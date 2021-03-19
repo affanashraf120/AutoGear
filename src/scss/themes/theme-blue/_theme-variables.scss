@@ -9,7 +9,7 @@ $theme-scheme: map_merge((
 // topbar variants
 $topbar-classic-scheme-variants: (
     classic-two: (
-        main: adjust-color($theme-color, $lightness: -10, $saturation: -10),
+        main: adjust-color($theme-color, $lightness: -10%, $saturation: -10%),
     ),
 ) !default;
 
@@ -17,14 +17,14 @@ $topbar-classic-scheme-variants: (
 $logo-scheme-variants: (
     classic-two: (
         primary:   rgba(#fff, .9),
-        secondary: adjust-color($theme-color, $lightness: -25, $saturation: -25),
+        secondary: adjust-color($theme-color, $lightness: -25%, $saturation: -25%),
     ),
     classic-four: (
         primary:   rgba(#fff, .9),
-        secondary: adjust-color($theme-color, $lightness: -25, $saturation: -25),
+        secondary: adjust-color($theme-color, $lightness: -25%, $saturation: -25%),
     ),
     mobile-two: (
         primary:   rgba(#fff, .9),
-        secondary: adjust-color($theme-color, $lightness: -25, $saturation: -25),
+        secondary: adjust-color($theme-color, $lightness: -25%, $saturation: -25%),
     ),
 ) !default;
