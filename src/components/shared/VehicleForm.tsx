@@ -146,7 +146,8 @@ function VehicleForm(props: Props) {
                     <div className="vehicle-form__item-alert">
                         {vehicleByVin && (
                             <div className="alert alert-sm alert-primary my-0">
-                                <FormattedMessage id="TEXT_ALERT_VEHICLE_FOUND" values={vehicleByVin} />
+                                {/* <FormattedMessage id="TEXT_ALERT_VEHICLE_FOUND" values={vehicleByVin} /> */}
+                                <FormattedMessage id="TEXT_ALERT_VEHICLE_FOUND" />
                             </div>
                         )}
                         {vinError !== null && (
