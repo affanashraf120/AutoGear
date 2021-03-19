@@ -1,14 +1,14 @@
 // react
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from "react";
 // third-party
-import classNames from 'classnames';
-import { FormattedMessage, useIntl } from 'react-intl';
+import classNames from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
 // application
-import useVehicleForm from '~/services/forms/vehicle';
-import { IVehicle } from '~/interfaces/vehicle';
-import { vehicleApi } from '~/api';
+import useVehicleForm from "~/services/forms/vehicle";
+import { IVehicle } from "~/interfaces/vehicle";
+import { vehicleApi } from "~/api";
 
-type Location = 'search' | 'account' | 'modal';
+type Location = "search" | "account" | "modal";
 
 interface Props {
     location: Location;
@@ -27,7 +27,7 @@ function VehicleForm(props: Props) {
     const [vehicleByFilters, setVehicleByFilters] = useState<IVehicle | null>(null);
     const [vehicleByVin, setVehicleByVin] = useState<IVehicle | null>(null);
 
-    const updateValue = (args: { vehicleByVin?: IVehicle | null, vehicleByFilters?: IVehicle | null }) => {
+    const updateValue = (args: { vehicleByVin?: IVehicle | null; vehicleByFilters?: IVehicle | null }) => {
         const value = { vehicleByVin, vehicleByFilters, ...args };
         const vehicle = value.vehicleByVin || value.vehicleByFilters;
 
@@ -56,9 +56,9 @@ function VehicleForm(props: Props) {
 
         const value = event.currentTarget.value.trim();
 
-        setVinIsLoading(value !== '');
+        setVinIsLoading(value !== "");
 
-        if (value === '') {
+        if (value === "") {
             setVehicleByVin(null);
             setVinError(null);
 
@@ -66,7 +66,7 @@ function VehicleForm(props: Props) {
         }
 
         setTimeout(async () => {
-            if (value === '' || canceled) {
+            if (value === "" || canceled) {
                 return;
             }
 
@@ -94,7 +94,7 @@ function VehicleForm(props: Props) {
         }, 350);
     };
 
-    const rootClasses = classNames('vehicle-form', `vehicle-form--layout--${location}`);
+    const rootClasses = classNames("vehicle-form", `vehicle-form--layout--${location}`);
 
     return (
         <div className={rootClasses}>
@@ -104,8 +104,8 @@ function VehicleForm(props: Props) {
                 return (
                     <div
                         key={itemIdx}
-                        className={classNames('vehicle-form__item', 'vehicle-form__item--select', {
-                            'vehicle-form__item--loading': item.loading,
+                        className={classNames("vehicle-form__item", "vehicle-form__item--select", {
+                            "vehicle-form__item--loading": item.loading,
                         })}
                     >
                         <select
@@ -130,14 +130,14 @@ function VehicleForm(props: Props) {
             <div className="vehicle-form__divider">
                 <FormattedMessage id="TEXT_OR" />
             </div>
-            <div className={classNames('vehicle-form__item', { 'vehicle-form__item--loading': vinIsLoading })}>
+            <div className={classNames("vehicle-form__item", { "vehicle-form__item--loading": vinIsLoading })}>
                 <div className="vehicle-form__item-input">
                     <input
                         type="text"
                         className="form-control"
                         name="vin"
-                        aria-label={intl.formatMessage({ id: 'INPUT_VIN_LABEL' })}
-                        placeholder={intl.formatMessage({ id: 'INPUT_VIN_PLACEHOLDER' })}
+                        aria-label={intl.formatMessage({ id: "INPUT_VIN_LABEL" })}
+                        placeholder={intl.formatMessage({ id: "INPUT_VIN_PLACEHOLDER" })}
                         onInput={handleVinChange}
                     />
                     <div className="vehicle-form__loader" />
@@ -146,10 +146,7 @@ function VehicleForm(props: Props) {
                     <div className="vehicle-form__item-alert">
                         {vehicleByVin && (
                             <div className="alert alert-sm alert-primary my-0">
-                                <FormattedMessage
-                                    id="TEXT_ALERT_VEHICLE_FOUND"
-                                    values={vehicleByVin}
-                                />
+                                <FormattedMessage id="TEXT_ALERT_VEHICLE_FOUND" values={vehicleByVin} />
                             </div>
                         )}
                         {vinError !== null && (
