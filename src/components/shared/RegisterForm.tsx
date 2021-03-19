@@ -1,12 +1,12 @@
 // react
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 // third-party
-import classNames from 'classnames';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useFormContext } from 'react-hook-form';
+import classNames from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
+import { useFormContext } from "react-hook-form";
 // application
-import { useDetachableForm } from '~/services/hooks';
-import { validateEmail } from '~/services/validators';
+import { useDetachableForm } from "~/services/hooks";
+import { validateEmail } from "~/services/validators";
 
 export interface IRegisterForm {
     email: string;
@@ -22,9 +22,9 @@ interface Props {
 
 export function getRegisterFormDefaultValue(initialData: IRegisterForm | null = null): IRegisterForm {
     return {
-        email: '',
-        password: '',
-        confirmPassword: '',
+        email: "",
+        password: "",
+        confirmPassword: "",
         ...initialData,
     };
 }
@@ -35,8 +35,8 @@ function RegisterForm(props: Props) {
     const { getValues, errors: errorsProps } = formMethods;
     const errors = namespace ? errorsProps[namespace] : errorsProps;
     const intl = useIntl();
-    const fieldId = idPrefix ? `${idPrefix}-` : '';
-    const ns = useMemo(() => (namespace ? `${namespace}.` : ''), [namespace]);
+    const fieldId = idPrefix ? `${idPrefix}-` : "";
+    const ns = useMemo(() => (namespace ? `${namespace}.` : ""), [namespace]);
     const register = useDetachableForm(formMethods, disabled || false);
 
     return (
@@ -49,20 +49,16 @@ function RegisterForm(props: Props) {
                     type="text"
                     id={`${fieldId}email`}
                     name={`${ns}email`}
-                    className={classNames('form-control', {
-                        'is-invalid': errors?.email,
+                    className={classNames("form-control", {
+                        "is-invalid": errors?.email,
                     })}
                     disabled={disabled}
-                    placeholder={intl.formatMessage({ id: 'INPUT_EMAIL_ADDRESS_PLACEHOLDER' })}
+                    placeholder={intl.formatMessage({ id: "INPUT_EMAIL_ADDRESS_PLACEHOLDER" })}
                     ref={register({ required: true, validate: { email: validateEmail } })}
                 />
                 <div className="invalid-feedback">
-                    {errors?.email?.type === 'required' && (
-                        <FormattedMessage id="ERROR_FORM_REQUIRED" />
-                    )}
-                    {errors?.email?.type === 'email' && (
-                        <FormattedMessage id="ERROR_FORM_INCORRECT_EMAIL" />
-                    )}
+                    {errors?.email?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
+                    {errors?.email?.type === "email" && <FormattedMessage id="ERROR_FORM_INCORRECT_EMAIL" />}
                 </div>
             </div>
 
@@ -74,17 +70,15 @@ function RegisterForm(props: Props) {
                     type="password"
                     id={`${fieldId}password`}
                     name={`${ns}password`}
-                    className={classNames('form-control', {
-                        'is-invalid': errors?.password,
+                    className={classNames("form-control", {
+                        "is-invalid": errors?.password,
                     })}
                     disabled={disabled}
-                    placeholder={intl.formatMessage({ id: 'INPUT_PASSWORD_PLACEHOLDER' })}
+                    placeholder={intl.formatMessage({ id: "INPUT_PASSWORD_PLACEHOLDER" })}
                     ref={register({ required: true })}
                 />
                 <div className="invalid-feedback">
-                    {errors?.password?.type === 'required' && (
-                        <FormattedMessage id="ERROR_FORM_REQUIRED" />
-                    )}
+                    {errors?.password?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
                 </div>
             </div>
 
@@ -96,23 +90,21 @@ function RegisterForm(props: Props) {
                     type="password"
                     id={`${fieldId}confirm-password`}
                     name={`${ns}confirmPassword`}
-                    className={classNames('form-control', {
-                        'is-invalid': errors?.confirmPassword,
+                    className={classNames("form-control", {
+                        "is-invalid": errors?.confirmPassword,
                     })}
                     disabled={disabled}
-                    placeholder={intl.formatMessage({ id: 'INPUT_PASSWORD_REPEAT_PLACEHOLDER' })}
+                    placeholder={intl.formatMessage({ id: "INPUT_PASSWORD_REPEAT_PLACEHOLDER" })}
                     ref={register({
                         required: true,
                         validate: {
-                            match: (value) => value === getValues(`${ns}password`),
+                            match: (value: any) => value === getValues(`${ns}password`),
                         },
                     })}
                 />
                 <div className="invalid-feedback">
-                    {errors?.confirmPassword?.type === 'required' && (
-                        <FormattedMessage id="ERROR_FORM_REQUIRED" />
-                    )}
-                    {errors?.confirmPassword?.type === 'match' && (
+                    {errors?.confirmPassword?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
+                    {errors?.confirmPassword?.type === "match" && (
                         <FormattedMessage id="ERROR_FORM_PASSWORD_DOES_NOT_MATCH" />
                     )}
                 </div>
