@@ -1,11 +1,13 @@
 // react
-import React from 'react';
+import React from "react";
+import Logo from "~/custom/logo/MobileLogo";
 
 function MobileLogo() {
     return (
         <div className="mobile-logo">
             {/* mobile-logo */}
-            <svg width="130" height="20">
+            <Logo />
+            {/* <svg width="130" height="20">
                 <path
                     className="mobile-logo__part-one"
                     d="M40,19.9c-0.3,0-0.7,0.1-1,0.1h-4.5c-0.8,0-1.5-0.7-1.5-1.5v-17C33,0.7,33.7,0,34.5,0H39c0.3,0,0.7,0,1,0.1
@@ -34,7 +36,7 @@ M118.4,14h1c0.5,0,0.9,0.3,1.2,0.7c0.2,0.3,0.4,0.6,0.8,0.8c0.5,0.3,1.4,0.5,2.1,0.
 c-0.8-0.4-1.1-1.3-0.7-2.1l0.4-0.9c0.4-0.7,1.2-1,1.8-0.6c0.6,0.3,1.2,0.7,1.6,1.2c1,1.1,1.7,2.5,1.7,4c0,3.3-2.9,6-6.5,6
 c-2.8,0-5.5-1.7-6.4-4C116.7,15.1,117.4,14,118.4,14z"
                 />
-            </svg>
+            </svg> */}
             {/* mobile-logo / end */}
         </div>
     );

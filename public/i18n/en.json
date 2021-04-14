@@ -1,4 +1,11 @@
 {
+  "CAR_INSPECTION_CHECKPOINT_TITLE":"Car Inspection",
+  "CAR_INSPECTION_CHECKPOINT_SUBTITLE":"300+ checkpoints",
+  "CERTIFIED_CAR_TITLE":"Certified Car",
+  "CERTIFIED_CAR_SUBTITLE":"Certified car with warranty.",
+  "CAR_AUCTION_TITLE":"Secure Auction",
+  "CAR_AUCTION_SUBTITLE":"Online secure car auction",
+  
   "BUTTON_ADD_ADDRESS": "Add Address",
   "BUTTON_ADD_NEW": "Add New",
   "BUTTON_ADD_TO_CART": "Add to cart",

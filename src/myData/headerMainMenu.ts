@@ -6,11 +6,15 @@ const navItems: IMainMenuLink[] = [
         url: "/",
     },
     {
-        title: "Auction",
+        title: "New Cars",
+        url: "/new-cars",
+    },
+    {
+        title: "Old Cars",
         url: "/",
     },
     {
-        title: "News",
+        title: "Auction",
         url: "/",
     },
     {

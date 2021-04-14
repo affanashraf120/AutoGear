@@ -65,9 +65,9 @@ function Header() {
             )}
 
             <div className="header__navbar">
-                <div className="header__navbar-departments">
+                {/* <div className="header__navbar-departments">
                     <Departments label={departmentsLabel} />
-                </div>
+                </div> */}
                 <div className=" header__navbar-menu">
                     <MainMenu />
                 </div>

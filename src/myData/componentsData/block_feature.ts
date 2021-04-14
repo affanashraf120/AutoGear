@@ -1,4 +1,5 @@
-import { Fi24Hours48Svg, FiFreeDelivery48Svg, FiPaymentSecurity48Svg, FiTag48Svg } from "~/svg";
+import { Fi24Hours48Svg, FiFreeDelivery48Svg, FiPaymentSecurity48Svg, FiTag48Svg, Search20Svg, Check12x9Svg,Car20Svg} from "~/svg";
+
 import { JSXElementConstructor } from "react";
 
 type Feature = {
@@ -8,9 +9,9 @@ type Feature = {
 };
 const features: Feature[] = [
     {
-        title: "TEXT_SHOP_FEATURE_FREE_SHIPPING_TITLE",
-        subtitle: "TEXT_SHOP_FEATURE_FREE_SHIPPING_SUBTITLE",
-        FeatureIcon: FiFreeDelivery48Svg,
+        title: "CAR_INSPECTION_CHECKPOINT_TITLE",
+        subtitle: "CAR_INSPECTION_CHECKPOINT_SUBTITLE",
+        FeatureIcon: Search20Svg,
     },
     {
         title: "TEXT_SHOP_FEATURE_SUPPORT_TITLE",
@@ -18,14 +19,14 @@ const features: Feature[] = [
         FeatureIcon: Fi24Hours48Svg,
     },
     {
-        title: "TEXT_SHOP_FEATURE_SECURITY_TITLE",
-        subtitle: "TEXT_SHOP_FEATURE_SECURITY_SUBTITLE",
-        FeatureIcon: FiPaymentSecurity48Svg,
+        title: "CERTIFIED_CAR_TITLE",
+        subtitle: "CERTIFIED_CAR_SUBTITLE",
+        FeatureIcon: Check12x9Svg,
     },
     {
-        title: "TEXT_SHOP_FEATURE_HOT_OFFERS_TITLE",
-        subtitle: "TEXT_SHOP_FEATURE_HOT_OFFERS_SUBTITLE",
-        FeatureIcon: FiTag48Svg,
+        title: "CAR_AUCTION_TITLE",
+        subtitle: "CAR_AUCTION_SUBTITLE",
+        FeatureIcon: Car20Svg,
     },
 ];
 
