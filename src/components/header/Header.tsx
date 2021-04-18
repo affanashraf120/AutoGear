@@ -83,9 +83,9 @@ function Header() {
                 )}
             </div>
             <Logo className="header__logo" />
-            <div className="header__search">
+            {/* <div className="header__search">
                 <Search />
-            </div>
+            </div> */}
             <div className="header__indicators">
                 <Indicator
                     href={url.wishlist()}

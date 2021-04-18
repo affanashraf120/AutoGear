@@ -1,8 +1,8 @@
 // react
-import React from 'react';
+import React, { useEffect } from "react";
 // application
-import { useCurrency } from '~/store/currency/currencyHooks';
-import { ICurrency } from '~/interfaces/currency';
+import { useCurrency } from "~/store/currency/currencyHooks";
+import { ICurrency } from "~/interfaces/currency";
 
 interface Props {
     value: number;
@@ -17,7 +17,7 @@ function CurrencyFormat(props: Props) {
     return (
         <React.Fragment>
             {currency.symbol}
-            {(value * currency.rate).toFixed(2)}
+            {(value * currency.rate).toFixed(0)}
         </React.Fragment>
     );
 }
