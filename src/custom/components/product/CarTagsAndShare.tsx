@@ -1,9 +1,9 @@
 import React from "react";
 import AppLink from "~/components/shared/AppLink";
 import ShareLinks from "~/components/shared/ShareLinks";
-import { IProduct } from "~/interfaces/product";
+import { ICarPost } from "~/interfaces/custom/car";
 
-const ProductTagsAndShare = (product: IProduct) => {
+const ProductTagsAndShare = (product: ICarPost) => {
     return (
         <div className="product__tags-and-share-links">
             {product.tags && product.tags.length > 0 && (

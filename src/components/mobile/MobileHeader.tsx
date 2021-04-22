@@ -108,7 +108,7 @@ function MobileHeader() {
                     >
                         <Menu18x14Svg />
                     </button>
-                    <AppLink href={url.home()} className="mobile-header__logo">
+                    <AppLink href={url.home()} >
                         <MobileLogo />
                     </AppLink>
                     <div
@@ -117,7 +117,7 @@ function MobileHeader() {
                             'mobile-header__search--open': searchIsOpen,
                         })}
                     >
-                        <form className="mobile-search__body" onSubmit={onSearchSubmit}>
+                        {/* <form className="mobile-search__body" onSubmit={onSearchSubmit}>
                             <label className="sr-only" htmlFor="mobile-site-search">
                                 <FormattedMessage id="INPUT_SEARCH_LABEL" />
                             </label>
@@ -149,7 +149,7 @@ function MobileHeader() {
                                 <Cross20Svg />
                             </button>
                             <div className="mobile-search__field" />
-                        </form>
+                        </form> */}
                     </div>
                     <div className="mobile-header__indicators">
                         <div className="mobile-indicator d-md-none" ref={searchIndicatorRef}>
@@ -178,7 +178,7 @@ function MobileHeader() {
                                 </span>
                             </AppLink>
                         </div>
-                        <div className="mobile-indicator">
+                        {/* <div className="mobile-indicator">
                             <AppLink href={url.cart()} className="mobile-indicator__button">
                                 <span className="mobile-indicator__icon">
                                     <Cart20Svg />
@@ -189,7 +189,7 @@ function MobileHeader() {
                                     )}
                                 </span>
                             </AppLink>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

@@ -52,6 +52,7 @@ const NewCars = () => {
 
     const product: ICarPost = {
         //TODO
+        id:"dfgknj98y34",
         car: car,
         postedDate: new Date(),
         mileage: 1000,
@@ -83,6 +84,9 @@ const NewCars = () => {
                 ],
             },
         ],
+        tags:[
+            'Civic', 'Honda Civic'
+        ]
     };
 
     return (

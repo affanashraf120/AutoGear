@@ -193,7 +193,7 @@ function ProductCard(props: Props) {
                 </div>
                 {!exclude.includes('buttons') && (
                     <React.Fragment>
-                        <AsyncAction
+                        {/* <AsyncAction
                             action={() => cartAddItem(product)}
                             render={({ run, loading }) => (
                                 <button
@@ -207,7 +207,7 @@ function ProductCard(props: Props) {
                                     <Cart20Svg />
                                 </button>
                             )}
-                        />
+                        /> */}
                         {!exclude.includes('list-buttons') && (
                             <React.Fragment>
                                 <AsyncAction

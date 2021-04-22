@@ -17,6 +17,7 @@ import url from '~/services/url';
 import { shopApi, blogApi } from '~/api';
 import { useDeferredData, useProductColumns, useProductTabs } from '~/services/hooks';
 import BlockSlideshow from '~/components/blocks/BlockSlideshow';
+import HeroHeader from '~/custom/components/heroHeader/HeroHeader';
 
 function Page() {
     const intl = useIntl();
@@ -122,9 +123,10 @@ function Page() {
 
     return (
         <React.Fragment>
-            {/* <BlockFinder /> */}
-            <BlockSpace layout="divider-xs" />
-            <BlockSlideshow slides={slides} />
+            <BlockFinder />
+            {/* <BlockSpace layout="divider-xs" /> */}
+            {/* <BlockSlideshow slides={slides} /> */}
+            {/* <HeroHeader/> */}
             <BlockSpace layout="divider-nl" />
             <BlockFeatures layout="top-strip" />
             <BlockSpace layout="divider-nl" />

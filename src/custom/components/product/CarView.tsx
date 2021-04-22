@@ -19,7 +19,7 @@ import { useProductForm } from "~/services/forms/product";
 import Features from "../Features";
 import CarActions from "./CarActions";
 import CarInfo from "./CarInfo";
-import ProductTagsAndShare from "./ProductTagsAndShare";
+import ProductTagsAndShare from "./CarTagsAndShare";
 import { ICar, ICarPost } from "~/interfaces/custom/car";
 
 interface Props {
@@ -136,31 +136,12 @@ const CarView = (props: Props) => {
                                         <div className="product__info-card">
                                             <CarInfo {...product} />
                                             <CarActions {...product} />
+                                            <ProductTagsAndShare {...product} />
                                         </div>
-
-                                        {/* <FormProvider {...productForm.methods}>
-                                            <form onSubmit={productForm.submit} className="product__info-card">
-                                                <CarInfo {...product} />
-
-                                                {product.options.length > 0 && (
-                                                    <ProductForm
-                                                        options={product.options}
-                                                        className="product__form"
-                                                        namespace="options"
-                                                    />
-                                                )}
-
-                                                <CarActions {...product} />
-
-                                                <ProductTagsAndShare {...product} />
-                                            </form>
-                                        </FormProvider> */}
-
                                         <Features />
                                     </div>
                                     {/* ---------------------------------------------------- */}
-
-                                    {/* <ProductTabs className="product__tabs" product={product} layout={layout} /> */}
+                                    {/* <CarTabs className="product__tabs" product={product} layout={layout} /> */}
                                 </div>
                             </div>
                         </div>

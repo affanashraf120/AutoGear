@@ -73,12 +73,12 @@ export interface IProduct {
     /**
      * A short product description without HTML tags.
      */
-    excerpt: string;
+    excerpt: string;//
     description: string;
     slug: string;
-    sku?: string;
-    partNumber: string;
-    stock: IProductStock;
+    sku?: string;//
+    partNumber: string;//
+    stock: IProductStock;//
     price: number;
     compareAtPrice: number|null;
     images?: string[];
@@ -91,13 +91,13 @@ export interface IProduct {
      * 'unknown' - No compatibility information. Part may not fit the specified vehicle.
      * number[]  - An array of vehicle identifiers with which this part is compatible.
      */
-    compatibility: 'all' | 'unknown' | number[];
+    compatibility: 'all' | 'unknown' | number[];//
     brand?: IBrand|null;
     tags?: string[];
     type: IProductType;
-    categories?: IShopCategory[];
+    categories?: IShopCategory[];//
     attributes: IProductAttribute[];
-    options: IProductOption[];
+    options: IProductOption[];//
     customFields?: ICustomFields;
 }
 

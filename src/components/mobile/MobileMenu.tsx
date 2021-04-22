@@ -58,12 +58,12 @@ function MobileMenu() {
 
                         <div className="mobile-menu__spring" />
                         <div className="mobile-menu__divider" />
-                        <AppLink href={url.pageContactUs()} className="mobile-menu__contacts">
+                        {/* <AppLink href={url.pageContactUs()} className="mobile-menu__contacts">
                             <div className="mobile-menu__contacts-subtitle">
                                 <FormattedMessage id="TEXT_MOBILE_MENU_PHONE_TITLE" />
                             </div>
                             <div className="mobile-menu__contacts-title">800 060-0730</div>
-                        </AppLink>
+                        </AppLink> */}
                     </MobileMenuPanel>
                 </MobileMenuConveyor>
             </div>

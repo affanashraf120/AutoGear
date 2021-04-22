@@ -1,6 +1,7 @@
 // react
 import React from "react";
 import Logo from "~/custom/logo/MobileLogo";
+import { AutoGearDesktop } from "~/svg";
 
 function MobileLogo() {
     return (

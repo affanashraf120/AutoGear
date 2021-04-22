@@ -43,7 +43,7 @@ function MobileMenuIndicators() {
                     <FormattedMessage id="TEXT_MOBILE_INDICATOR_ACCOUNT" />
                 </span>
             </AppLink>
-            <AppLink href={url.cart()} className="mobile-menu__indicator" onClick={mobileMenuClose}>
+            {/* <AppLink href={url.cart()} className="mobile-menu__indicator" onClick={mobileMenuClose}>
                 <span className="mobile-menu__indicator-icon">
                     <Cart20Svg />
                     {cart.items.length > 0 && (
@@ -63,7 +63,7 @@ function MobileMenuIndicators() {
                 <span className="mobile-menu__indicator-title">
                     <FormattedMessage id="TEXT_MOBILE_INDICATOR_GARAGE" />
                 </span>
-            </AppLink>
+            </AppLink> */}
         </div>
     );
 }

@@ -2,6 +2,7 @@ import { IComment } from "../comment";
 import { IProductOption } from "../product";
 
 export interface ICarPost {
+    id: string;
     car: ICar;
     postedDate: Date;
     mileage: number;
@@ -19,7 +20,8 @@ export interface ICarPost {
     sellerPhone: string;
     assembly: "Local" | "Imported";
     Transaction: Transaction;
-    options: IProductOption[]
+    options: IProductOption[];
+    tags:string[]
 }
 
 export interface ICar {

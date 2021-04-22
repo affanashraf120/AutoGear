@@ -1,8 +1,8 @@
 // third-party
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 // application
-import { globalIntl } from '~/services/i18n/global-intl';
-import { IProduct } from '~/interfaces/product';
+import { globalIntl } from "~/services/i18n/global-intl";
+import { IProduct } from "~/interfaces/product";
 import {
     COMPARE_ADD_ITEM,
     COMPARE_CLEAR,
@@ -11,13 +11,32 @@ import {
     CompareClearAction,
     CompareRemoveItemAction,
     CompareThunkAction,
-} from '~/store/compare/compareActionTypes';
+} from "~/store/compare/compareActionTypes";
+import { ICarPost } from "~/interfaces/custom/car";
 
-export function compareAddItemSuccess(product: IProduct): CompareAddItemAction {
-    toast.success(globalIntl()?.formatMessage(
-        { id: 'TEXT_TOAST_PRODUCT_ADDED_TO_COMPARE' },
-        { productName: product.name },
-    ));
+// export function compareAddItemSuccess(product: IProduct): CompareAddItemAction {
+//     toast.success(globalIntl()?.formatMessage(
+//         { id: 'TEXT_TOAST_PRODUCT_ADDED_TO_COMPARE' },
+//         { productName: product.name },
+//     ));
+
+//     return {
+//         type: COMPARE_ADD_ITEM,
+//         product,
+//     };
+// }
+
+// export function compareRemoveItemSuccess(productId: number): CompareRemoveItemAction {
+//     return {
+//         type: COMPARE_REMOVE_ITEM,
+//         productId,
+//     };
+// }
+
+export function compareAddItemSuccess(product: ICarPost): CompareAddItemAction {
+    toast.success(
+        globalIntl()?.formatMessage({ id: "TEXT_TOAST_PRODUCT_ADDED_TO_COMPARE" }, { productName: product.car.model })
+    );
 
     return {
         type: COMPARE_ADD_ITEM,
@@ -25,7 +44,7 @@ export function compareAddItemSuccess(product: IProduct): CompareAddItemAction {
     };
 }
 
-export function compareRemoveItemSuccess(productId: number): CompareRemoveItemAction {
+export function compareRemoveItemSuccess(productId: string): CompareRemoveItemAction {
     return {
         type: COMPARE_REMOVE_ITEM,
         productId,
@@ -38,38 +57,59 @@ export function compareClearSuccess(): CompareClearAction {
     };
 }
 
-export function compareAddItem(product: IProduct): CompareThunkAction<Promise<void>> {
+// export function compareAddItem(product: IProduct): CompareThunkAction<Promise<void>> {
+//     // sending request to server, timeout is used as a stub
+//     return (dispatch) => (
+//         new Promise((resolve) => {
+//             setTimeout(() => {
+//                 dispatch(compareAddItemSuccess(product));
+//                 resolve();
+//             }, 250);
+//         })
+//     );
+// }
+
+// export function compareRemoveItem(productId: number): CompareThunkAction<Promise<void>> {
+//     // sending request to server, timeout is used as a stub
+//     return (dispatch) => (
+//         new Promise((resolve) => {
+//             setTimeout(() => {
+//                 dispatch(compareRemoveItemSuccess(productId));
+//                 resolve();
+//             }, 250);
+//         })
+//     );
+// }
+
+export function compareAddItem(product: ICarPost): CompareThunkAction<Promise<void>> {
     // sending request to server, timeout is used as a stub
-    return (dispatch) => (
+    return (dispatch) =>
         new Promise((resolve) => {
             setTimeout(() => {
                 dispatch(compareAddItemSuccess(product));
                 resolve();
             }, 250);
-        })
-    );
+        });
 }
 
-export function compareRemoveItem(productId: number): CompareThunkAction<Promise<void>> {
+export function compareRemoveItem(productId: string): CompareThunkAction<Promise<void>> {
     // sending request to server, timeout is used as a stub
-    return (dispatch) => (
+    return (dispatch) =>
         new Promise((resolve) => {
             setTimeout(() => {
                 dispatch(compareRemoveItemSuccess(productId));
                 resolve();
             }, 250);
-        })
-    );
+        });
 }
 
 export function compareClear(): CompareThunkAction<Promise<void>> {
     // sending request to server, timeout is used as a stub
-    return (dispatch) => (
+    return (dispatch) =>
         new Promise((resolve) => {
             setTimeout(() => {
                 dispatch(compareClearSuccess());
                 resolve();
             }, 250);
-        })
-    );
+        });
 }

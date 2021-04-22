@@ -1,15 +1,15 @@
 const theme = {
-    name: 'AutoGear',
-    url: 'https://themeforest.net/user/kos9/portfolio',
+    name: "AutoGear",
+    url: "#",
     author: {
-        name: 'Affan',
-        profile_url: 'https://themeforest.net/user/kos9',
+        name: "Affan & Talha",
+        profile_url: "",
     },
     contacts: {
-        address: ['715 Fake Street, New York 10021 USA'],
-        email: ['red-parts@example.com'],
-        phone: ['+1 (800) 060-07-30'],
-        hours: ['Mon-Sat 10:00pm - 7:00pm'],
+        address: ["Lahore, Punjab, Pakistan"],
+        email: ["autogear.pk"],
+        phone: ["+92-313-4371392"],
+        hours: ["Mon-Sat 10:00pm - 7:00pm"],
     },
 };
 
