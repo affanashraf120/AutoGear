@@ -15,7 +15,7 @@ const MobileLogo = () => {
                     transform="translate(-0.83 -1.17)"
                 />
             </svg> */}
-             <img src="/images/autogear.png" alt="AutoGear Logo"  height="40" />
+             <img src="/images/autogear.png" alt="AutoGear Logo"  height="30" style={{marginTop:'10px'}} />
         </React.Fragment>
     );
 };
