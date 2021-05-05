@@ -1,18 +1,16 @@
 /* eslint-disable import/prefer-default-export */
 
 // application
+import { attributesGroups } from "~/custom-server/database/product/attributesGroups";
 import { brands } from "~/fake-server/database/brands";
-import { IBrand } from "~/interfaces/brand";
-import { IProduct, IProductAttribute } from "~/interfaces/product";
-import { IShopCategory } from "~/interfaces/category";
-import { makeIdGenerator, nameToSlug } from "~/fake-server/utils";
+import { shopCategoriesList } from "~/fake-server/database/categories";
 import { prepareCategory } from "~/fake-server/endpoints/categories";
 import { IProductAttributesDef, IProductDef } from "~/fake-server/interfaces/product-def";
-import { shopCategoriesList } from "~/fake-server/database/categories";
+import { makeIdGenerator, nameToSlug } from "~/fake-server/utils";
+import { IBrand } from "~/interfaces/brand";
+import { IShopCategory } from "~/interfaces/category";
+import { IProduct, IProductAttribute } from "~/interfaces/product";
 
-import { car, carPosts } from "~/myData/productData";
-import { attributesSet } from "~/custom-server/database/product/attributesSet";
-import { attributesGroups } from "~/custom-server/database/product/attributesGroups";
 
 const getNextId = makeIdGenerator();
 
