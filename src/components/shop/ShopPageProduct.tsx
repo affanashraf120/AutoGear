@@ -79,11 +79,11 @@ function ShopPageProduct(props: Props) {
 
     const breadcrumb = [
         { title: intl.formatMessage({ id: 'LINK_HOME' }), url: url.home() },
-        { title: intl.formatMessage({ id: 'LINK_SHOP' }), url: url.shop() },
-        ...getCategoryPath(product.categories && product.categories[0]).map((x) => ({
-            title: x.name,
-            url: url.category(x),
-        })),
+        // { title: intl.formatMessage({ id: 'LINK_SHOP' }), url: url.shop() },
+        // ...getCategoryPath(product.categories && product.categories[0]).map((x) => ({
+        //     title: x.name,
+        //     url: url.category(x),
+        // })),
         { title: product.name, url: url.product(product) },
     ];
 
