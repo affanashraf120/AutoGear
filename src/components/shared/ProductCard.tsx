@@ -210,7 +210,7 @@ function ProductCard(props: Props) {
                         /> */}
                         {!exclude.includes('list-buttons') && (
                             <React.Fragment>
-                                <AsyncAction
+                                {/* <AsyncAction
                                     action={() => cartAddItem(product)}
                                     render={({ run, loading }) => (
                                         <button
@@ -223,7 +223,7 @@ function ProductCard(props: Props) {
                                             <FormattedMessage id="BUTTON_ADD_TO_CART" />
                                         </button>
                                     )}
-                                />
+                                /> */}
                                 <AsyncAction
                                     action={() => addToWishlist()}
                                     render={({ run, loading }) => (
