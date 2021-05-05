@@ -1,15 +1,10 @@
 // react
-import React from 'react';
+import React from "react";
 // third-party
-import Document, {
-    Head,
-    Html,
-    Main,
-    NextScript,
-} from 'next/document';
+import Document, { Head, Html, Main, NextScript } from "next/document";
 // application
-import { baseUrl } from '~/services/utils';
-import { getDefaultLanguage, getLanguageByPath } from '~/services/i18n/utils';
+import { baseUrl } from "~/services/utils";
+import { getDefaultLanguage, getLanguageByPath } from "~/services/i18n/utils";
 
 class MyDocument extends Document {
     render() {
@@ -24,7 +19,10 @@ class MyDocument extends Document {
                     <link rel="shortcut icon" href={baseUrl('/images/favicon.png')} />
 
                     {/* fonts */}
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" />
+                    <link
+                        rel="stylesheet"
+                        href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i"
+                    />
                 </Head>
                 <body>
                     <div className="site-preloader">

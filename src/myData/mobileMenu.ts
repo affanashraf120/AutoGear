@@ -6,19 +6,19 @@ export const mobileMenu: IMobileMenuLink[] = [
         url: "/",
     },
     {
-        title: "New Cars",
-        url: "/new-cars",
-    },
-    {
-        title: "Old Cars",
-        url: "/",
+        title: "Find Cars",
+        url: "/find-cars",
     },
     {
         title: "Auction",
-        url: "/",
+        url: "/auction",
     },
     {
         title: "Comparison",
         url: "/compare",
+    },
+    {
+        title: "WishList",
+        url: "/wishlist",
     },
 ];
