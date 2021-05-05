@@ -20,8 +20,6 @@ import BlockSlideshow from "~/components/blocks/BlockSlideshow";
 import HeroHeader from "~/custom/components/heroHeader/HeroHeader";
 import { IBrand } from "~/interfaces/brand";
 import { brands } from "~/myData/brandsData";
-import CarCarousel from "~/custom/components/CarCarousel/CarCarousel";
-import { carPosts } from "~/myData/productData";
 
 function Page() {
     const intl = useIntl();
