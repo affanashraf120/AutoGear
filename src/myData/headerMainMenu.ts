@@ -11,11 +11,11 @@ const navItems: IMainMenuLink[] = [
     },
     {
         title: "Old Cars",
-        url: "/",
+        url: "/old-cars",
     },
     {
         title: "Auction",
-        url: "/",
+        url: "/auction",
     },
     {
         title: "Comparison",

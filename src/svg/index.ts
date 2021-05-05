@@ -38,7 +38,7 @@ import RecycleBin16 from "./recycle-bin-16.svg";
 import Search20 from "./search-20.svg";
 import Wishlist16 from "./wishlist-16.svg";
 import ZoomIn24 from "./zoom-in-24.svg";
-import AutoGearDesktopLogo from "./autogear-logo.svg";
+import AutoGearDesktopLogo from "./autogear-logo2.svg";
 
 export const AutoGearDesktop = AutoGearDesktopLogo;
 export const ArrowDown9x6Svg = ArrowDown9x6;

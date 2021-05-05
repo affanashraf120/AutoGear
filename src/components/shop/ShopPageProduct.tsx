@@ -1,34 +1,34 @@
 // react
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 // third-party
-import classNames from "classnames";
-import { Controller, FormProvider } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
+import classNames from 'classnames';
+import { Controller, FormProvider } from 'react-hook-form';
+import { FormattedMessage, useIntl } from 'react-intl';
 // application
-import AppLink from "~/components/shared/AppLink";
-import AsyncAction from "~/components/shared/AsyncAction";
-import BlockHeader from "~/components/blocks/BlockHeader";
-import BlockProductsCarousel from "~/components/blocks/BlockProductsCarousel";
-import BlockSpace from "~/components/blocks/BlockSpace";
-import CompatibilityStatusBadge from "~/components/shared/CompatibilityStatusBadge";
-import CurrencyFormat from "~/components/shared/CurrencyFormat";
-import InputNumber from "~/components/shared/InputNumber";
-import PageTitle from "~/components/shared/PageTitle";
-import ProductForm from "~/components/shop/ProductForm";
-import ProductGallery, { IProductGalleryLayout } from "~/components/shop/ProductGallery";
-import ProductSidebar from "~/components/shop/ProductSidebar";
-import ProductTabs from "~/components/shop/ProductTabs";
-import Rating from "~/components/shared/Rating";
-import ShareLinks from "~/components/shared/ShareLinks";
-import StockStatusBadge from "~/components/shared/StockStatusBadge";
-import url from "~/services/url";
-import { getCategoryPath } from "~/services/utils";
-import { IProduct } from "~/interfaces/product";
-import { IProductPageLayout, IProductPageSidebarPosition } from "~/interfaces/pages";
-import { shopApi } from "~/api";
-import { useCompareAddItem } from "~/store/compare/compareHooks";
-import { useProductForm } from "~/services/forms/product";
-import { useWishlistAddItem } from "~/store/wishlist/wishlistHooks";
+import AppLink from '~/components/shared/AppLink';
+import AsyncAction from '~/components/shared/AsyncAction';
+import BlockHeader from '~/components/blocks/BlockHeader';
+import BlockProductsCarousel from '~/components/blocks/BlockProductsCarousel';
+import BlockSpace from '~/components/blocks/BlockSpace';
+import CompatibilityStatusBadge from '~/components/shared/CompatibilityStatusBadge';
+import CurrencyFormat from '~/components/shared/CurrencyFormat';
+import InputNumber from '~/components/shared/InputNumber';
+import PageTitle from '~/components/shared/PageTitle';
+import ProductForm from '~/components/shop/ProductForm';
+import ProductGallery, { IProductGalleryLayout } from '~/components/shop/ProductGallery';
+import ProductSidebar from '~/components/shop/ProductSidebar';
+import ProductTabs from '~/components/shop/ProductTabs';
+import Rating from '~/components/shared/Rating';
+import ShareLinks from '~/components/shared/ShareLinks';
+import StockStatusBadge from '~/components/shared/StockStatusBadge';
+import url from '~/services/url';
+import { getCategoryPath } from '~/services/utils';
+import { IProduct } from '~/interfaces/product';
+import { IProductPageLayout, IProductPageSidebarPosition } from '~/interfaces/pages';
+import { shopApi } from '~/api';
+import { useCompareAddItem } from '~/store/compare/compareHooks';
+import { useProductForm } from '~/services/forms/product';
+import { useWishlistAddItem } from '~/store/wishlist/wishlistHooks';
 import {
     Compare16Svg,
     Fi24Hours48Svg,
@@ -36,7 +36,7 @@ import {
     FiPaymentSecurity48Svg,
     FiTag48Svg,
     Wishlist16Svg,
-} from "~/svg";
+} from '~/svg';
 
 interface Props {
     product: IProduct;
@@ -45,7 +45,11 @@ interface Props {
 }
 
 function ShopPageProduct(props: Props) {
-    const { product, layout, sidebarPosition = "start" } = props;
+    const {
+        product,
+        layout,
+        sidebarPosition = 'start',
+    } = props;
     const intl = useIntl();
     const wishlistAddItem = useWishlistAddItem();
     const compareAddItem = useCompareAddItem();
@@ -74,8 +78,8 @@ function ShopPageProduct(props: Props) {
     }
 
     const breadcrumb = [
-        { title: intl.formatMessage({ id: "LINK_HOME" }), url: url.home() },
-        { title: intl.formatMessage({ id: "LINK_SHOP" }), url: url.shop() },
+        { title: intl.formatMessage({ id: 'LINK_HOME' }), url: url.home() },
+        { title: intl.formatMessage({ id: 'LINK_SHOP' }), url: url.shop() },
         ...getCategoryPath(product.categories && product.categories[0]).map((x) => ({
             title: x.name,
             url: url.category(x),
@@ -193,7 +197,9 @@ function ShopPageProduct(props: Props) {
                                         <FormattedMessage id="TABLE_BRAND" />
                                     </th>
                                     <td>
-                                        <AppLink href={url.brand(product.brand)}>{product.brand.name}</AppLink>
+                                        <AppLink href={url.brand(product.brand)}>
+                                            {product.brand.name}
+                                        </AppLink>
                                     </td>
                                 </tr>
                                 <tr>
@@ -220,7 +226,7 @@ function ShopPageProduct(props: Props) {
 
     const productActions = (
         <div className="product__actions">
-            {product.stock !== "out-of-stock" && (
+            {product.stock !== 'out-of-stock' && (
                 <React.Fragment>
                     <div className="product__actions-item product__actions-item--quantity">
                         <Controller
@@ -229,15 +235,21 @@ function ShopPageProduct(props: Props) {
                                 required: true,
                             }}
                             render={({ value, onChange, onBlur }) => (
-                                <InputNumber size="lg" min={1} value={value} onChange={onChange} onBlur={onBlur} />
+                                <InputNumber
+                                    size="lg"
+                                    min={1}
+                                    value={value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                />
                             )}
                         />
                     </div>
                     <div className="product__actions-item product__actions-item--addtocart">
                         <button
                             type="submit"
-                            className={classNames("btn", "btn-primary", "btn-lg", "btn-block", {
-                                "btn-loading": productForm.submitInProgress,
+                            className={classNames('btn', 'btn-primary', 'btn-lg', 'btn-block', {
+                                'btn-loading': productForm.submitInProgress,
                             })}
                         >
                             <FormattedMessage id="BUTTON_ADD_TO_CART" />
@@ -251,8 +263,8 @@ function ShopPageProduct(props: Props) {
                 render={({ run, loading }) => (
                     <button
                         type="button"
-                        className={classNames("product__actions-item", "product__actions-item--wishlist", {
-                            "product__actions-item--loading": loading,
+                        className={classNames('product__actions-item', 'product__actions-item--wishlist', {
+                            'product__actions-item--loading': loading,
                         })}
                         onClick={run}
                     >
@@ -268,8 +280,8 @@ function ShopPageProduct(props: Props) {
                 render={({ run, loading }) => (
                     <button
                         type="button"
-                        className={classNames("product__actions-item", "product__actions-item--compare", {
-                            "product__actions-item--loading": loading,
+                        className={classNames('product__actions-item', 'product__actions-item--compare', {
+                            'product__actions-item--loading': loading,
                         })}
                         onClick={run}
                     >
@@ -304,12 +316,14 @@ function ShopPageProduct(props: Props) {
         <React.Fragment>
             <PageTitle>{product.name}</PageTitle>
 
-            <BlockHeader breadcrumb={breadcrumb} />
+            <BlockHeader
+                breadcrumb={breadcrumb}
+            />
 
-            <div className={classNames("block-split", { "block-split--has-sidebar": layout === "sidebar" })}>
+            <div className={classNames('block-split', { 'block-split--has-sidebar': layout === 'sidebar' })}>
                 <div className="container">
                     <div className="block-split__row row no-gutters">
-                        {layout === "sidebar" && sidebarPosition === "start" && (
+                        {layout === 'sidebar' && sidebarPosition === 'start' && (
                             <div className="block-split__item block-split__item-sidebar col-auto">
                                 <ProductSidebar />
                             </div>
@@ -336,7 +350,7 @@ function ShopPageProduct(props: Props) {
                                                     <Rating value={product.rating || 0} />
                                                 </div>
                                                 <div className="product__rating-label">
-                                                    <AppLink href={{ href: { hash: "product-tab-reviews" } }}>
+                                                    <AppLink href={{ href: { hash: 'product-tab-reviews' } }}>
                                                         <FormattedMessage
                                                             id="TEXT_RATING_LABEL"
                                                             values={{
@@ -352,32 +366,36 @@ function ShopPageProduct(props: Props) {
                                         </div>
                                     </div>
 
-                                    {layout === "full" && (
+                                    {layout === 'full' && (
                                         <div className="product__main">
                                             {product.excerpt && (
-                                                <div className="product__excerpt">{product.excerpt}</div>
+                                                <div className="product__excerpt">
+                                                    {product.excerpt}
+                                                </div>
                                             )}
 
                                             {featuredAttributes.length > 0 && (
                                                 <div className="product__features">
                                                     <div className="product__features-title">
-                                                        <FormattedMessage id="TEXT_KEY_FEATURES" />:
+                                                        <FormattedMessage id="TEXT_KEY_FEATURES" />
+                                                        :
                                                     </div>
                                                     <ul>
                                                         {featuredAttributes.map((attribute, index) => (
                                                             <li key={index}>
                                                                 {attribute.name}
-                                                                {": "}
+                                                                {': '}
                                                                 <span>
                                                                     {attribute.values
                                                                         .map((value) => value.name)
-                                                                        .join(", ")}
+                                                                        .join(', ')}
                                                                 </span>
                                                             </li>
                                                         ))}
+
                                                     </ul>
                                                     <div className="product__features-link">
-                                                        <AppLink href={{ href: { hash: "product-tab-specification" } }}>
+                                                        <AppLink href={{ href: { hash: 'product-tab-specification' } }}>
                                                             <FormattedMessage id="LINK_SEE_FULL_SPECIFICATION" />
                                                         </AppLink>
                                                     </div>
@@ -417,15 +435,15 @@ function ShopPageProduct(props: Props) {
                                     <BlockSpace layout="divider-nl" />
 
                                     <BlockProductsCarousel
-                                        blockTitle={intl.formatMessage({ id: "HEADER_RELATED_PRODUCTS" })}
+                                        blockTitle={intl.formatMessage({ id: 'HEADER_RELATED_PRODUCTS' })}
                                         products={relatedProducts}
-                                        layout={layout === "sidebar" ? "grid-4-sidebar" : "grid-5"}
+                                        layout={layout === 'sidebar' ? 'grid-4-sidebar' : 'grid-5'}
                                     />
                                 </React.Fragment>
                             )}
                         </div>
 
-                        {layout === "sidebar" && sidebarPosition === "end" && (
+                        {layout === 'sidebar' && sidebarPosition === 'end' && (
                             <div className="block-split__item block-split__item-sidebar col-auto">
                                 <ProductSidebar />
                             </div>

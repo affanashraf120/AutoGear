@@ -1,29 +1,18 @@
 // application
 import { AppAction } from '~/store/types';
 import { IProduct } from '~/interfaces/product';
-import { ICarPost } from '~/interfaces/custom/car';
 
 export const WISHLIST_ADD_ITEM = 'WISHLIST_ADD_ITEM';
 export const WISHLIST_REMOVE_ITEM = 'WISHLIST_REMOVE_ITEM';
 
-// export interface WishlistAddItemAction {
-//     type: typeof WISHLIST_ADD_ITEM;
-//     product: IProduct;
-// }
-
-// export interface WishlistRemoveItemAction {
-//     type: typeof WISHLIST_REMOVE_ITEM;
-//     productId: number;
-// }
-
 export interface WishlistAddItemAction {
     type: typeof WISHLIST_ADD_ITEM;
-    product: ICarPost;
+    product: IProduct;
 }
 
 export interface WishlistRemoveItemAction {
     type: typeof WISHLIST_REMOVE_ITEM;
-    productId: string;
+    productId: number;
 }
 
 export type WishlistAction =

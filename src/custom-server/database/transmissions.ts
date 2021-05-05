@@ -1,4 +1,4 @@
-import { Transmission } from "~/interfaces/custom/car";
+import { Transmission } from "~/interfaces/product";
 
 export const transmissions: Transmission[] = [
     {

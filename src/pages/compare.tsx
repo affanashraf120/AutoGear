@@ -1,28 +1,28 @@
 // react
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState } from "react";
 // third-party
-import classNames from 'classnames';
-import { FormattedMessage, useIntl } from 'react-intl';
+import classNames from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
 // application
-import AppImage from '~/components/shared/AppImage';
-import AppLink from '~/components/shared/AppLink';
-import AsyncAction from '~/components/shared/AsyncAction';
-import BlockHeader from '~/components/blocks/BlockHeader';
-import BlockSpace from '~/components/blocks/BlockSpace';
-import CurrencyFormat from '~/components/shared/CurrencyFormat';
-import PageTitle from '~/components/shared/PageTitle';
-import Rating from '~/components/shared/Rating';
-import StockStatusBadge from '~/components/shared/StockStatusBadge';
-import url from '~/services/url';
-import { IProductAttributeValue } from '~/interfaces/product';
-import { useCartAddItem } from '~/store/cart/cartHooks';
-import { useCompare, useCompareClear, useCompareRemoveItem } from '~/store/compare/compareHooks';
+import AppImage from "~/components/shared/AppImage";
+import AppLink from "~/components/shared/AppLink";
+import AsyncAction from "~/components/shared/AsyncAction";
+import BlockHeader from "~/components/blocks/BlockHeader";
+import BlockSpace from "~/components/blocks/BlockSpace";
+import CurrencyFormat from "~/components/shared/CurrencyFormat";
+import PageTitle from "~/components/shared/PageTitle";
+import Rating from "~/components/shared/Rating";
+import StockStatusBadge from "~/components/shared/StockStatusBadge";
+import url from "~/services/url";
+import { IProductAttributeValue } from "~/interfaces/product";
+import { useCartAddItem } from "~/store/cart/cartHooks";
+import { useCompare, useCompareClear, useCompareRemoveItem } from "~/store/compare/compareHooks";
 
 interface Attribute {
     slug: string;
     name: string;
     sameValues: boolean;
-    values: {[productId: number]: IProductAttributeValue[]};
+    values: { [productId: number]: IProductAttributeValue[] };
 }
 
 function Page() {
@@ -32,53 +32,57 @@ function Page() {
     const cartAddItem = useCartAddItem();
     const compareRemoveItem = useCompareRemoveItem();
     const products = compare.items;
-    const [show, setShow] = useState('all');
+    const [show, setShow] = useState("all");
 
     const attributes: Attribute[] = useMemo(() => {
         const attributes: Attribute[] = [];
 
-        products.forEach((product) => product.attributes.forEach((pa) => {
-            let attribute = attributes.find((x) => x.slug === pa.slug);
+        products.forEach((product) =>
+            product.attributes?.forEach((pa) => {
+                let attribute = attributes.find((x) => x.slug === pa.slug);
 
-            if (!attribute) {
-                attribute = {
-                    slug: pa.slug,
-                    name: pa.name,
-                    sameValues: false,
-                    values: {},
-                };
+                if (!attribute) {
+                    attribute = {
+                        slug: pa.slug,
+                        name: pa.name,
+                        sameValues: false,
+                        values: {},
+                    };
 
-                attributes.push(attribute);
-            }
+                    attributes.push(attribute);
+                }
 
-            attribute.values[product.id] = pa.values;
-        }));
+                attribute.values[product.id] = pa.values;
+            })
+        );
 
         for (let i = 0; i < attributes.length; i += 1) {
             const attribute = attributes[i];
-            const values = products.map((product) => (
-                (attribute.values[product.id] || []).map((x) => x.slug).sort()
-            ));
+            const values = products.map((product) => (attribute.values[product.id] || []).map((x) => x.slug).sort());
 
-            attribute.sameValues = values.reduce<boolean>((sameValues, curr) => (
-                sameValues && (values[0].length === curr.length && values[0].join() === curr.join())
-            ), true);
+            attribute.sameValues = values.reduce<boolean>(
+                (sameValues, curr) =>
+                    sameValues && values[0].length === curr.length && values[0].join() === curr.join(),
+                true
+            );
         }
 
         return attributes;
     }, [products]);
     const differentAttributes = useMemo(() => attributes.filter((x) => !x.sameValues), [attributes]);
-    const currentAttributes = show === 'all' ? attributes : differentAttributes;
+    const currentAttributes = show === "all" ? attributes : differentAttributes;
 
     if (compare.items.length === 0) {
+        console.log("***Compare items***");
+        console.log(compare.items);
         return (
             <React.Fragment>
-                <PageTitle>{intl.formatMessage({ id: 'HEADER_COMPARE' })}</PageTitle>
+                <PageTitle>{intl.formatMessage({ id: "HEADER_COMPARE" })}</PageTitle>
 
                 <BlockHeader
                     breadcrumb={[
-                        { title: intl.formatMessage({ id: 'LINK_HOME' }), url: '/' },
-                        { title: intl.formatMessage({ id: 'LINK_COMPARE' }), url: '' },
+                        { title: intl.formatMessage({ id: "LINK_HOME" }), url: "/" },
+                        { title: intl.formatMessage({ id: "LINK_COMPARE" }), url: "" },
                     ]}
                 />
 
@@ -91,7 +95,7 @@ function Page() {
                             <div
                                 className="block-empty__message"
                                 dangerouslySetInnerHTML={{
-                                    __html: intl.formatMessage({ id: 'HEADER_COMPARE_EMPTY_SUBTITLE' }),
+                                    __html: intl.formatMessage({ id: "HEADER_COMPARE_EMPTY_SUBTITLE" }),
                                 }}
                             />
                             <div className="block-empty__action">
@@ -122,9 +126,7 @@ function Page() {
                                     <AppImage className="image__tag" src={product.images && product.images[0]} />
                                 </div>
                             </div>
-                            <div className="compare-table__product-name">
-                                {product.name}
-                            </div>
+                            <div className="compare-table__product-name">{product.name}</div>
                         </AppLink>
                     </td>
                 ))}
@@ -157,10 +159,7 @@ function Page() {
                 </th>
                 {compare.items.map((product) => (
                     <td key={product.id} className="compare-table__column compare-table__column--product">
-                        <StockStatusBadge
-                            stock={product.stock}
-                            className="product__stock"
-                        />
+                        <StockStatusBadge stock={product.stock} className="product__stock" />
                     </td>
                 ))}
                 <td className="compare-table__column compare-table__column--fake" />
@@ -189,8 +188,8 @@ function Page() {
                             render={({ run, loading }) => (
                                 <button
                                     type="button"
-                                    className={classNames('btn btn-sm btn-primary', {
-                                        'btn-loading': loading,
+                                    className={classNames("btn btn-sm btn-primary", {
+                                        "btn-loading": loading,
                                     })}
                                     onClick={run}
                                 >
@@ -215,15 +214,12 @@ function Page() {
             </tr>
             {currentAttributes.map((attribute, index) => (
                 <tr key={index} className="compare-table__row">
-                    <th className="compare-table__column compare-table__column--header">
-                        {attribute.name}
-                    </th>
+                    <th className="compare-table__column compare-table__column--header">{attribute.name}</th>
                     {compare.items.map((product) => (
                         <td key={product.id} className="compare-table__column compare-table__column--product">
-                            {attribute.values[product.id]?.length > 0 && (
-                                attribute.values[product.id].map((value) => value.name).join(', ')
-                            )}
-                            {attribute.values[product.id]?.length === 0 && '—'}
+                            {attribute.values[product.id]?.length > 0 &&
+                                attribute.values[product.id].map((value) => value.name).join(", ")}
+                            {attribute.values[product.id]?.length === 0 && "—"}
                         </td>
                     ))}
                     <td className="compare-table__column compare-table__column--fake" />
@@ -242,8 +238,8 @@ function Page() {
                             render={({ run, loading }) => (
                                 <button
                                     type="button"
-                                    className={classNames('btn', 'btn-sm', 'btn-secondary', {
-                                        'btn-loading': loading,
+                                    className={classNames("btn", "btn-sm", "btn-secondary", {
+                                        "btn-loading": loading,
                                     })}
                                     onClick={run}
                                 >
@@ -260,13 +256,13 @@ function Page() {
 
     return (
         <React.Fragment>
-            <PageTitle>{intl.formatMessage({ id: 'HEADER_COMPARE' })}</PageTitle>
+            <PageTitle>{intl.formatMessage({ id: "HEADER_COMPARE" })}</PageTitle>
 
             <BlockHeader
                 pageTitle={<FormattedMessage id="HEADER_COMPARE" />}
                 breadcrumb={[
-                    { title: intl.formatMessage({ id: 'LINK_HOME' }), url: '/' },
-                    { title: intl.formatMessage({ id: 'LINK_COMPARE' }), url: '' },
+                    { title: intl.formatMessage({ id: "LINK_HOME" }), url: "/" },
+                    { title: intl.formatMessage({ id: "LINK_COMPARE" }), url: "" },
                 ]}
             />
 
@@ -276,8 +272,7 @@ function Page() {
                         <div className="compare__options-list">
                             <div className="compare__option">
                                 <div className="compare__option-label">
-                                    <FormattedMessage id="INPUT_SHOW_LABEL" />
-                                    :
+                                    <FormattedMessage id="INPUT_SHOW_LABEL" />:
                                 </div>
                                 <div className="compare__option-control">
                                     <div className="button-toggle">
@@ -288,8 +283,8 @@ function Page() {
                                                     className="button-toggle__input"
                                                     name="compare-filter"
                                                     value="all"
-                                                    checked={show === 'all'}
-                                                    onChange={() => setShow('all')}
+                                                    checked={show === "all"}
+                                                    onChange={() => setShow("all")}
                                                 />
                                                 <span className="button-toggle__button">
                                                     <FormattedMessage id="INPUT_SHOW_OPTION_ALL" />
@@ -301,8 +296,8 @@ function Page() {
                                                     className="button-toggle__input"
                                                     name="compare-filter"
                                                     value="different"
-                                                    checked={show === 'different'}
-                                                    onChange={() => setShow('different')}
+                                                    checked={show === "different"}
+                                                    onChange={() => setShow("different")}
                                                 />
                                                 <span className="button-toggle__button">
                                                     <FormattedMessage id="INPUT_SHOW_OPTION_DIFFERENT" />
@@ -319,8 +314,8 @@ function Page() {
                                         render={({ run, loading }) => (
                                             <button
                                                 type="button"
-                                                className={classNames('btn', 'btn-secondary', 'btn-xs', {
-                                                    'btn-loading': loading,
+                                                className={classNames("btn", "btn-secondary", "btn-xs", {
+                                                    "btn-loading": loading,
                                                 })}
                                                 onClick={run}
                                             >
@@ -328,15 +323,12 @@ function Page() {
                                             </button>
                                         )}
                                     />
-
                                 </div>
                             </div>
                         </div>
 
                         <div className="table-responsive">
-                            <table className="compare__table compare-table">
-                                {tbody}
-                            </table>
+                            <table className="compare__table compare-table">{tbody}</table>
                         </div>
                     </div>
                 </div>

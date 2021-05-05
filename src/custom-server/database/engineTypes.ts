@@ -1,4 +1,4 @@
-import { EngineType } from "~/interfaces/custom/car";
+import { EngineType } from "~/interfaces/product";
 
 export const engineTypes: EngineType[] = [
     {

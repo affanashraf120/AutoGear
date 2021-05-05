@@ -57,10 +57,14 @@ function BlockSale(props: Props) {
             <div className="block-sale__content">
                 <div className="block-sale__header">
                     <div className="block-sale__title">
-                        <FormattedMessage id="HEADER_DEAL_ZONE_TITLE" />
+                        {/* <FormattedMessage id="HEADER_DEAL_ZONE_TITLE" />
+                         */}
+                         Car Auction
                     </div>
                     <div className="block-sale__subtitle">
-                        <FormattedMessage id="HEADER_DEAL_ZONE_SUBTITLE" />
+                        {/* <FormattedMessage id="HEADER_DEAL_ZONE_SUBTITLE" />
+                         */}
+                         Place your bid to win
                     </div>
                     <div className="block-sale__timer">
                         <Timer time={3 * 24 * 60 * 60} />
@@ -73,7 +77,8 @@ function BlockSale(props: Props) {
                         />
                         <div className="block-sale__link">
                             <AppLink href="/">
-                                <FormattedMessage id="LINK_VIEW_ALL_AVAILABLE_OFFERS" />
+                                {/* <FormattedMessage id="LINK_VIEW_ALL_AVAILABLE_OFFERS" /> */}
+                                View all auction cars here
                             </AppLink>
                         </div>
                         <Arrow
@@ -85,7 +90,7 @@ function BlockSale(props: Props) {
                     </div>
                 </div>
                 <div className="block-sale__body">
-                    <Decor type="bottom" className="block-sale__body-decor" />
+                    {/* <Decor type="bottom" className="block-sale__body-decor" /> */}
                     <div
                         className="block-sale__image"
                         style={{ backgroundImage: `url(${baseUrl('/images/sale.jpg')})` }}

@@ -5,7 +5,9 @@ const DesktopLogo = () => {
     return (
         <React.Fragment>
             {/* <img src=""/> */}
-            <AutoGearDesktop />
+            {/* <AutoGearDesktop />
+             */}
+             <img src="/images/autogear.png" alt="AutoGear Logo" width="200" />
         </React.Fragment>
     );
 };

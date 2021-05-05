@@ -8,24 +8,8 @@ import {
     COMPARE_REMOVE_ITEM,
     CompareAction,
 } from '~/store/compare/compareActionTypes';
-import { ICarPost } from '~/interfaces/custom/car';
 
-// function addItem(state: ICompareState, product: IProduct): ICompareState {
-//     const itemIndex = state.items.findIndex((x) => x.id === product.id);
-
-//     if (itemIndex === -1) {
-//         return {
-//             items: [
-//                 ...state.items,
-//                 JSON.parse(JSON.stringify(product)),
-//             ],
-//         };
-//     }
-
-//     return state;
-// }
-
-function addItem(state: ICompareState, product: ICarPost): ICompareState {
+function addItem(state: ICompareState, product: IProduct): ICompareState {
     const itemIndex = state.items.findIndex((x) => x.id === product.id);
 
     if (itemIndex === -1) {
@@ -40,13 +24,7 @@ function addItem(state: ICompareState, product: ICarPost): ICompareState {
     return state;
 }
 
-// function removeItem(state: ICompareState, productId: number): ICompareState {
-//     return {
-//         items: state.items.filter((x) => x.id !== productId),
-//     };
-// }
-
-function removeItem(state: ICompareState, productId: string): ICompareState {
+function removeItem(state: ICompareState, productId: number): ICompareState {
     return {
         items: state.items.filter((x) => x.id !== productId),
     };
