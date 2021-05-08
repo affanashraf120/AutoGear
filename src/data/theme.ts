@@ -6,10 +6,10 @@ const theme = {
         profile_url: "",
     },
     contacts: {
-        address: ["Lahore, Punjab, Pakistan"],
+        address: ["Nawaz Sharif Colony, Lahore, Punjab, Pakistan"],
         email: ["autogear.pk"],
         phone: ["+92-313-4371392"],
-        hours: ["Mon-Sat 10:00pm - 7:00pm"],
+        hours: ["Mon-Fri 8:00am-8pm"],
     },
 };
 

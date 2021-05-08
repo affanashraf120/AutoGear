@@ -19,10 +19,10 @@ export function Footer() {
             <div className="site-footer__widgets">
                 <div className="container">
                     <div className="row">
-                        <div className="col-12 col-xl-4">
+                        <div className="col-12 col-md-6 col-xl-6">
                             <FooterContacts className="site-footer__widget" />
                         </div>
-                        <div className="col-6 col-md-3 col-xl-2">
+                        {/* <div className="col-6 col-md-3 col-xl-2">
                             <FooterLinks
                                 className="site-footer__widget"
                                 header={<FormattedMessage id="HEADER_INFORMATION" />}
@@ -36,8 +36,8 @@ export function Footer() {
                                     { title: <FormattedMessage id="LINK_SITE_MAP" /> },
                                 ]}
                             />
-                        </div>
-                        <div className="col-6 col-md-3 col-xl-2">
+                        </div> */}
+                        {/* <div className="col-6 col-md-3 col-xl-2">
                             <FooterLinks
                                 className="site-footer__widget"
                                 header={<FormattedMessage id="HEADER_MY_ACCOUNT" />}
@@ -51,8 +51,8 @@ export function Footer() {
                                     { title: <FormattedMessage id="LINK_AFFILIATE" /> },
                                 ]}
                             />
-                        </div>
-                        <div className="col-12 col-md-6 col-xl-4">
+                        </div> */}
+                        <div className="col-12 col-md-6 col-xl-6">
                             <FooterNewsletter className="site-footer__widget" />
                         </div>
                     </div>
