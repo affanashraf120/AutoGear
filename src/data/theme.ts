@@ -3,6 +3,7 @@ const theme = {
     url: "#",
     author: {
         name: "Muhammad Affan Ashraf",
+        designer:"Muhammad Talha Ashraf",
         profile_url: "",
     },
     contacts: {
