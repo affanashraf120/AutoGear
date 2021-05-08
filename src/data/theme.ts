@@ -2,7 +2,7 @@ const theme = {
     name: "AutoGear",
     url: "#",
     author: {
-        name: "Affan & Talha",
+        name: "Muhammad Affan Ashraf",
         profile_url: "",
     },
     contacts: {
