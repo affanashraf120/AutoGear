@@ -18,7 +18,15 @@ export const mobileMenu: IMobileMenuLink[] = [
         url: "/compare",
     },
     {
-        title: "WishList",
-        url: "/wishlist",
+        title: "Contact Us",
+        url: "/contact-us",
+    },
+    {
+        title: "Latest News",
+        url: "/news",
+    },
+    {
+        title: "FAQ",
+        url: "/faq",
     },
 ];

@@ -23,7 +23,7 @@ function Page() {
 
     return (
         <div className="card">
-            <PageTitle>{intl.formatMessage({ id: 'HEADER_GARAGE' })}</PageTitle>
+            <PageTitle>My Cars</PageTitle>
 
             {vehicles.length > 0 && (
                 <React.Fragment>
@@ -35,7 +35,7 @@ function Page() {
                     <div className="card-body card-body--padding--2">
                         <div className="vehicles-list vehicles-list--layout--account">
                             <div className="vehicles-list__body">
-                                {vehicles.map((vehicle, index) => (
+                                {/* {vehicles.map((vehicle, index) => (
                                     <div key={index} className="vehicles-list__item">
                                         <div className="vehicles-list__item-info">
                                             <div className="vehicles-list__item-name">
@@ -55,7 +55,7 @@ function Page() {
                                                         },
                                                     })}
                                                 >
-                                                    <FormattedMessage id="LINK_SHOW_PARTS" />
+                                                    Show Product
                                                 </AppLink>
                                             </div>
                                         </div>
@@ -74,7 +74,7 @@ function Page() {
                                             )}
                                         />
                                     </div>
-                                ))}
+                                ))} */}
                             </div>
                         </div>
                     </div>
@@ -82,12 +82,12 @@ function Page() {
                 </React.Fragment>
             )}
 
-            <div className="card-header">
+            {/* <div className="card-header">
                 <h5><FormattedMessage id="HEADER_ADD_VEHICLE" /></h5>
             </div>
-            <div className="card-divider" />
+            <div className="card-divider" /> */}
 
-            <div className="card-body card-body--padding--2">
+            {/* <div className="card-body card-body--padding--2">
                 <VehicleForm location="account" onVehicleChange={setVehicle} />
 
                 <div className="mt-4 pt-3">
@@ -107,7 +107,7 @@ function Page() {
                         )}
                     />
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

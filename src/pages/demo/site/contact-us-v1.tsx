@@ -36,11 +36,11 @@ function Page() {
 
                                         <div className="contact-us__address">
                                             <p>
-                                                715 Fake Ave, Apt. 34, New York, NY 10021 USA
+                                            Nawaz Sharif Colony, Lahore, Punjab, Pakistan
                                                 <br />
                                                 {`Email: ${theme.contacts.email[0]}`}
                                                 <br />
-                                                Phone Number: +1 754 000-00-00
+                                                Phone Number: +92-313-4371392
                                             </p>
 
                                             <p>
@@ -57,10 +57,7 @@ function Page() {
 
                                                 <strong>Comment</strong>
                                                 <br />
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-                                                suscipit suscipit mi, non
-                                                tempor nulla finibus eget. Lorem ipsum dolor sit amet, consectetur
-                                                adipiscing elit.
+                                                If you wanna buy, sell or want to become trusted dealer contact us.
                                             </p>
                                         </div>
                                     </div>

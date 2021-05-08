@@ -161,7 +161,7 @@ function Page() {
                                         >
                                             <CurrencyFormat value={product.price} />
                                         </td>
-                                        <td
+                                        {/* <td
                                             className={classNames(
                                                 'wishlist__column',
                                                 'wishlist__column--body',
@@ -182,7 +182,7 @@ function Page() {
                                                     </button>
                                                 )}
                                             />
-                                        </td>
+                                        </td> */}
                                         <td
                                             className={classNames(
                                                 'wishlist__column',

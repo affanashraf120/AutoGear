@@ -19,6 +19,7 @@ import { useCart } from '~/store/cart/cartHooks';
 import { useOptions } from '~/store/options/optionsHooks';
 import { useUser } from '~/store/user/userHooks';
 import { useWishlist } from '~/store/wishlist/wishlistHooks';
+import { useCompare } from '~/store/compare/compareHooks';
 
 function Header() {
     const user = useUser();
@@ -39,6 +40,7 @@ function Header() {
     const cart = useCart();
     const cartIndicatorLabel = <FormattedMessage id="TEXT_INDICATOR_CART_LABEL" />;
     const cartIndicatorCtrl = useRef<IIndicatorController | null>(null);
+    const compare = useCompare()
 
     return (
         <div className="header">
@@ -63,7 +65,7 @@ function Header() {
                     </div>
                 </React.Fragment>
             )} */}
-
+    
             <div className="header__navbar">
                 {/* <div className="header__navbar-departments">
                     <Departments label={departmentsLabel} />

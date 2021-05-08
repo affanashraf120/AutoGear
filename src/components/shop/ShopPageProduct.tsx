@@ -226,37 +226,37 @@ function ShopPageProduct(props: Props) {
 
     const productActions = (
         <div className="product__actions">
-            {product.stock !== 'out-of-stock' && (
-                <React.Fragment>
-                    <div className="product__actions-item product__actions-item--quantity">
-                        <Controller
-                            name="quantity"
-                            rules={{
-                                required: true,
-                            }}
-                            render={({ value, onChange, onBlur }) => (
-                                <InputNumber
-                                    size="lg"
-                                    min={1}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
-                        />
-                    </div>
-                    <div className="product__actions-item product__actions-item--addtocart">
-                        <button
-                            type="submit"
-                            className={classNames('btn', 'btn-primary', 'btn-lg', 'btn-block', {
-                                'btn-loading': productForm.submitInProgress,
-                            })}
-                        >
-                            <FormattedMessage id="BUTTON_ADD_TO_CART" />
-                        </button>
-                    </div>
-                    <div className="product__actions-divider" />
-                </React.Fragment>
+            {product.stock !== 'out-of-stock' && ( null
+                // <React.Fragment>
+                //     <div className="product__actions-item product__actions-item--quantity">
+                //         <Controller
+                //             name="quantity"
+                //             rules={{
+                //                 required: true,
+                //             }}
+                //             render={({ value, onChange, onBlur }) => (
+                //                 <InputNumber
+                //                     size="lg"
+                //                     min={1}
+                //                     value={value}
+                //                     onChange={onChange}
+                //                     onBlur={onBlur}
+                //                 />
+                //             )}
+                //         />
+                //     </div>
+                //     <div className="product__actions-item product__actions-item--addtocart">
+                //         <button
+                //             type="submit"
+                //             className={classNames('btn', 'btn-primary', 'btn-lg', 'btn-block', {
+                //                 'btn-loading': productForm.submitInProgress,
+                //             })}
+                //         >
+                //             <FormattedMessage id="BUTTON_ADD_TO_CART" />
+                //         </button>
+                //     </div>
+                //     <div className="product__actions-divider" />
+                // </React.Fragment>
             )}
             <AsyncAction
                 action={() => wishlistAddItem(product)}
@@ -408,14 +408,14 @@ function ShopPageProduct(props: Props) {
                                         <FormProvider {...productForm.methods}>
                                             <form onSubmit={productForm.submit} className="product__info-card">
                                                 {productInfoBody}
-
+{/* 
                                                 {product.options.length > 0 && (
                                                     <ProductForm
                                                         options={product.options}
                                                         className="product__form"
                                                         namespace="options"
                                                     />
-                                                )}
+                                                )} */}
 
                                                 {productActions}
 

@@ -18,8 +18,20 @@ const navItems: IMainMenuLink[] = [
         url: "/compare",
     },
     {
-        title: "WishList",
-        url: "/wishlist",
+        title: "News",
+        url: "/news",
+    },
+    {
+        title: "Contact Us",
+        url: "/contact-us",
+    },
+    {
+        title: "About Us",
+        url: "/about-us",
+    },
+    {
+        title: "FAQ",
+        url: "/faq",
     },
 ];
 

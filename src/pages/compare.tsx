@@ -175,7 +175,7 @@ function Page() {
                 ))}
                 <td className="compare-table__column compare-table__column--fake" />
             </tr>
-            <tr className="compare-table__row">
+            {/* <tr className="compare-table__row">
                 <th className="compare-table__column compare-table__column--header">
                     <span className="sr-only">
                         <FormattedMessage id="TABLE_ADD_TO_CART" />
@@ -200,7 +200,7 @@ function Page() {
                     </td>
                 ))}
                 <td className="compare-table__column compare-table__column--fake" />
-            </tr>
+            </tr> */}
             <tr className="compare-table__row">
                 <th className="compare-table__column compare-table__column--header">
                     <FormattedMessage id="TABLE_SKU" />

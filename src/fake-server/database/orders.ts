@@ -173,7 +173,7 @@ const ordersDef: IOrderDef[] = [
     },
 ];
 
-export const orders: IOrder[] = makeOrders(ordersDef);
+export const orders: IOrder[] = makeOrders([]);
 
 export function getNextOrderNumber(): string {
     return (orders.reduce((prev, curr) => Math.max(prev, parseFloat(curr.number)), 0) + 1).toString();
