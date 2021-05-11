@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 // application
 import { useCurrency } from "~/store/currency/currencyHooks";
 import { ICurrency } from "~/interfaces/currency";
+import { useIntl } from "react-intl";
 
 interface Props {
     value: number;
@@ -13,11 +14,17 @@ function CurrencyFormat(props: Props) {
     const { value, currency: propCurrency } = props;
     const siteCurrency = useCurrency();
     const currency = propCurrency || siteCurrency;
+    const formatter = new Intl.NumberFormat(currency.code, {
+        style: "currency",
+        currency: currency.code,
+        minimumFractionDigits: 0,
+    });
 
     return (
         <React.Fragment>
-            {currency.symbol}
-            {(value * currency.rate).toFixed(0)}
+            {formatter.format(value * currency.rate)}
+            {/* {currency.symbol}
+            {(value * currency.rate).toFixed(0)} */}
         </React.Fragment>
     );
 }

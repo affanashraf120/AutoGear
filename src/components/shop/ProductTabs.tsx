@@ -60,11 +60,6 @@ function ProductTabs(props: Props) {
                 counter: product.reviews,
                 showCounter: typeof product.reviews === "number" && product.reviews > 0,
             },
-            // {
-            //     id: "product-tab-analogs",
-            //     title: intl.formatMessage({ id: "TEXT_TAB_ANALOGS" }),
-            //     content: <AnalogsTable productId={product.id} />,
-            // },
         ],
         [layout, product, spec, intl]
     );

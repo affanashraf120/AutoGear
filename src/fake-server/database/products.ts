@@ -9,10 +9,23 @@ import { IProductAttributesDef, IProductDef } from "~/fake-server/interfaces/pro
 import { makeIdGenerator, nameToSlug } from "~/fake-server/utils";
 import { IBrand } from "~/interfaces/brand";
 import { IShopCategory } from "~/interfaces/category";
-import { IProduct, IProductAttribute } from "~/interfaces/product";
-
+import { IProduct, IProductAttribute, Transaction } from "~/interfaces/product";
 
 const getNextId = makeIdGenerator();
+
+const transactionCash: Transaction = {
+    transactionType: "Cash",
+    flatPrice: 3200000,
+};
+const transactionLeased: Transaction = {
+    transactionType: "Leased",
+    flatPrice: 1200000,
+    leased: {
+        timeInterval: "month",
+        terms: 10,
+        leasedAmount: 100000,
+    },
+};
 
 function resolveProductAttributesDef(attributesDef: IProductAttributesDef): IProductAttribute[] {
     const attributes: IProductAttribute[] = [];
@@ -130,6 +143,7 @@ function makeProducts(defs: IProductDef[]): IProduct[] {
             tags: ["Honda", "ISUZU", "Audi"],
             categories,
             customFields: {},
+            transaction: def.transaction,
         };
     });
 }
@@ -138,8 +152,9 @@ const productsDef: IProductDef[] = [
     {
         name: "Honda City 1.3L",
         slug: "honda-city-1.3l",
+        brand:'honda',
         sku: "140-10441-B",
-        price: 2449000,
+        price: transactionCash.flatPrice,
         images: ["https://www.honda.com.pk/wp-content/uploads/2010/09/city-1.3-720x420.jpg"],
         badges: ["new", "hot"],
         rating: 4,
@@ -149,12 +164,14 @@ const productsDef: IProductDef[] = [
         attributes: {
             Color: "White",
         },
+        transaction: transactionCash,
     },
     {
         name: "Suzuki Cultus",
         slug: "suzuki-cultus",
         sku: "140-10443-z",
-        price: 19,
+        brand: "suzuki",
+        price: transactionLeased.flatPrice,
         images: ["https://propakistani.pk/wp-content/uploads/2017/12/suzuki-cultus-2017-back-view.jpg"],
         badges: ["sale", "new", "hot"],
         rating: 4,
@@ -164,51 +181,55 @@ const productsDef: IProductDef[] = [
         attributes: {
             Color: "White",
         },
+        transaction: transactionLeased,
     },
     {
         name: "Honda Civic",
         slug: "honda-civic",
+        brand:'honda',
         sku: "12-dhd7",
-        price: 3200000,
         images: [
             "https://pictures.dealer.com/h/highcountryhondaglenwoodsprings/1065/49959fc31f9faf05c7e2770e167ee11cx.jpg?impolicy=downsize&w=568",
         ],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand: "Honda",
         attributes: {
             Color: "Metallic Grey",
         },
+        price: transactionCash.flatPrice,
+        transaction: transactionCash,
     },
     {
         name: "Honda Civic",
         slug: "honda-civic1",
         sku: "12-dhd7",
-        price: 3200000,
         images: [
             "https://pictures.dealer.com/h/highcountryhondaglenwoodsprings/1065/49959fc31f9faf05c7e2770e167ee11cx.jpg?impolicy=downsize&w=568",
         ],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand: "Honda",
+        brand:'honda',
         attributes: {
             Color: "Metallic Grey",
         },
+        price: transactionLeased.flatPrice,
+        transaction: transactionLeased,
     },
     {
         name: "Honda Civic",
         slug: "honda-civic2",
         sku: "12-dhd7",
-        price: 3200000,
+        price: transactionCash.flatPrice,
+        transaction: transactionCash,
         images: [
             "https://pictures.dealer.com/h/highcountryhondaglenwoodsprings/1065/49959fc31f9faf05c7e2770e167ee11cx.jpg?impolicy=downsize&w=568",
         ],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand: "Honda",
+        brand:'honda',
         attributes: {
             Color: "Metallic Grey",
         },
@@ -217,30 +238,32 @@ const productsDef: IProductDef[] = [
         name: "Honda Civic",
         slug: "honda-civic3",
         sku: "12-dhd7",
-        price: 3200000,
         images: [
             "https://pictures.dealer.com/h/highcountryhondaglenwoodsprings/1065/49959fc31f9faf05c7e2770e167ee11cx.jpg?impolicy=downsize&w=568",
         ],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand: "Honda",
+        brand:'honda',
         attributes: {
             Color: "Metallic Grey",
         },
+        price: transactionLeased.flatPrice,
+        transaction: transactionLeased,
     },
     {
         name: "Honda Civic",
         slug: "honda-civic4",
         sku: "12-dhd7",
-        price: 3200000,
+        price: transactionCash.flatPrice,
+        transaction: transactionCash,
         images: [
             "https://pictures.dealer.com/h/highcountryhondaglenwoodsprings/1065/49959fc31f9faf05c7e2770e167ee11cx.jpg?impolicy=downsize&w=568",
         ],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand: "Honda",
+        brand:'honda',
         attributes: {
             Color: "Metallic Grey",
         },
@@ -249,30 +272,32 @@ const productsDef: IProductDef[] = [
         name: "Honda Civic",
         slug: "honda-civic5",
         sku: "12-dhd7",
-        price: 3200000,
         images: [
             "https://pictures.dealer.com/h/highcountryhondaglenwoodsprings/1065/49959fc31f9faf05c7e2770e167ee11cx.jpg?impolicy=downsize&w=568",
         ],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand: "Honda",
+        brand:'honda',
         attributes: {
             Color: "Metallic Grey",
         },
+        price: transactionLeased.flatPrice,
+        transaction: transactionLeased,
     },
     {
         name: "Honda Civic",
         slug: "honda-civic6",
         sku: "12-dhd7",
-        price: 3200000,
+        price: transactionCash.flatPrice,
+        transaction: transactionCash,
         images: [
             "https://pictures.dealer.com/h/highcountryhondaglenwoodsprings/1065/49959fc31f9faf05c7e2770e167ee11cx.jpg?impolicy=downsize&w=568",
         ],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand: "Honda",
+        brand:'honda',
         attributes: {
             Color: "Metallic Grey",
         },

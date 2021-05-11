@@ -87,17 +87,17 @@ function Page() {
                                     <th className="wishlist__column wishlist__column--head wishlist__column--product">
                                         <FormattedMessage id="TABLE_PRODUCT" />
                                     </th>
-                                    <th className="wishlist__column wishlist__column--head wishlist__column--stock">
+                                    {/* <th className="wishlist__column wishlist__column--head wishlist__column--stock">
                                         <FormattedMessage id="TABLE_STOCK_STATUS" />
-                                    </th>
+                                    </th> */}
                                     <th className="wishlist__column wishlist__column--head wishlist__column--price">
                                         <FormattedMessage id="TABLE_PRICE" />
                                     </th>
-                                    <th className="wishlist__column wishlist__column--head wishlist__column--button">
+                                    {/* <th className="wishlist__column wishlist__column--head wishlist__column--button">
                                         <span className="sr-only">
                                             <FormattedMessage id="TABLE_ADD_TO_CART" />
                                         </span>
-                                    </th>
+                                    </th> */}
                                     <th className="wishlist__column wishlist__column--head wishlist__column--remove">
                                         <span className="sr-only">
                                             <FormattedMessage id="TABLE_REMOVE" />
@@ -143,7 +143,7 @@ function Page() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td
+                                        {/* <td
                                             className={classNames(
                                                 'wishlist__column',
                                                 'wishlist__column--body',
@@ -151,7 +151,7 @@ function Page() {
                                             )}
                                         >
                                             <StockStatusBadge stock={product.stock} />
-                                        </td>
+                                        </td> */}
                                         <td
                                             className={classNames(
                                                 'wishlist__column',
@@ -161,28 +161,6 @@ function Page() {
                                         >
                                             <CurrencyFormat value={product.price} />
                                         </td>
-                                        {/* <td
-                                            className={classNames(
-                                                'wishlist__column',
-                                                'wishlist__column--body',
-                                                'wishlist__column--button',
-                                            )}
-                                        >
-                                            <AsyncAction
-                                                action={() => cartAddItem(product)}
-                                                render={({ run, loading }) => (
-                                                    <button
-                                                        type="button"
-                                                        className={classNames('btn', 'btn-sm', 'btn-primary', {
-                                                            'btn-loading': loading,
-                                                        })}
-                                                        onClick={run}
-                                                    >
-                                                        <FormattedMessage id="BUTTON_ADD_TO_CART" />
-                                                    </button>
-                                                )}
-                                            />
-                                        </td> */}
                                         <td
                                             className={classNames(
                                                 'wishlist__column',

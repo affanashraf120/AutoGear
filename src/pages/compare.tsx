@@ -155,11 +155,11 @@ function Page() {
             </tr>
             <tr className="compare-table__row">
                 <th className="compare-table__column compare-table__column--header">
-                    <FormattedMessage id="TABLE_STOCK_STATUS" />
+                    Transaction Type
                 </th>
                 {compare.items.map((product) => (
                     <td key={product.id} className="compare-table__column compare-table__column--product">
-                        <StockStatusBadge stock={product.stock} className="product__stock" />
+                        {product.transaction.transactionType}
                     </td>
                 ))}
                 <td className="compare-table__column compare-table__column--fake" />
@@ -171,43 +171,6 @@ function Page() {
                 {compare.items.map((product) => (
                     <td key={product.id} className="compare-table__column compare-table__column--product">
                         <CurrencyFormat value={product.price} />
-                    </td>
-                ))}
-                <td className="compare-table__column compare-table__column--fake" />
-            </tr>
-            {/* <tr className="compare-table__row">
-                <th className="compare-table__column compare-table__column--header">
-                    <span className="sr-only">
-                        <FormattedMessage id="TABLE_ADD_TO_CART" />
-                    </span>
-                </th>
-                {compare.items.map((product) => (
-                    <td key={product.id} className="compare-table__column compare-table__column--product">
-                        <AsyncAction
-                            action={() => cartAddItem(product)}
-                            render={({ run, loading }) => (
-                                <button
-                                    type="button"
-                                    className={classNames("btn btn-sm btn-primary", {
-                                        "btn-loading": loading,
-                                    })}
-                                    onClick={run}
-                                >
-                                    <FormattedMessage id="BUTTON_ADD_TO_CART" />
-                                </button>
-                            )}
-                        />
-                    </td>
-                ))}
-                <td className="compare-table__column compare-table__column--fake" />
-            </tr> */}
-            <tr className="compare-table__row">
-                <th className="compare-table__column compare-table__column--header">
-                    <FormattedMessage id="TABLE_SKU" />
-                </th>
-                {compare.items.map((product) => (
-                    <td key={product.id} className="compare-table__column compare-table__column--product">
-                        {product.sku}
                     </td>
                 ))}
                 <td className="compare-table__column compare-table__column--fake" />

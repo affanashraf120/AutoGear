@@ -1,3 +1,5 @@
+import { Transaction } from "~/interfaces/product";
+
 export interface IProductAttributesDef {
     [slug: string]: string | string[] | [true, string, ...string[]];
 }
@@ -13,8 +15,9 @@ export interface IProductDef {
     rating: number;
     reviews: number;
     availability: string;
-    brand?: string;
+    brand: string;
     categories?: string[];
     attributes?: IProductAttributesDef;
     compatibility?: 'all' | 'unknown' | number[];
+    transaction: Transaction
 }

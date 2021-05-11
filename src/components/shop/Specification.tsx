@@ -27,9 +27,7 @@ function Specification(props: Props) {
                     ))}
                 </div>
             ))}
-            <div className="spec__disclaimer">
-                <FormattedMessage id="TEXT_PRODUCT_DISCLAIMER" />
-            </div>
+           
         </div>
     );
 }

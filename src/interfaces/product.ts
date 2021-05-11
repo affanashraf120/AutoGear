@@ -101,28 +101,29 @@ export interface IProduct {
     attributes: IProductAttribute[];//
     options: IProductOption[]; //
     customFields?: ICustomFields;
+    transaction: Transaction
 }
 
 // Add-ons
 
-export interface ICar {
-    model: string;
-    version?: string;
-    year: Date;
-    mileage: number;
-    assembly: "Local" | "Imported";
-    transmission: Transmission;
-    bodyType: BodyType;
-    colors: string[];
-    engineCapacity: number;
-    engine: EngineType;
-    transaction: Transaction;
-    user: IUser;
-    postedDate: Date;
-    province: string;
-    city: string;
-    registrationCity: string;
-}
+// export interface ICar {
+//     model: string;
+//     version?: string;
+//     year: Date;
+//     mileage: number;
+//     assembly: "Local" | "Imported";
+//     transmission: Transmission;
+//     bodyType: BodyType;
+//     colors: string[];
+//     engineCapacity: number;
+//     engine: EngineType;
+//     transaction: Transaction;
+//     user: IUser;
+//     postedDate: Date;
+//     province: string;
+//     city: string;
+//     registrationCity: string;
+// }
 
 type TransactionType = "Leased" | "Cash";
 
