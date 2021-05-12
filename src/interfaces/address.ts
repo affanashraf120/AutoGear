@@ -1,4 +1,4 @@
-export interface IAddressData {
+export interface IAddressData { 
     firstName: string;
     lastName: string;
     company: string;
