@@ -20,7 +20,7 @@ function Page() {
                         <div
                             className="about__image-bg"
                             style={{
-                                backgroundImage: `url(${baseUrl("/images/about.jpg")})`,
+                                backgroundImage: `url(${baseUrl("/images/about.jpeg")})`,
                             }}
                         />
                         <Decor className="about__image-decor" type="bottom" />
@@ -33,30 +33,23 @@ function Page() {
                             Company started a year ago in a local market. This business enterprise has experienced car
                             dealers who offer customers most ideal choice as per their financial plan and their needs.
                             Their administrations incorporate giving best car survey, most recent updates about cars in
-                            Pakistan. AutoGear have not any electronic means for their services. Now business enterprise
-                            desires to develop their enterprise to throughout Pakistan via Web Application and social
-                            platforms like Facebook, Instagram, and YouTube. AutoGear hired us for their project
-                            development. And we will develop a Web Application for their enterprise which uses the
-                            reverse marketplace model to remove the need for buyers to negotiate with car sellers. Users
-                            choose the car they would like to buy, along with the various specifications and features
-                            and receive offers directly from dealers. And website provides best review for cars via
-                            videos on YouTube channel and integrate with Facebook and Instagram.
+                            Pakistan. 
                         </div>
-                        <div className="about__card-author">Ryan Ford, CEO RedParts</div>
+                        <div className="about__card-author">Affan Ashraf, CEO AutoGear</div>
                         <div className="about__card-signature">
-                            <AppImage src="/images/signature.jpg" width="160" height="55" />
+                            <AppImage src="/images/about.jpeg" width="160" height="55" />
                         </div>
                     </div>
 
                     <div className="about__indicators">
                         <div className="about__indicators-body">
                             <div className="about__indicators-item">
-                                <div className="about__indicators-item-value">350</div>
-                                <div className="about__indicators-item-title">Stores around the world</div>
+                                <div className="about__indicators-item-value">200+</div>
+                                <div className="about__indicators-item-title">Vehicles</div>
                             </div>
                             <div className="about__indicators-item">
-                                <div className="about__indicators-item-value">80 000</div>
-                                <div className="about__indicators-item-title">Original auto parts</div>
+                                <div className="about__indicators-item-value">1000</div>
+                                <div className="about__indicators-item-title">Subscribers</div>
                             </div>
                             <div className="about__indicators-item">
                                 <div className="about__indicators-item-value">5 000</div>
@@ -71,9 +64,9 @@ function Page() {
 
             <BlockTeammates />
 
-            <BlockSpace layout="divider-xl" />
+            {/* <BlockSpace layout="divider-xl" />
 
-            <BlockReviews />
+            <BlockReviews /> */}
 
             <BlockSpace layout="before-footer" />
         </React.Fragment>

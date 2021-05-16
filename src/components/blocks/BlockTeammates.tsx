@@ -1,10 +1,10 @@
 // react
-import React from 'react';
+import React from "react";
 // application
-import AppImage from '~/components/shared/AppImage';
-import AppSlick, { ISlickProps } from '~/components/shared/AppSlick';
+import AppImage from "~/components/shared/AppImage";
+import AppSlick, { ISlickProps } from "~/components/shared/AppSlick";
 // data
-import dataSiteTeammates from '~/data/siteTeammates';
+import dataSiteTeammates from "~/data/siteTeammates";
 
 const slickSettings: ISlickProps = {
     dots: true,
@@ -52,7 +52,8 @@ function BlockTeammates() {
                 <div className="block-teammates__title">Professional Team</div>
                 <div className="block-teammates__subtitle">Meet this is our professional team.</div>
                 <div className="block-teammates__list">
-                    <AppSlick {...slickSettings}>
+                    {/* <AppSlick {...slickSettings}> */}
+                    <div style={{ display: "flex" }}>
                         {dataSiteTeammates.map((teammate, index) => (
                             <div key={index} className="block-teammates__item teammate">
                                 <div className="teammate__avatar">
@@ -64,7 +65,8 @@ function BlockTeammates() {
                                 </div>
                             </div>
                         ))}
-                    </AppSlick>
+                    </div>
+                    {/* </AppSlick> */}
                 </div>
             </div>
         </div>
