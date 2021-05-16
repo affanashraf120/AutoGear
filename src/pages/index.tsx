@@ -146,13 +146,14 @@ function Page() {
     return (
         <React.Fragment>
             <BlockFinder />
-            {/* <BlockSpace layout="divider-xs" /> */}
-            {/* <BlockSlideshow slides={slides} /> */}
+            
             {/* <HeroHeader/> */}
             <BlockSpace layout="divider-nl" />
             <BlockFeatures layout="top-strip" />
             <BlockSpace layout="divider-nl" />
             <BlockBrands layout="columns-8-full" brands={brands} />
+            <BlockSpace layout="divider-xs" />
+            <BlockSlideshow slides={slides} />
             <BlockSpace layout="divider-nl" />
             <BlockProductsCarousel
                 blockTitle={intl.formatMessage({ id: "HEADER_FEATURED_PRODUCTS" })}
@@ -180,8 +181,8 @@ function Page() {
                 </React.Fragment>
             ))} */}
 
-            {/* <BlockSpace layout="divider-nl" /> */}
-            {/* <BlockBanners /> */}
+            <BlockSpace layout="divider-nl" />
+            <BlockBanners />
             {/* <BlockSpace layout="divider-nl" /> */}
             {/* <BlockProductsCarousel
                 blockTitle={intl.formatMessage({ id: 'HEADER_NEW_ARRIVALS' })}

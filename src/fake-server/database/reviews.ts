@@ -8,29 +8,25 @@ export const reviews: IReview[] = [
     {
         id: getNextReviewId(),
         date: '2018-05-27',
-        author: 'Samantha Smith',
-        avatar: '/images/avatars/avatar-1.jpg',
+        author: 'Aslam',
+        avatar: '/images/avatars/avatar.jpeg',
         rating: 4,
-        content: `Phasellus id mattis nulla. Mauris velit nisi, imperdiet vitae sodales in, maximus ut lectus. Vivamus
-                  commodo scelerisque lacus, at porttitor dui iaculis id. Curabitur imperdiet ultrices fermentum.`,
+        content: `Honda civic is good model. And used for 10 years.`,
     },
     {
         id: getNextReviewId(),
         date: '2018-04-12',
-        author: 'Adam Taylor',
-        avatar: '/images/avatars/avatar-2.jpg',
+        author: 'Bilal',
+        avatar: '/images/avatars/avatar.jpeg',
         rating: 3,
-        content: `Aenean non lorem nisl. Duis tempor sollicitudin orci, eget tincidunt ex semper sit amet. Nullam neque
-                  justo, sodales congue feugiat ac, facilisis a augue. Donec tempor sapien et fringilla facilisis. Nam
-                  maximus consectetur diam. Nulla ut ex mollis, volutpat tellus vitae, accumsan ligula.`,
+        content: `Nice`,
     },
     {
         id: getNextReviewId(),
         date: '2018-01-02',
-        author: 'Helena Garcia',
-        avatar: '/images/avatars/avatar-3.jpg',
+        author: 'Hira',
+        avatar: '/images/avatars/female-avatar.jpeg',
         rating: 5,
-        content: `Duis ac lectus scelerisque quam blandit egestas. Pellentesque hendrerit eros laoreet suscipit
-                  ultrices.`,
+        content: `Amazing 😻 `,
     },
 ];

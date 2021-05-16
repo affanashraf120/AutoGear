@@ -46,7 +46,7 @@ function PostCard(props: Props) {
                 </div>
                 <div className="post-card__date">
                     {' By '}
-                    <AppLink href="/">Jessica Moore</AppLink>
+                    <AppLink href="/">Affan Ashraf</AppLink>
                     {' on '}
                     {post.date}
                 </div>

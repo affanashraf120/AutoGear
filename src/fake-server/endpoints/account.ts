@@ -4,13 +4,13 @@ import { IEditProfileData } from '~/api/base';
 import { IUser } from '~/interfaces/user';
 
 export function accountSignIn(email: string, password: string): Promise<IUser> {
-    if (email === 'red-parts@example.com' && password === '123456') {
+    if (email === 'affan@gmail.com' && password === '123456') {
         const user: IUser = {
-            email: 'red-parts@example.com',
+            email: 'affan@gmail.com',
             phone: '38 972 588-42-36',
-            firstName: 'Ryan',
-            lastName: 'Ford',
-            avatar: '//www.gravatar.com/avatar/bde30b7dd579b3c9773f80132523b4c3?d=mp&s=88',
+            firstName: 'Affan',
+            lastName: 'Ashraf',
+            avatar: '/images/avatars/avatar.jpeg',
         };
 
         return delayResponse(Promise.resolve(user));

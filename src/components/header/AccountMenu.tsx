@@ -119,6 +119,7 @@ function AccountMenu(props: Props) {
                     </div>
                 </form>
             )}
+            
             {user !== null && (
                 <React.Fragment>
                     <AppLink href={url.accountDashboard()} className="account-menu__user" onClick={onCloseMenu}>
