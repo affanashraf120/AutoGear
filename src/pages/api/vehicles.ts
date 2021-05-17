@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case "GET":
             try {
                 const vehicles = await Vehicle.find({});
-                res.status(400).json({ success: false, data: [...vehicles] });
+                res.status(202).json({ success: true, vehicles });
             } catch (error) {
                 res.status(400).json({ success: false });
             }

@@ -19,4 +19,4 @@ const vehicleSchema = new mongoose.Schema({
     }
 })
 
-export default mongoose.model('Vehicle', vehicleSchema)
+export default mongoose.models.Vehicle || mongoose.model('Vehicle', vehicleSchema)
