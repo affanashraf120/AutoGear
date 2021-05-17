@@ -10,6 +10,9 @@ import { IPost } from "~/interfaces/post";
 import { IProduct } from "~/interfaces/product";
 
 const url = {
+    //Admin
+    addVehicle: () => "/admin/add-vehicle",
+    vehicles: () => "/admin/vehicles",
     // common
     home: () => "/",
     category: (category: ICategory): IAppLinkHref => {
@@ -53,7 +56,7 @@ const url = {
     blog: () => "/demo/blog/classic-right-sidebar",
     post: (post: IPost) => "/demo/blog/post-full-width",
 
-    // auth pages
+    // user auth pages
     signIn: () => "/account/login",
     signUp: () => "/account/login",
     passwordRecovery: () => "/account/forgot",

@@ -1,11 +1,18 @@
+import classNames from "classnames";
 import { redirect } from "next/dist/next-server/server/api-utils";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { FormattedMessage } from "react-intl";
+import { useForm } from "react-hook-form";
+import { FormattedMessage, useIntl } from "react-intl";
 import PageTitle from "~/components/shared/PageTitle";
 import Redirect from "~/components/shared/Redirect";
+import axios from "axios";
+import AdminAccountLayout from "~/components/account/AdminAccountLayout";
+import url from "~/services/url";
+import AppImage from "~/components/shared/AppImage";
 
 const Page = () => {
+    const intl = useIntl();
     const router = useRouter();
     const { password } = router.query;
 
@@ -13,54 +20,30 @@ const Page = () => {
         return password === "secret";
     };
 
-    useEffect(() => {
-        if (!isAuthorized(password)) {
-            router.push("/");
-        }
-    }, []);
+    if (!isAuthorized(password)) {
+        return <Redirect href={url.home()} />;
+    }
+
 
     return (
-        <div className="card">
-            {/* <PageTitle>Administration Panel</PageTitle> */}
+        <div className="dashboard">
+            <PageTitle>{intl.formatMessage({ id: 'HEADER_DASHBOARD' })}</PageTitle>
 
-            <div className="card-header">
-                <h5>Administration Panel</h5>
-            </div>
-            <div className="card-divider" />
-
-            <div className="card-body card-body--padding--2">
-            <form className="col-12 col-lg-10 col-xl-8" >
-                            
-
-                            {/* <div className="form-group mt-3">
-                                <div className="form-check">
-                                    <Checkbox
-                                        id="address-form-id-default"
-                                        name="default"
-                                        className="form-check-input"
-                                        disabled={firstOrDefaultAddress}
-                                        inputRef={register()}
-                                    />
-                                    <label htmlFor="address-form-id-default" className="form-check-label">
-                                        <FormattedMessage id="INPUT_SET_AS_MY_DEFAULT_ADDRESS_LABEL" />
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div className="form-group mb-0 pt-3 mt-3">
-                                <button
-                                    type="submit"
-                                    className={classNames('btn', 'btn-primary', {
-                                        'btn-loading': submitInProgress,
-                                    })}
-                                >
-                                    <FormattedMessage id="BUTTON_SAVE" />
-                                </button>
-                            </div> */}
-                        </form>
+            <div className="dashboard__profile card profile-card">
+                <div className="card-body profile-card__body">
+                    <div className="profile-card__avatar">
+                        <AppImage src={`/images/avatars/avatar.jpeg`} />
+                    </div>
+                    <div className="profile-card__name">
+                        Admin
+                    </div>
+                    <div className="profile-card__email">{`affanashraf313@gmail.com`}</div>
+                </div>
             </div>
         </div>
     );
 };
+
+Page.Layout = AdminAccountLayout
 
 export default Page;
