@@ -62,12 +62,12 @@ function Quickview() {
             <div className="quickview__product-meta">
                 <table>
                     <tbody>
-                        <tr>
+                        {/* <tr>
                             <th>
                                 <FormattedMessage id="TABLE_SKU" />
                             </th>
                             <td>{product.sku}</td>
-                        </tr>
+                        </tr> */}
                         {product.brand && (
                             <React.Fragment>
                                 <tr>
@@ -92,12 +92,12 @@ function Quickview() {
                                 </tr>
                             </React.Fragment>
                         )}
-                        <tr>
+                        {/* <tr>
                             <th>
                                 <FormattedMessage id="TABLE_PART_NUMBER" />
                             </th>
                             <td>{product.partNumber}</td>
-                        </tr>
+                        </tr> */}
                     </tbody>
                 </table>
             </div>
@@ -124,7 +124,7 @@ function Quickview() {
                         </div>
                     )}
                 </div>
-                <StockStatusBadge className="quickview__product-stock" stock={product.stock} />
+                {/* <StockStatusBadge className="quickview__product-stock" stock={product.stock} /> */}
             </div>
 
             <ProductForm
@@ -134,7 +134,7 @@ function Quickview() {
             />
 
             <div className="quickview__product-actions">
-                <div className="quickview__product-actions-item quickview__product-actions-item--quantity">
+                {/* <div className="quickview__product-actions-item quickview__product-actions-item--quantity">
                     <Controller
                         name="quantity"
                         rules={{ required: true }}
@@ -157,7 +157,7 @@ function Quickview() {
                     >
                         <FormattedMessage id="BUTTON_ADD_TO_CART" />
                     </button>
-                </div>
+                </div> */}
 
                 <AsyncAction
                     action={() => wishlistAddItem(product)}
