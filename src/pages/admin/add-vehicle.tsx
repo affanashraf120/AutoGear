@@ -20,9 +20,25 @@ type IVehicleForm = {
 const Page = () => {
     const { register, handleSubmit, errors } = useForm<IVehicleForm>();
 
+    const getYearsTillNow = (startYear: number): number[] => {
+        const year = new Date().getFullYear();
+        const years = Array.from(new Array(20), (val, index) => index + year);
+        return years;
+    };
+
+    const getDropList = () => {
+        const year = new Date().getFullYear() - 21;
+        return Array.from(new Array(22), (v, i) => (
+            <option key={i} value={year + i}>
+                {year + i}
+            </option>
+        ));
+    };
+
     const onSubmit = (data: IVehicleForm) => {
-        const startTime = parseInt(data.from.toString().split("-")[0]);
-        const endTime = parseInt(data.to.toString().split("-")[0]);
+        console.log(data)
+        const startTime = data.from
+        const endTime = data.to
         let year;
         if (startTime === endTime) {
             year = [startTime];
@@ -40,6 +56,7 @@ const Page = () => {
             .post("/api/vehicles", { ...vehicle })
             .then((res) => {
                 console.log(res);
+                alert("Vehicle added successfully.")
             })
             .catch((err) => {
                 console.log(err.response.data);
@@ -102,30 +119,32 @@ const Page = () => {
                     <div className="form-group ">
                         <label>Years</label>
                         <div style={{ display: "flex", flexDirection: "column" }}>
-                            <div className="form-group" style={{ marginRight: "1rem" }}>
-                                <label>From</label>
-                                <input
-                                    type="date"
-                                    id="from"
+                            <div className="form-group">
+                            <label>From</label>
+                                <select
                                     name="from"
+                                    id="from"
                                     className={classNames("form-control", {
                                         "is-invalid": errors?.from,
                                     })}
                                     ref={register({ required: true })}
-                                />
+                                >
+                                    {getDropList()}
+                                </select>
                             </div>
 
                             <div className="form-group">
                                 <label>To</label>
-                                <input
-                                    type="date"
-                                    id="to"
+                                <select
                                     name="to"
+                                    id="to"
                                     className={classNames("form-control", {
-                                        "is-invalid": errors?.to,
+                                        "is-invalid": errors?.from,
                                     })}
                                     ref={register({ required: true })}
-                                />
+                                >
+                                    {getDropList()}
+                                </select>
                             </div>
                         </div>
                     </div>

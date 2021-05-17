@@ -1,7 +1,7 @@
 // application
-import { clone, delayResponse, error } from '~/fake-server/utils';
-import { IVehicle } from '~/interfaces/vehicle';
-import { userVehicles, vehicles } from '~/fake-server/database/vehicles';
+import { clone, delayResponse, error } from "~/fake-server/utils";
+import { IVehicle } from "~/interfaces/vehicle";
+import { userVehicles, vehicles } from "~/fake-server/database/vehicles";
 
 export function getYears(): Promise<number[]> {
     const result: number[] = [];
@@ -18,11 +18,13 @@ export function getYears(): Promise<number[]> {
 export function getMakes(year: number): Promise<string[]> {
     const result: string[] = [];
 
-    vehicles.filter((x) => x.year === year).forEach((vehicle) => {
-        if (result.indexOf(vehicle.make) === -1) {
-            result.push(vehicle.make);
-        }
-    });
+    vehicles
+        .filter((x) => x.year === year)
+        .forEach((vehicle) => {
+            if (result.indexOf(vehicle.make) === -1) {
+                result.push(vehicle.make);
+            }
+        });
 
     return delayResponse(Promise.resolve(result.sort()), 750);
 }
@@ -30,11 +32,13 @@ export function getMakes(year: number): Promise<string[]> {
 export function getModels(year: number, make: string): Promise<string[]> {
     const result: string[] = [];
 
-    vehicles.filter((x) => x.year === year && x.make === make).forEach((vehicle) => {
-        if (result.indexOf(vehicle.model) === -1) {
-            result.push(vehicle.model);
-        }
-    });
+    vehicles
+        .filter((x) => x.year === year && x.make === make)
+        .forEach((vehicle) => {
+            if (result.indexOf(vehicle.model) === -1) {
+                result.push(vehicle.model);
+            }
+        });
 
     return delayResponse(Promise.resolve(result.sort()), 750);
 }
@@ -48,10 +52,10 @@ export function getVehicles(year: number, make: string, model: string): Promise<
 export function getVehicleByVin(vin: string): Promise<IVehicle> {
     const vinValue = vin.trim();
 
-    const vehicle = vehicles.find((x) => x.model === 'Focus S');
+    const vehicle = vehicles.find((x) => x.model === "Focus S");
 
-    if (vinValue === '' || vinValue === 'error' || !vehicle) {
-        return error('Page Not Found');
+    if (vinValue === "" || vinValue === "error" || !vehicle) {
+        return error("Page Not Found");
     }
 
     return Promise.resolve(vehicle);
