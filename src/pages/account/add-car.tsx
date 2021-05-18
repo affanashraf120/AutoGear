@@ -1,5 +1,5 @@
 // react
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 // third-party
 import classNames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -31,9 +31,9 @@ type ICarForm = {
     excerpt: string; //
     description: string; //
     // images: string[];
-    transactionType: string;//
-    terms?: string;//
-    interval?: string;//
+    transactionType: string; //
+    terms?: string; //
+    interval?: string; //
     price: string; //
     color: string; //
     mileage: number; //
@@ -43,13 +43,20 @@ type ICarForm = {
     transmission: string; //
     bodyType: string; //
     registeredCity: string; //
-    province: string;//
+    province: string; //
 };
 
 const Page = () => {
     const user = useUser();
     const [vehicle, setVehicle] = useState<IVehicle>();
     const { register, handleSubmit, errors } = useForm<ICarForm>();
+    const [file, setFile] = useState<string>();
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target && e.target.files) {
+            const file = URL.createObjectURL(e.target.files[0]);
+            setFile(file);
+        }
+    };
 
     const handleVehicleChange = (vehicle: IVehicle | null) => {
         if (vehicle !== null) setVehicle(vehicle);
@@ -333,7 +340,9 @@ const Page = () => {
                                 <option value="leased">Leased</option>
                             </select>
                             <div className="invalid-feedback">
-                                {errors?.transactionType?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
+                                {errors?.transactionType?.type === "required" && (
+                                    <FormattedMessage id="ERROR_FORM_REQUIRED" />
+                                )}
                             </div>
                         </div>
 
@@ -368,20 +377,20 @@ const Page = () => {
                             />
                         </div>
 
-                        {/* <div className="form-group">
+                        <div className="form-group">
                             <label>Image</label>
                             <input
                                 type="file"
                                 id={`image`}
                                 name={`image`}
+                                onChange={handleFileChange}
                                 disabled={vehicle === undefined}
-                                className={classNames("form-control", {
-                                    "is-invalid": errors?.im,
-                                })}
+                                className={classNames("form-control")}
                                 placeholder={`Enter image`}
                             />
-                        </div> */}
+                        </div>
 
+                        <img src={file} width="300px" />
 
                         <div className="form-group mb-0 pt-3 mt-3">
                             <button type="submit" className={classNames("btn", "btn-primary")}>
