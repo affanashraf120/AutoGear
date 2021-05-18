@@ -2,6 +2,42 @@ import { IFilter } from "~/interfaces/filter";
 
 export const carFilters: IFilter[] = [
     {
+        slug: "price",
+        name: "Price range",
+        type: "range",
+        min: 2000000,
+        max: 10000000,
+        value: [1, 2000000],
+    },
+    {
+        name: "Rating",
+        slug: "rating",
+        type: "rating",
+        value: [],
+        items: [
+            {
+                rating: 1,
+                count: 2,
+            },
+            {
+                rating: 2,
+                count: 2,
+            },
+            {
+                rating: 3,
+                count: 2,
+            },
+            {
+                rating: 4,
+                count: 2,
+            },
+            {
+                rating: 5,
+                count: 2,
+            },
+        ],
+    },
+    {
         name: "Body Type",
         slug: "body-type",
         type: "check",
@@ -87,40 +123,5 @@ export const carFilters: IFilter[] = [
         ],
         value: [],
     },
-    {
-        slug: "price",
-        name: "Price range",
-        type: "range",
-        min: 2000000,
-        max: 10000000,
-        value: [1, 2000000],
-    },
-    {
-        name: "Rating",
-        slug: "rating",
-        type: "rating",
-        value: [],
-        items: [
-            {
-                rating: 1,
-                count: 2,
-            },
-            {
-                rating: 2,
-                count: 2,
-            },
-            {
-                rating: 3,
-                count: 2,
-            },
-            {
-                rating: 4,
-                count: 2,
-            },
-            {
-                rating: 5,
-                count: 2,
-            },
-        ],
-    },
+    
 ];

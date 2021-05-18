@@ -1,15 +1,15 @@
 // react
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 // third-party
-import classNames from 'classnames';
-import { FormattedMessage, useIntl } from 'react-intl';
+import classNames from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
 // application
-import AppImage from '~/components/shared/AppImage';
-import AppLink from '~/components/shared/AppLink';
-import url from '~/services/url';
-import { useSignInForm } from '~/services/forms/sign-in';
-import { useUser, useUserSignOut } from '~/store/user/userHooks';
-import { validateEmail } from '~/services/validators';
+import AppImage from "~/components/shared/AppImage";
+import AppLink from "~/components/shared/AppLink";
+import url from "~/services/url";
+import { useSignInForm } from "~/services/forms/sign-in";
+import { useUser, useUserSignOut } from "~/store/user/userHooks";
+import { validateEmail } from "~/services/validators";
 
 interface Props {
     onCloseMenu: () => void;
@@ -56,18 +56,18 @@ function AccountMenu(props: Props) {
                         <input
                             id="header-signin-email"
                             type="email"
-                            className={classNames('form-control', 'form-control-sm', {
-                                'is-invalid': signInForm.errors.email,
+                            className={classNames("form-control", "form-control-sm", {
+                                "is-invalid": signInForm.errors.email,
                             })}
                             placeholder="customer@example.com"
                             name="email"
                             ref={signInForm.register({ required: true, validate: { email: validateEmail } })}
                         />
                         <div className="invalid-feedback">
-                            {signInForm.errors.email?.type === 'required' && (
+                            {signInForm.errors.email?.type === "required" && (
                                 <FormattedMessage id="ERROR_FORM_REQUIRED" />
                             )}
-                            {signInForm.errors.email?.type === 'email' && (
+                            {signInForm.errors.email?.type === "email" && (
                                 <FormattedMessage id="ERROR_FORM_INCORRECT_EMAIL" />
                             )}
                         </div>
@@ -77,17 +77,17 @@ function AccountMenu(props: Props) {
                             <FormattedMessage id="INPUT_PASSWORD_LABEL" />
                         </label>
                         <div
-                            className={classNames('account-menu__form-forgot', {
-                                'is-invalid': signInForm.errors.password,
+                            className={classNames("account-menu__form-forgot", {
+                                "is-invalid": signInForm.errors.password,
                             })}
                         >
                             <input
                                 id="header-signin-password"
                                 type="password"
-                                className={classNames('form-control', 'form-control-sm', {
-                                    'is-invalid': signInForm.errors.password,
+                                className={classNames("form-control", "form-control-sm", {
+                                    "is-invalid": signInForm.errors.password,
                                 })}
-                                placeholder={intl.formatMessage({ id: 'INPUT_PASSWORD_PLACEHOLDER' })}
+                                placeholder={intl.formatMessage({ id: "INPUT_PASSWORD_PLACEHOLDER" })}
                                 name="password"
                                 ref={signInForm.register({ required: true })}
                             />
@@ -96,7 +96,7 @@ function AccountMenu(props: Props) {
                             </AppLink>
                         </div>
                         <div className="invalid-feedback">
-                            {signInForm.errors.password?.type === 'required' && (
+                            {signInForm.errors.password?.type === "required" && (
                                 <FormattedMessage id="ERROR_FORM_REQUIRED" />
                             )}
                         </div>
@@ -105,8 +105,8 @@ function AccountMenu(props: Props) {
                     <div className="form-group account-menu__form-button">
                         <button
                             type="submit"
-                            className={classNames('btn', 'btn-primary', 'btn-sm', {
-                                'btn-loading': signInForm.submitInProgress,
+                            className={classNames("btn", "btn-primary", "btn-sm", {
+                                "btn-loading": signInForm.submitInProgress,
                             })}
                         >
                             <FormattedMessage id="BUTTON_LOGIN" />
@@ -119,7 +119,7 @@ function AccountMenu(props: Props) {
                     </div>
                 </form>
             )}
-            
+
             {user !== null && (
                 <React.Fragment>
                     <AppLink href={url.accountDashboard()} className="account-menu__user" onClick={onCloseMenu}>
@@ -128,11 +128,9 @@ function AccountMenu(props: Props) {
                         </div>
                         <div className=" account-menu__user-info">
                             <div className=" account-menu__user-name">
-                                {`${user.firstName} ${user.lastName}`}
+                                {`${user.firstName ? user.firstName : ``} ${user.lastName ? user.lastName : ``}`}
                             </div>
-                            <div className=" account-menu__user-email">
-                                {user.email}
-                            </div>
+                            <div className=" account-menu__user-email">{user.email}</div>
                         </div>
                     </AppLink>
                     <div className="account-menu__divider" />

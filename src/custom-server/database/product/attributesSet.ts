@@ -1,4 +1,4 @@
-import { IProductAttributesDef } from "~/fake-server/interfaces/product-def";
+import { IProductAttributesDef } from "~/server/interfaces/product-def";
 
 export const attributesSet: IProductAttributesDef = {
     // Featured attributes

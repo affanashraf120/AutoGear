@@ -124,6 +124,7 @@ function Page() {
                                 </div>
                             </div>
                         </div>
+                        {/* Register */}
                         <div className="col-md-6 d-flex mt-4 mt-md-0">
                             <div className="card flex-grow-1 mb-0 ml-0 ml-lg-3 mr-0 mr-lg-4">
                                 <div className="card-body card-body--padding--2">
@@ -162,6 +163,7 @@ function Page() {
                                                 )}
                                             </div>
                                         </div>
+                                        {/*  */}
                                         <div className="form-group">
                                             <label htmlFor="signup-password">
                                                 <FormattedMessage id="INPUT_PASSWORD_LABEL" />

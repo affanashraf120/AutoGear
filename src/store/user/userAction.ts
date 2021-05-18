@@ -17,6 +17,8 @@ export function userSignIn(
 ): UserThunkAction<Promise<void>> {
     return (dispatch) => (
         accountApi.signIn(email, password).then((user) => {
+            console.log("Login")
+            console.log(user)
             dispatch(userSetCurrent(user));
         })
     );

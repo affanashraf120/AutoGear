@@ -22,7 +22,7 @@ function BlockBrands(props: Props) {
                     {brands.map((brand, brandIdx) => (
                         <React.Fragment key={brandIdx}>
                             <li className="block-brands__item">
-                                <AppLink href="/" className="block-brands__item-link">
+                                <AppLink href="/find-cars" className="block-brands__item-link">
                                     <AppImage src={brand.image} />
                                     <span className="block-brands__item-name">{brand.name}</span>
                                 </AppLink>

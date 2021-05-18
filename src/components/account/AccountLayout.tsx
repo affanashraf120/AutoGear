@@ -30,7 +30,7 @@ function AccountLayout(props: Props) {
         { title: intl.formatMessage({ id: 'LINK_ACCOUNT_ADD_CAR' }), url: url.addCar() },
         // { title: intl.formatMessage({ id: 'LINK_ACCOUNT_ORDERS' }), url: url.accountOrders() },
         { title: intl.formatMessage({ id: 'LINK_ACCOUNT_ADDRESSES' }), url: url.accountAddresses() },
-        { title: intl.formatMessage({ id: 'LINK_ACCOUNT_PASSWORD' }), url: url.accountPassword() },
+        // { title: intl.formatMessage({ id: 'LINK_ACCOUNT_PASSWORD' }), url: url.accountPassword() },
     ];
 
     if (!user) {

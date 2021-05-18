@@ -57,14 +57,14 @@ function Header() {
                     </div>
                 </React.Fragment>
             )} */}
-            {/* {desktopLayout === 'classic' && (
+            {desktopLayout === 'classic' && (
                 <React.Fragment>
                     <div className="header__topbar-classic-bg" />
                     <div className="header__topbar-classic">
                         <Topbar layout="classic" />
                     </div>
                 </React.Fragment>
-            )} */}
+            )}
     
             <div className="header__navbar">
                 {/* <div className="header__navbar-departments">

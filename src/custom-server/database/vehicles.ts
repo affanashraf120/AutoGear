@@ -1,4 +1,4 @@
-import { IVehicleDef } from "~/fake-server/interfaces/vehicle-def";
+import { IVehicleDef } from "~/server/interfaces/vehicle-def";
 
 const _m = {
     Honda: "Honda",

@@ -6,14 +6,15 @@ import { useIntl } from "react-intl";
 import { IVehicle } from "~/interfaces/vehicle";
 import { vehicleApi } from "~/api";
 import axios from "axios";
-import { IVehicleDef } from "~/fake-server/interfaces/vehicle-def";
-import { makeIdGenerator } from "~/fake-server/utils";
+import { IVehicleDef } from "~/server/interfaces/vehicle-def";
+import { makeIdGenerator } from "~/server/utils";
 
 interface VehicleSelectItemDef<T = any> {
     key: string;
     label: string;
     placeholder: string;
     optionsSource: (...args: any[]) => Promise<T[]>;
+    // optionsSource: (args:any) => T[];
     serializeOptionFn?: (option: T, item: VehicleSelectItem<T>) => string;
     deserializeOptionFn?: (value: string, item: VehicleSelectItem<T>) => T;
 }

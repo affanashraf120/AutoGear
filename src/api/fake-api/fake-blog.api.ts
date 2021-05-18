@@ -2,7 +2,7 @@
 
 // application
 import { BlogApi, IGetBlogCategoriesOptions } from '~/api/base';
-import { getBlogCategories, getLatestPosts } from '~/fake-server/endpoints';
+import { getBlogCategories, getLatestPosts } from '~/server/endpoints';
 import { IBlogCategory } from '~/interfaces/category';
 import { IPost } from '~/interfaces/post';
 
