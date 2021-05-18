@@ -181,8 +181,8 @@ function Page() {
                 </React.Fragment>
             ))} */}
 
-            <BlockSpace layout="divider-nl" />
-            <BlockBanners />
+            {/* <BlockSpace layout="divider-nl" />
+            <BlockBanners /> */}
             {/* <BlockSpace layout="divider-nl" /> */}
             {/* <BlockProductsCarousel
                 blockTitle={intl.formatMessage({ id: 'HEADER_NEW_ARRIVALS' })}
