@@ -10,7 +10,7 @@ function SitePageNotFound() {
     return (
         <React.Fragment>
             <PageTitle>
-                Page Not Found
+                Product Not Found
             </PageTitle>
 
             <BlockSpace layout="spaceship-ledge-height" />
@@ -19,13 +19,13 @@ function SitePageNotFound() {
                 <div className="container">
                     <div className="not-found">
                         <div className="not-found__404">
-                            Oops! Error 404
+                            Oops! Product not found or deleted
                         </div>
 
                         <div className="not-found__content">
-                            <h1 className="not-found__title">Page Not Found</h1>
+                            <h1 className="not-found__title">Product Not Found</h1>
 
-                            <p className="not-found__text">
+                            {/* <p className="not-found__text">
                                 {'We can\'t seem to find the page you\'re looking for.'}
                                 <br />
                                 Try to use the search.
@@ -40,7 +40,7 @@ function SitePageNotFound() {
                                 <button type="submit" className="not-found__search-button btn btn-primary">
                                     Search
                                 </button>
-                            </form>
+                            </form> */}
 
                             <p className="not-found__text">
                                 Or go to the home page to start over.

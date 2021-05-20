@@ -87,6 +87,9 @@ const url = {
     pageContactUs: () => "/contact-us",
     pageStoreLocation: () => "/",
     pageTerms: () => "/terms",
+
+    //404
+    notFound: () => "/404"
 };
 
 export default url;
