@@ -13,7 +13,7 @@ export interface CompareAddItemAction {
 
 export interface CompareRemoveItemAction {
     type: typeof COMPARE_REMOVE_ITEM;
-    productId: number;
+    productId: string;
 }
 
 export interface CompareClearAction {

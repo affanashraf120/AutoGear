@@ -22,7 +22,7 @@ interface Attribute {
     slug: string;
     name: string;
     sameValues: boolean;
-    values: { [productId: number]: IProductAttributeValue[] };
+    values: { [productId: string]: IProductAttributeValue[] };
 }
 
 function Page() {

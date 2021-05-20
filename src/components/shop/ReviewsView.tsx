@@ -21,7 +21,7 @@ interface IForm {
 }
 
 interface Props {
-    productId: number;
+    productId: string;
     productPageLayout: IProductPageLayout;
 }
 
@@ -29,7 +29,7 @@ function ReviewsView(props: Props) {
     const intl = useIntl();
     const { productId, productPageLayout } = props;
     const [page, setPage] = useState<number>(1);
-    const listMetaRef = useRef<{ productId: number, page: number } | null>(null);
+    const listMetaRef = useRef<{ productId: string, page: number } | null>(null);
     const [list, setList] = useState<IReviewsList | null>(null);
     const formMethods = useForm<IForm>();
     const {
@@ -41,7 +41,7 @@ function ReviewsView(props: Props) {
 
     const isUnmountedRef = useIsUnmountedRef();
 
-    const load = async (productId: number, page: number, canceledRef?: React.RefObject<boolean>) => {
+    const load = async (productId: string, page: number, canceledRef?: React.RefObject<boolean>) => {
         await shopApi.getProductReviews(productId, { limit: 8, page }).then((result) => {
             if (isUnmountedRef.current || canceledRef?.current) {
                 return;

@@ -25,7 +25,7 @@ export function compareAddItemSuccess(product: IProduct): CompareAddItemAction {
     };
 }
 
-export function compareRemoveItemSuccess(productId: number): CompareRemoveItemAction {
+export function compareRemoveItemSuccess(productId: string): CompareRemoveItemAction {
     return {
         type: COMPARE_REMOVE_ITEM,
         productId,
@@ -50,7 +50,7 @@ export function compareAddItem(product: IProduct): CompareThunkAction<Promise<vo
     );
 }
 
-export function compareRemoveItem(productId: number): CompareThunkAction<Promise<void>> {
+export function compareRemoveItem(productId: string): CompareThunkAction<Promise<void>> {
     // sending request to server, timeout is used as a stub
     return (dispatch) => (
         new Promise((resolve) => {

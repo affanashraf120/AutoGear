@@ -23,7 +23,7 @@ export function wishlistAddItemSuccess(product: IProduct): WishlistAddItemAction
     };
 }
 
-export function wishlistRemoveItemSuccess(productId: number): WishlistRemoveItemAction {
+export function wishlistRemoveItemSuccess(productId: string): WishlistRemoveItemAction {
     return {
         type: WISHLIST_REMOVE_ITEM,
         productId,
@@ -42,7 +42,7 @@ export function wishlistAddItem(product: IProduct): WishlistThunkAction<Promise<
     );
 }
 
-export function wishlistRemoveItem(productId: number): WishlistThunkAction<Promise<void>> {
+export function wishlistRemoveItem(productId: string): WishlistThunkAction<Promise<void>> {
     // sending request to server, timeout is used as a stub
     return (dispatch) => (
         new Promise((resolve) => {

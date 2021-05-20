@@ -12,7 +12,7 @@ export interface WishlistAddItemAction {
 
 export interface WishlistRemoveItemAction {
     type: typeof WISHLIST_REMOVE_ITEM;
-    productId: number;
+    productId: string;
 }
 
 export type WishlistAction =

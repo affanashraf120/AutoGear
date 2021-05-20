@@ -24,7 +24,7 @@ function addItem(state: ICompareState, product: IProduct): ICompareState {
     return state;
 }
 
-function removeItem(state: ICompareState, productId: number): ICompareState {
+function removeItem(state: ICompareState, productId: string): ICompareState {
     return {
         items: state.items.filter((x) => x.id !== productId),
     };
