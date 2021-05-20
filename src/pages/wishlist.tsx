@@ -143,15 +143,6 @@ function Page() {
                                                 </div>
                                             </div>
                                         </td>
-                                        {/* <td
-                                            className={classNames(
-                                                'wishlist__column',
-                                                'wishlist__column--body',
-                                                'wishlist__column--stock',
-                                            )}
-                                        >
-                                            <StockStatusBadge stock={product.stock} />
-                                        </td> */}
                                         <td
                                             className={classNames(
                                                 'wishlist__column',
