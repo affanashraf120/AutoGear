@@ -33,7 +33,7 @@ export class CheckFilterBuilder extends AbstractFilterBuilder {
     }
 
     // noinspection DuplicatedCode
-    calc(filters: AbstractFilterBuilder[]): void {
+    calc(dbProducts: IProduct[],filters: AbstractFilterBuilder[]): void {
         const products = dbProducts.filter(
             (product) => filters.reduce<boolean>(
                 (isMatched, filter) => (isMatched && (filter === this || filter.test(product))),

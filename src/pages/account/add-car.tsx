@@ -19,42 +19,50 @@ import CustomProductForm from "~/components/shared/CustomProductForm";
 import VehicleSelect from "~/components/shared/VehicleSelect";
 import { useUser } from "~/store/user/userHooks";
 import Redirect from "~/components/shared/Redirect";
-import { IProduct } from "~/interfaces/product";
+import { ICarForm, ICarProduct, IProduct, Transaction } from "~/interfaces/product";
 import { IVehicle } from "~/interfaces/vehicle";
 import { engineTypes } from "~/custom-server/database/engineTypes";
 import { transmissions } from "~/custom-server/database/transmissions";
 import { bodyTypes } from "~/custom-server/database/bodyTypes";
 import { cities } from "~/custom-server/cities";
 import { provinces } from "~/custom-server/provinces";
-
-type ICarForm = {
-    excerpt: string; //
-    description: string; //
-    // images: string[];
-    transactionType: string; //
-    terms?: string; //
-    interval?: string; //
-    price: string; //
-    color: string; //
-    mileage: number; //
-    engineType: string; //
-    assembly: string; //
-    engineDisplacement: number;
-    transmission: string; //
-    bodyType: string; //
-    registeredCity: string; //
-    province: string; //
-};
+import cloudinary from "cloudinary";
+import { brands } from "~/server/database/brands";
+import { attributesGroups } from "~/custom-server/database/product/attributesGroups";
+import { IProductAttributesDef } from "~/server/interfaces/product-def";
+import { resolveProductAttributesDef } from "~/server/database/products";
+import { flatMap } from "lodash";
+import { makeIdGenerator, nameToSlug } from "~/server/utils";
+import { IReview } from "~/interfaces/review";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Page = () => {
     const user = useUser();
     const [vehicle, setVehicle] = useState<IVehicle>();
     const { register, handleSubmit, errors } = useForm<ICarForm>();
-    const [file, setFile] = useState<string>();
+    const [file, setFile] = useState<File | null>(null);
+    const [media, setMedia] = useState("");
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target && e.target.files) {
             const file = URL.createObjectURL(e.target.files[0]);
-            setFile(file);
+            // const file = e.target.files[0];
+            setFile(e.target.files[0]);
+        }
+    };
+
+    const imageUpload = async () => {
+        if (file !== null) {
+            const data = new FormData();
+            data.append("file", file);
+            data.append("upload_preset", "autogear");
+            data.append("cloud_name", "autogear");
+            const res = await fetch("https://api.cloudinary.com/v1_1/autogear/image/upload", {
+                method: "POST",
+                body: data,
+            });
+            const res2 = await res.json();
+            return res2.url;
         }
     };
 
@@ -75,7 +83,62 @@ const Page = () => {
         return <Redirect href={url.accountProfile()} />;
     }
 
-    const submitHandler = (data: any) => {};
+    const getNextId = makeIdGenerator();
+
+    const submitHandler = async (data: ICarForm) => {
+        const {
+            excerpt,
+            description,
+            transactionType,
+            terms,
+            interval,
+            price,
+            color,
+            mileage,
+            engineType,
+            assembly,
+            engineDisplacement,
+            transmission,
+            bodyType,
+            registeredCity,
+            province,
+        } = data;
+
+        try {
+            const mediaUrl = await imageUpload();
+            const url = mediaUrl.replace("upload", "upload/c_scale,h_800,w_800");
+            if (vehicle && user._id) {
+                const car: ICarProduct = {
+                    ...data,
+                    make: vehicle.make,
+                    model: vehicle.model,
+                    version: vehicle.engine,
+                    year: vehicle.year,
+                    images: [url],
+                    rating: 0,
+                    reviews: [],
+                    sellerId: user._id,
+                    badges: [],
+                    isFeatured: false,
+                    isApproved: false,
+                    isInspected: false,
+                    customFields: ["Bumper to bumper original"],
+                    postedDate: new Date().toLocaleDateString(),
+                };
+                axios
+                    .post("/api/products/addProduct", { ...car })
+                    .then((res) => {
+                        console.log(res);
+                        toast("Car added successfully.");
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <div className="card">
             <PageTitle>Add New Car</PageTitle>
@@ -160,7 +223,7 @@ const Page = () => {
                                 ref={register({ required: true })}
                             >
                                 {engineTypes.map((type, index) => (
-                                    <option value={type.slug} key={index}>
+                                    <option value={type.name} key={index}>
                                         {type.name}
                                     </option>
                                 ))}
@@ -184,8 +247,8 @@ const Page = () => {
                                 placeholder={`Enter assembly`}
                                 ref={register({ required: true })}
                             >
-                                <option value="local">Local</option>
-                                <option value="imported">Imported</option>
+                                <option value="Local">Local</option>
+                                <option value="Imported">Imported</option>
                             </select>
                             <div className="invalid-feedback">
                                 {errors?.assembly?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
@@ -205,7 +268,7 @@ const Page = () => {
                                 ref={register({ required: true })}
                             >
                                 {transmissions.map((type, index) => (
-                                    <option value={type.slug} key={index}>
+                                    <option value={type.name} key={index}>
                                         {type.name}
                                     </option>
                                 ))}
@@ -230,7 +293,7 @@ const Page = () => {
                                 ref={register({ required: true })}
                             >
                                 {bodyTypes.map((type, index) => (
-                                    <option value={type.slug} key={index}>
+                                    <option value={type.name} key={index}>
                                         {type.name}
                                     </option>
                                 ))}
@@ -253,7 +316,7 @@ const Page = () => {
                                 ref={register({ required: true })}
                             >
                                 {cities.map((type, index) => (
-                                    <option value={type.slug} key={index}>
+                                    <option value={type.name} key={index}>
                                         {type.name}
                                     </option>
                                 ))}
@@ -278,7 +341,7 @@ const Page = () => {
                                 ref={register({ required: true })}
                             >
                                 {provinces.map((type, index) => (
-                                    <option value={type.slug} key={index}>
+                                    <option value={type.name} key={index}>
                                         {type.name}
                                     </option>
                                 ))}
@@ -303,6 +366,26 @@ const Page = () => {
                             />
                             <div className="invalid-feedback">
                                 {errors?.color?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label>Engine Displacement</label>
+                            <input
+                                type="number"
+                                id={`engineDisplacement`}
+                                name={`engineDisplacement`}
+                                disabled={vehicle === undefined}
+                                className={classNames("form-control", {
+                                    "is-invalid": errors?.engineDisplacement,
+                                })}
+                                placeholder={`Enter engineDisplacement`}
+                                ref={register({ required: true })}
+                            />
+                            <div className="invalid-feedback">
+                                {errors?.engineDisplacement?.type === "required" && (
+                                    <FormattedMessage id="ERROR_FORM_REQUIRED" />
+                                )}
                             </div>
                         </div>
 
@@ -336,8 +419,8 @@ const Page = () => {
                                 placeholder={`Enter transactionType`}
                                 ref={register({ required: true })}
                             >
-                                <option value="cash">Cash</option>
-                                <option value="leased">Leased</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Leased">Leased</option>
                             </select>
                             <div className="invalid-feedback">
                                 {errors?.transactionType?.type === "required" && (
@@ -358,8 +441,12 @@ const Page = () => {
                                 placeholder={`Enter interval`}
                             >
                                 <option value=""></option>
-                                <option value="month">Month</option>
-                                <option value="year">Year</option>
+                                <option value="Month">Month</option>
+                                <option value="2 Months">2 Months</option>
+                                <option value="3 Month">3 Month</option>
+                                <option value="4 Month">4 Month</option>
+                                <option value="6 Month">6 Month</option>
+                                <option value="Year">Year</option>
                             </select>
                         </div>
 
@@ -381,6 +468,7 @@ const Page = () => {
                             <label>Image</label>
                             <input
                                 type="file"
+                                accept="image/*"
                                 id={`image`}
                                 name={`image`}
                                 onChange={handleFileChange}
@@ -390,7 +478,7 @@ const Page = () => {
                             />
                         </div>
 
-                        <img src={file} width="300px" />
+                        <img src={file ? URL.createObjectURL(file) : ""} width="100%" />
 
                         <div className="form-group mb-0 pt-3 mt-3">
                             <button type="submit" className={classNames("btn", "btn-primary")}>

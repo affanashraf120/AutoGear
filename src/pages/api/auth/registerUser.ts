@@ -25,7 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     res.status(200).json({
                         success: true,
                         data: {
-                            id: user._id,
+                            _id: user._id,
                             email: user.email,
                             avatar: "https://ui-avatars.com/api/?name=" + user.email,
                         },

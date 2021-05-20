@@ -27,7 +27,7 @@ const transactionLeased: Transaction = {
     },
 };
 
-function resolveProductAttributesDef(attributesDef: IProductAttributesDef): IProductAttribute[] {
+export function resolveProductAttributesDef(attributesDef: IProductAttributesDef): IProductAttribute[] {
     const attributes: IProductAttribute[] = [];
     const keys = Object.keys(attributesDef);
 
@@ -115,7 +115,7 @@ function makeProducts(defs: IProductDef[]): IProduct[] {
             "Last Updated": "10/02/2021",
         };
         return {
-            id: getNextId(),
+            id: `${getNextId()}`,
             name: def.name,
             excerpt: `
             Honda civic is the future.
@@ -144,6 +144,7 @@ function makeProducts(defs: IProductDef[]): IProduct[] {
             categories,
             customFields: {},
             transaction: def.transaction,
+            
         };
     });
 }
@@ -152,7 +153,7 @@ const productsDef: IProductDef[] = [
     {
         name: "Honda City 1.3L",
         slug: "honda-city-1.3l",
-        brand:'honda',
+        brand: "honda",
         sku: "140-10441-B",
         price: transactionCash.flatPrice,
         images: ["https://www.honda.com.pk/wp-content/uploads/2010/09/city-1.3-720x420.jpg"],
@@ -186,11 +187,9 @@ const productsDef: IProductDef[] = [
     {
         name: "Toyota Land Cruiser",
         slug: "toyota-land-cruiser",
-        brand:'Toyota',
+        brand: "Toyota",
         sku: "12-349jr8",
-        images: [
-            "https://s.wsj.net/public/resources/images/BN-TH470_RUMBLE_GR_20170504132712.jpg",
-        ],
+        images: ["https://s.wsj.net/public/resources/images/BN-TH470_RUMBLE_GR_20170504132712.jpg"],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
@@ -204,13 +203,11 @@ const productsDef: IProductDef[] = [
         name: "Toyota Prado",
         slug: "toyota-prado",
         sku: "12-dhfjken9d7",
-        images: [
-            "https://www.europeanbusinessreview.com/wp-content/uploads/2021/01/20200803_01_02_s-1280x720.jpg",
-        ],
+        images: ["https://www.europeanbusinessreview.com/wp-content/uploads/2021/01/20200803_01_02_s-1280x720.jpg"],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand:'honda',
+        brand: "honda",
         attributes: {
             Color: "Metallic Grey",
         },
@@ -229,7 +226,7 @@ const productsDef: IProductDef[] = [
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand:'honda',
+        brand: "honda",
         attributes: {
             Color: "Metallic Grey",
         },
@@ -238,13 +235,11 @@ const productsDef: IProductDef[] = [
         name: "Toyota Fortuner",
         slug: "toyota-fortuner",
         sku: "12-dlkmnf89hd7",
-        images: [
-            "https://static.autox.com/uploads/2020/08/toyota-fortuner-trd.jpg",
-        ],
+        images: ["https://static.autox.com/uploads/2020/08/toyota-fortuner-trd.jpg"],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand:'toyota',
+        brand: "toyota",
         attributes: {
             Color: "Metallic Grey",
         },
@@ -263,7 +258,7 @@ const productsDef: IProductDef[] = [
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand:'toyota',
+        brand: "toyota",
         attributes: {
             Color: "Metallic Grey",
         },
@@ -272,13 +267,11 @@ const productsDef: IProductDef[] = [
         name: "Honda Vezel",
         slug: "honda-vezel",
         sku: "12-dhmcve090e8d7",
-        images: [
-            "https://cache2.pakwheels.com/system/car_generation_pictures/3834/original/side_view.png?1451461491",
-        ],
+        images: ["https://cache2.pakwheels.com/system/car_generation_pictures/3834/original/side_view.png?1451461491"],
         rating: 5,
         reviews: 22,
         availability: "in-stock",
-        brand:'honda',
+        brand: "honda",
         attributes: {
             Color: "Metallic Grey",
         },

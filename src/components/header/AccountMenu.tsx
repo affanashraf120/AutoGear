@@ -151,8 +151,8 @@ function AccountMenu(props: Props) {
                             </AppLink>
                         </li>
                         <li>
-                            <AppLink href={url.accountOrders()} onClick={onCloseMenu}>
-                                <FormattedMessage id="LINK_ACCOUNT_ORDERS" />
+                            <AppLink href={url.addCar()} onClick={onCloseMenu}>
+                                <FormattedMessage id="LINK_ACCOUNT_ADD_CAR" />
                             </AppLink>
                         </li>
                         <li>

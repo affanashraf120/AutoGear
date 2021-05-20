@@ -1,10 +1,10 @@
 /* eslint-disable import/prefer-default-export,class-methods-use-this */
 
 // application
-import { AbstractFilterBuilder } from '~/server/filters/abstract-filter-builder';
-import { IProduct } from '~/interfaces/product';
-import { IRatingFilter, IRatingFilterItem } from '~/interfaces/filter';
-import { products as dbProducts } from '~/server/database/products';
+import { AbstractFilterBuilder } from "~/server/filters/abstract-filter-builder";
+import { IProduct } from "~/interfaces/product";
+import { IRatingFilter, IRatingFilterItem } from "~/interfaces/filter";
+import { products as dbProducts } from "~/server/database/products";
 
 export class RatingFilterBuilder extends AbstractFilterBuilder {
     private items: IRatingFilterItem[] = [];
@@ -22,7 +22,7 @@ export class RatingFilterBuilder extends AbstractFilterBuilder {
     makeItems(products: IProduct[], value: string): void {
         products.forEach((product) => {
             const item = this.extractItem(product);
-
+            console.log("Item", item);
             if (!this.items.find((x) => x.rating === item.rating)) {
                 this.items.push(item);
             }
@@ -32,25 +32,23 @@ export class RatingFilterBuilder extends AbstractFilterBuilder {
         this.items.sort((a, b) => b.rating - a.rating);
     }
 
-    calc(filters: AbstractFilterBuilder[]): void {
-        const products = dbProducts.filter(
-            (product) => filters.reduce<boolean>(
-                (isMatched, filter) => (isMatched && (filter === this || filter.test(product))),
-                true,
-            ),
+    calc(dbProducts: IProduct[], filters: AbstractFilterBuilder[]): void {
+        const products = dbProducts.filter((product) =>
+            filters.reduce<boolean>((isMatched, filter) => isMatched && (filter === this || filter.test(product)), true)
         );
 
         this.items = this.items.map((item) => ({
             ...item,
-            count: products.reduce((acc, product) => (
-                acc + (item.rating === this.extractItem(product).rating ? 1 : 0)
-            ), 0),
+            count: products.reduce(
+                (acc, product) => acc + (item.rating === this.extractItem(product).rating ? 1 : 0),
+                0
+            ),
         }));
     }
 
     build(): IRatingFilter {
         return {
-            type: 'rating',
+            type: "rating",
             slug: this.slug,
             name: this.name,
             items: this.items,
@@ -59,7 +57,7 @@ export class RatingFilterBuilder extends AbstractFilterBuilder {
     }
 
     private parseValue(value: string): number[] {
-        return value ? value.split(',').map((x) => parseFloat(x)) : [];
+        return value ? value.split(",").map((x) => parseFloat(x)) : [];
     }
 
     // noinspection JSMethodCanBeStatic

@@ -7,8 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { useShopFilters, useShopFilterValues, useShopResetFiltersThunk } from "~/store/shop/shopHooks";
 import { IShopPageOffCanvasSidebar } from "~/interfaces/pages";
 import Filter from "~/components/filters/Filter";
-import { IFilter } from "~/interfaces/filter";
-import { carFilters } from "~/myData/filters";
+
 
 interface Props {
     offcanvasSidebar: IShopPageOffCanvasSidebar;
@@ -22,10 +21,6 @@ function WidgetFilters(props: Props) {
 
     const rootClasses = classNames("widget", "widget-filters", `widget-filters--offcanvas--${offcanvasSidebar}`);
 
-    useEffect(() => {
-        console.log(values);
-    }, [values]);
-
     return (
         <div className={rootClasses}>
             <div className="widget__header widget-filters__header">
@@ -35,7 +30,7 @@ function WidgetFilters(props: Props) {
             </div>
 
             <div className="widget-filters__list">
-                {carFilters.map((filter) => (
+                {filters.map((filter) => (
                     <Filter key={filter.slug} filter={filter} value={values[filter.slug]} />
                 ))}
             </div>

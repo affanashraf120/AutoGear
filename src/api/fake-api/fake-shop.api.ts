@@ -1,13 +1,13 @@
 /* eslint-disable import/prefer-default-export,class-methods-use-this */
 
 // application
-import { getBrands } from '~/server/endpoints/brands';
-import { IBrand } from '~/interfaces/brand';
-import { IFilterValues, IListOptions, IReviewsList } from '~/interfaces/list';
-import { IOrder } from '~/interfaces/order';
-import { IProductsList, IProduct } from '~/interfaces/product';
-import { IReview } from '~/interfaces/review';
-import { IShopCategory } from '~/interfaces/category';
+import { getBrands } from "~/server/endpoints/brands";
+import { IBrand } from "~/interfaces/brand";
+import { IFilterValues, IListOptions, IReviewsList } from "~/interfaces/list";
+import { IOrder } from "~/interfaces/order";
+import { IProductsList, IProduct } from "~/interfaces/product";
+import { IReview } from "~/interfaces/review";
+import { IShopCategory } from "~/interfaces/category";
 import {
     IAddProductReviewData,
     ICheckoutData,
@@ -17,7 +17,7 @@ import {
     IGetSearchSuggestionsOptions,
     IGetSearchSuggestionsResult,
     ShopApi,
-} from '~/api/base';
+} from "~/api/base";
 import {
     addProductReview,
     checkout,
@@ -34,7 +34,11 @@ import {
     getSearchSuggestions,
     getSpecialOffers,
     getTopRatedProducts,
-} from '~/server/endpoints';
+} from "~/server/endpoints";
+import axios from "axios";
+import { delayResponse } from "~/server/utils";
+import { sendMail } from "~/services/email";
+import { getHostUrl } from "~/services/utils";
 
 export class FakeShopApi implements ShopApi {
     getCategoryBySlug(slug: string, options?: IGetCategoryBySlugOptions): Promise<IShopCategory> {
@@ -49,27 +53,48 @@ export class FakeShopApi implements ShopApi {
         return getBrands(options);
     }
 
-    getProductsList(options: IListOptions = {}, filters: IFilterValues = {}): Promise<IProductsList> {
-        return getProductsList(options, filters);
+    async getProductsList(options: IListOptions = {}, filters: IFilterValues = {}): Promise<IProductsList> {
+        // return getProductsList(options, filters);
+
+        console.log("Filters", filters);
+        console.log("Options", options);
+        const url = process.env.NODE_ENV === "development" ? "http://localhost:3000" : `${process.env.VERCEL_URL}`;
+
+        return axios
+            .post(`${url}/api/products/getProducts`, {
+                options,
+                filterValues: filters,
+            })
+            .then((res) => res.data.data);
     }
 
-    getProductBySlug(slug: string): Promise<IProduct> {
-        return getProductBySlug(slug);
+    async getProductBySlug(slug: string): Promise<IProduct> {
+        // return getProductBySlug(slug);
+        const url = getHostUrl();
+        let response = await axios.post(`${url}/api/products/getProductBySlug`, {
+            slug,
+        });
+
+        const product: IProduct = response.data.data;
+
+        console.log(product);
+
+        return product;
     }
 
-    getProductReviews(productId: number, options?: IListOptions): Promise<IReviewsList> {
+    getProductReviews(productId: string, options?: IListOptions): Promise<IReviewsList> {
         return getProductReviews(productId, options);
     }
 
-    addProductReview(productId: number, data: IAddProductReviewData): Promise<IReview> {
+    addProductReview(productId: string, data: IAddProductReviewData): Promise<IReview> {
         return addProductReview(productId, data);
     }
 
-    getProductAnalogs(productId: number): Promise<IProduct[]> {
+    getProductAnalogs(productId: string): Promise<IProduct[]> {
         return getProductAnalogs(productId);
     }
 
-    getRelatedProducts(productId: number, limit: number): Promise<IProduct[]> {
+    getRelatedProducts(productId: string, limit: number): Promise<IProduct[]> {
         return getRelatedProducts(productId, limit);
     }
 
@@ -93,10 +118,7 @@ export class FakeShopApi implements ShopApi {
         return getLatestProducts(limit);
     }
 
-    getSearchSuggestions(
-        query: string,
-        options?: IGetSearchSuggestionsOptions,
-    ): Promise<IGetSearchSuggestionsResult> {
+    getSearchSuggestions(query: string, options?: IGetSearchSuggestionsOptions): Promise<IGetSearchSuggestionsResult> {
         return getSearchSuggestions(query, options);
     }
 

@@ -70,8 +70,11 @@ export type IProductStock = "in-stock" | "out-of-stock" | "on-backorder";
 export type IProductCompatibilityResult = "all" | "fit" | "not-fit" | "unknown";
 
 export interface IProduct {
-    id: number;
+    id: string;
     name: string;
+    //
+    sellerId?: string;
+    version?: string;
     /**
      * A short product description without HTML tags.
      */
@@ -96,39 +99,59 @@ export interface IProduct {
     compatibility: "all" | "unknown" | number[]; //
     brand?: IBrand | null;
     tags?: string[];
-    type: IProductType;//
+    type: IProductType; //
     categories?: IShopCategory[]; //
-    attributes: IProductAttribute[];//
+    attributes: IProductAttribute[]; //
     options: IProductOption[]; //
     customFields?: ICustomFields;
-    transaction: Transaction
+    transaction: Transaction;
 }
 
-// Add-ons
+export interface ICarForm {
+    excerpt: string;
+    description: string;
 
-// export interface ICar {
-//     model: string;
-//     version?: string;
-//     year: Date;
-//     mileage: number;
-//     assembly: "Local" | "Imported";
-//     transmission: Transmission;
-//     bodyType: BodyType;
-//     colors: string[];
-//     engineCapacity: number;
-//     engine: EngineType;
-//     transaction: Transaction;
-//     user: IUser;
-//     postedDate: Date;
-//     province: string;
-//     city: string;
-//     registrationCity: string;
-// }
+    price: number;
+    transactionType: string;
+    terms?: number;
+    interval?: string;
+
+    mileage: number;
+    engineType: string;
+    engineDisplacement: number;
+    transmission: string;
+
+    color: string;
+    assembly: string;
+    bodyType: string;
+
+    registeredCity: string;
+    province: string;
+}
+
+export interface ICarProduct extends ICarForm {
+    make: string;
+    model: string;
+    version: string;
+    year: number;
+
+    images: string[];
+
+    rating: number;
+    reviews: Object[];
+    sellerId: string;
+    badges: string[];
+    isFeatured: boolean;
+    isApproved: boolean;
+    isInspected: boolean;
+    customFields: any;
+    postedDate: string;
+}
 
 type TransactionType = "Leased" | "Cash";
 
 type LeasedTransaction = {
-    timeInterval: "month" | "year";
+    timeInterval: string;
     terms: number;
     leasedAmount: number;
 };
@@ -154,6 +177,5 @@ export type BodyType = {
     name: string;
     image: string;
 };
-
 
 export type IProductsList = IPaginatedList<IProduct> & IFilterableList<IProduct>;

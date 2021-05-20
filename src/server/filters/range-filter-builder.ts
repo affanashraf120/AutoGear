@@ -4,7 +4,7 @@
 import { AbstractFilterBuilder } from '~/server/filters/abstract-filter-builder';
 import { IProduct } from '~/interfaces/product';
 import { IRangeFilter } from '~/interfaces/filter';
-import { products as dbProducts } from '~/server/database/products';
+// import { products as dbProducts } from '~/server/database/products';
 
 export class RangeFilterBuilder extends AbstractFilterBuilder {
     private min!: number;
@@ -24,6 +24,7 @@ export class RangeFilterBuilder extends AbstractFilterBuilder {
     }
 
     makeItems(products: IProduct[], value: string): void {
+        const dbProducts = products
         this.max = dbProducts.reduce((acc, product) => Math.max(acc, this.extractValue(product)), 0);
         this.min = dbProducts.reduce((acc, product) => Math.min(acc, this.extractValue(product)), this.max);
 

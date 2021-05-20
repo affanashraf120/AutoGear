@@ -1,11 +1,11 @@
 // application
-import { IAddressData } from '~/interfaces/address';
-import { IBrand } from '~/interfaces/brand';
-import { IFilterValues, IListOptions, IReviewsList } from '~/interfaces/list';
-import { IOrder } from '~/interfaces/order';
-import { IProduct, IProductsList } from '~/interfaces/product';
-import { IReview } from '~/interfaces/review';
-import { IShopCategory } from '~/interfaces/category';
+import { IAddressData } from "~/interfaces/address";
+import { IBrand } from "~/interfaces/brand";
+import { IFilterValues, IListOptions, IReviewsList } from "~/interfaces/list";
+import { IOrder } from "~/interfaces/order";
+import { IProduct, IProductsList } from "~/interfaces/product";
+import { IReview } from "~/interfaces/review";
+import { IShopCategory } from "~/interfaces/category";
 
 export interface IGetCategoryBySlugOptions {
     depth?: number;
@@ -68,13 +68,13 @@ export abstract class ShopApi {
 
     abstract getProductBySlug(slug: string): Promise<IProduct>;
 
-    abstract getProductReviews(productId: number, options?: IListOptions): Promise<IReviewsList>;
+    abstract getProductReviews(productId: string, options?: IListOptions): Promise<IReviewsList>;
 
-    abstract addProductReview(productId: number, data: IAddProductReviewData): Promise<IReview>;
+    abstract addProductReview(productId: string, data: IAddProductReviewData): Promise<IReview>;
 
-    abstract getProductAnalogs(productId: number): Promise<IProduct[]>;
+    abstract getProductAnalogs(productId: string): Promise<IProduct[]>;
 
-    abstract getRelatedProducts(productId: number, limit: number): Promise<IProduct[]>;
+    abstract getRelatedProducts(productId: string, limit: number): Promise<IProduct[]>;
 
     abstract getFeaturedProducts(categorySlug: string | null, limit: number): Promise<IProduct[]>;
 
@@ -88,7 +88,7 @@ export abstract class ShopApi {
 
     abstract getSearchSuggestions(
         query: string,
-        options?: IGetSearchSuggestionsOptions,
+        options?: IGetSearchSuggestionsOptions
     ): Promise<IGetSearchSuggestionsResult>;
 
     abstract checkout(data: ICheckoutData): Promise<IOrder>;

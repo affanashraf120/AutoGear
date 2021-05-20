@@ -5,7 +5,6 @@ import { useIntl } from "react-intl";
 // application
 import { IVehicle } from "~/interfaces/vehicle";
 import { vehicleApi } from "~/api";
-import axios from "axios";
 import { IVehicleDef } from "~/server/interfaces/vehicle-def";
 import { makeIdGenerator } from "~/server/utils";
 
@@ -14,7 +13,6 @@ interface VehicleSelectItemDef<T = any> {
     label: string;
     placeholder: string;
     optionsSource: (...args: any[]) => Promise<T[]>;
-    // optionsSource: (args:any) => T[];
     serializeOptionFn?: (option: T, item: VehicleSelectItem<T>) => string;
     deserializeOptionFn?: (value: string, item: VehicleSelectItem<T>) => T;
 }
@@ -74,50 +72,6 @@ export default function useVehicleForm(options: IOptions = {}) {
     const intl = useIntl();
     const { onChange } = options;
     const cancelPrevRequestRef = useRef(() => {});
-    const [vehicles, setVehicles] = useState<IVehicle[]>([]);
-    const getVehicleYears = (vehicles: IVehicle[]): number[] => {
-        const result: number[] = [];
-    
-        vehicles.forEach((vehicle) => {
-            if (result.indexOf(vehicle.year) === -1) {
-                result.push(vehicle.year);
-            }
-        });
-    
-        return result.sort();
-    };
-    const getVehicleMakes = (vehicles: IVehicle[], year: number): string[] => {
-        const result: string[] = [];
-    
-        vehicles
-            .filter((x) => x.year === year)
-            .forEach((vehicle) => {
-                if (result.indexOf(vehicle.make) === -1) {
-                    result.push(vehicle.make);
-                }
-            });
-    
-        return result.sort();
-    };
-    
-    const getVehicleModels = (vehicles: IVehicle[], year: number, make: string): string[] => {
-        const result: string[] = [];
-    
-        vehicles
-            .filter((x) => x.year === year && x.make === make)
-            .forEach((vehicle) => {
-                if (result.indexOf(vehicle.model) === -1) {
-                    result.push(vehicle.model);
-                }
-            });
-    
-        return result.sort();
-    };
-    
-    const getFilteredVehicle = (vehicles: IVehicle[], year: number, make: string, model: string) => {
-        const result = vehicles.filter((x) => x.year === year && x.make === make && x.model === model);
-        return result.sort();
-    };
     const [items, setItems] = useState(
         makeItems([
             {
@@ -125,7 +79,6 @@ export default function useVehicleForm(options: IOptions = {}) {
                 label: intl.formatMessage({ id: "INPUT_VEHICLE_YEAR_LABEL" }),
                 placeholder: intl.formatMessage({ id: "INPUT_VEHICLE_YEAR_PLACEHOLDER" }),
                 optionsSource: vehicleApi.getYears.bind(vehicleApi),
-                // optionsSource: getVehicleYears(vehicles),
                 serializeOptionFn: (option: number) => option.toString(),
                 deserializeOptionFn: (option: string) => parseFloat(option),
             },
@@ -256,11 +209,7 @@ export default function useVehicleForm(options: IOptions = {}) {
     };
 
     const getNextId = makeIdGenerator();
-
     
-    
-    
-
     function makeVehicles(defs: IVehicleDef[]): IVehicle[] {
         return defs
             .map((def) => {
@@ -280,28 +229,7 @@ export default function useVehicleForm(options: IOptions = {}) {
                 }));
             })
             .reduce((acc, v) => [...acc, ...v], []);
-    }
-    // Data fetch
-    useEffect(() => {
-        axios
-            .get(`/api/vehicles`)
-            .then((res) => {
-                let vehicles = res.data.vehicles.map((e: any) => {
-                    const v: IVehicleDef = {
-                        make: e.make,
-                        model: e.model,
-                        year: [parseInt(e.year[0]),parseInt(e.year[1])],
-                        engine: e.engine,
-                    };
-                    return v;
-                });
-                console.log(vehicles);
-                setVehicles(makeVehicles(vehicles));
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
+    }    
 
     // Load items.
     useEffect(() => {

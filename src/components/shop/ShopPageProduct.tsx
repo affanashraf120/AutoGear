@@ -68,7 +68,7 @@ function ShopPageProduct(props: Props) {
         { title: product.name, url: url.product(product) },
     ];
 
-    const featuredAttributes = product.attributes.filter((x) => x.featured);
+    const featuredAttributes = product?.attributes?.filter((x) => x.featured);
 
     const productInfoBody = (
         <div className="product__info-body">
@@ -99,7 +99,7 @@ function ShopPageProduct(props: Props) {
                         )}
                         <tr>
                             <th>Transaction Type</th>
-                            <td>{product.transaction.transactionType}</td>
+                            <td>{product?.transaction?.transactionType}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -221,7 +221,7 @@ function ShopPageProduct(props: Props) {
                                                 <div className="product__excerpt">{product.excerpt}</div>
                                             )}
 
-                                            {featuredAttributes.length > 0 && (
+                                            {featuredAttributes?.length > 0 && (
                                                 <div className="product__features">
                                                     <div className="product__features-title">
                                                         <FormattedMessage id="TEXT_KEY_FEATURES" />:

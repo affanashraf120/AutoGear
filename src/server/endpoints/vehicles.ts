@@ -57,7 +57,7 @@ export async function getVehicles(year: number, make: string, model: string): Pr
 
     const result = response.data.vehicles.filter((x:any) => x.year === year && x.make === make && x.model === model);
 
-    return delayResponse(Promise.resolve(result.sort()), 750);
+    return delayResponse(Promise.resolve(result.sort()), 0);
 }
 
 export function getVehicleByVin(vin: string): Promise<IVehicle> {

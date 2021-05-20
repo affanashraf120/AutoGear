@@ -25,7 +25,7 @@ export class RadioFilterBuilder extends AbstractFilterBuilder {
         this.value = value || this.items[0].slug;
     }
 
-    calc(filters: AbstractFilterBuilder[]): void {
+    calc(dbProducts:IProduct[],filters: AbstractFilterBuilder[]): void {
         const products = dbProducts.filter(
             (product) => filters.reduce<boolean>(
                 (isMatched, filter) => isMatched && (filter === this || filter.test(product)),

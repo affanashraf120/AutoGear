@@ -1,5 +1,5 @@
 // application
-import { IBaseCategory, ICategory } from '~/interfaces/category';
+import { IBaseCategory, ICategory } from "~/interfaces/category";
 
 export function baseUrl(url: string): string {
     if (/^\/([^/]|$)/.test(url)) {
@@ -22,7 +22,7 @@ export function isArrayOfStrings(value: any): value is string[] {
         return false;
     }
 
-    return !value.map((x) => typeof x !== 'string').includes(true);
+    return !value.map((x) => typeof x !== "string").includes(true);
 }
 
 export function isArrayOfNumbers(value: any): value is number[] {
@@ -30,5 +30,10 @@ export function isArrayOfNumbers(value: any): value is number[] {
         return false;
     }
 
-    return !value.map((x) => typeof x !== 'number').includes(true);
+    return !value.map((x) => typeof x !== "number").includes(true);
 }
+
+export const getHostUrl = (): string => {
+    const url = process.env.NODE_ENV === "development" ? "http://localhost:3000" : `${process.env.VERCEL_URL}`;
+    return url;
+};

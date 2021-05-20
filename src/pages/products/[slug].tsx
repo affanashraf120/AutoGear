@@ -1,23 +1,31 @@
 // react
-import React from 'react';
+import React from "react";
 // third-party
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps } from "next";
 // application
-import ShopPageProduct from '~/components/shop/ShopPageProduct';
-import { IProduct } from '~/interfaces/product';
-import { shopApi } from '~/api';
-import SitePageNotFound from '~/components/site/SitePageNotFound';
+import ShopPageProduct from "~/components/shop/ShopPageProduct";
+import { IProduct } from "~/interfaces/product";
+import { shopApi } from "~/api";
+import SitePageNotFound from "~/components/site/SitePageNotFound";
 
 interface Props {
     product: IProduct | null;
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
-    const slug = typeof params?.slug === 'string' ? params?.slug : null;
+    const slug = typeof params?.slug === "string" ? params?.slug : null;
+
+    let product: IProduct | null = null;
+
+    if (slug) {
+        const _product = await shopApi.getProductBySlug(slug);
+        console.log(_product);
+        product = _product;
+    }
 
     return {
         props: {
-            product: slug ? await shopApi.getProductBySlug(slug) : null,
+            product: product,
         },
     };
 };
@@ -29,12 +37,7 @@ function Page(props: Props) {
         return <SitePageNotFound />;
     }
 
-    return (
-        <ShopPageProduct
-            product={product}
-            layout="full"
-        />
-    );
+    return <ShopPageProduct product={product} layout="full" />;
 }
 
 export default Page;

@@ -1,10 +1,10 @@
 // react
-import React from 'react';
+import React, { useEffect } from "react";
 // third-party
-import classNames from 'classnames';
+import classNames from "classnames";
 // application
-import useVehicleForm from '~/services/forms/vehicle';
-import { IVehicle } from '~/interfaces/vehicle';
+import useVehicleForm from "~/services/forms/vehicle";
+import { IVehicle } from "~/interfaces/vehicle";
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
     onVehicleChange?: (event: IVehicle | null) => void;
@@ -12,10 +12,11 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
 
 function VehicleSelect(props: Props) {
     const { onVehicleChange, className, ...rootProps } = props;
-    const rootClasses = classNames('vehicle-select', className);
+    const rootClasses = classNames("vehicle-select", className);
     const form = useVehicleForm({
         onChange: onVehicleChange,
     });
+
 
     return (
         <div className={rootClasses} {...rootProps}>
@@ -26,8 +27,8 @@ function VehicleSelect(props: Props) {
                     return (
                         <div
                             key={itemIdx}
-                            className={classNames('vehicle-select__item', {
-                                'vehicle-select__item--loading': item.loading,
+                            className={classNames("vehicle-select__item", {
+                                "vehicle-select__item--loading": item.loading,
                             })}
                         >
                             <select

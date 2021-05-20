@@ -26,7 +26,7 @@ function BlockFinder() {
                 ...hrefToRouterArgs(
                     url.products({
                         filters: {
-                            filter_vehicle: vehicle.id.toString(),
+                            filter_vehicle: `${vehicle.make} ${vehicle.model}`,
                         },
                     })
                 )
