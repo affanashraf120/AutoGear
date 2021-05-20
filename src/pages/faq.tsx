@@ -93,7 +93,7 @@ function Page() {
                         </div>
                     </div>
 
-                    <div className="faq__section">
+                    {/* <div className="faq__section">
                         <h3 className="faq__section-title">Payment Information</h3>
                         <div className="faq__section-body">
                             <div className="faq__question">
@@ -128,9 +128,9 @@ function Page() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div className="faq__section">
+                    {/* <div className="faq__section">
                         <h3 className="faq__section-title">Orders and Returns</h3>
                         <div className="faq__section-body">
                             <div className="faq__question">
@@ -165,7 +165,7 @@ function Page() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="faq__footer">
                         <div className="faq__footer-title">Still Have A Questions?</div>

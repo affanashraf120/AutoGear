@@ -54,14 +54,8 @@ export class FakeShopApi implements ShopApi {
     }
 
     async getProductsList(options: IListOptions = {}, filters: IFilterValues = {}): Promise<IProductsList> {
-        // return getProductsList(options, filters);
-
-        console.log("Filters", filters);
-        console.log("Options", options);
-        const url = process.env.NODE_ENV === "development" ? "http://localhost:3000" : `${process.env.VERCEL_URL}`;
-
         return axios
-            .post(`${url}/api/products/getProducts`, {
+            .post(`${getHostUrl()}/api/products/getProducts`, {
                 options,
                 filterValues: filters,
             })
@@ -91,31 +85,59 @@ export class FakeShopApi implements ShopApi {
     }
 
     getProductAnalogs(productId: string): Promise<IProduct[]> {
-        return getProductAnalogs(productId);
+        // return getProductAnalogs(productId);
+        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
+            let products = shuffle(res.data.data).slice(0,4)
+            return products;
+        });
     }
 
     getRelatedProducts(productId: string, limit: number): Promise<IProduct[]> {
-        return getRelatedProducts(productId, limit);
+        // return getRelatedProducts(productId, limit);
+        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
+            let products = shuffle(res.data.data).slice(0,limit)
+            return products;
+        });
     }
 
     getFeaturedProducts(categorySlug: string | null, limit: number): Promise<IProduct[]> {
-        return getFeaturedProducts(categorySlug, limit);
+        // return getFeaturedProducts(categorySlug, limit);
+        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
+            let products = shuffle(res.data.data).slice(0,limit)
+            return products;
+        });
     }
 
     getPopularProducts(categorySlug: string | null, limit: number): Promise<IProduct[]> {
-        return getPopularProducts(categorySlug, limit);
+        // return getPopularProducts(categorySlug, limit);
+        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
+            let products = shuffle(res.data.data).slice(0,limit)
+            return products;
+        });
     }
 
     getTopRatedProducts(categorySlug: string | null, limit: number): Promise<IProduct[]> {
-        return getTopRatedProducts(categorySlug, limit);
+        // return getTopRatedProducts(categorySlug, limit);
+        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
+            let products = shuffle(res.data.data).slice(0,limit)
+            return products;
+        });
     }
 
     getSpecialOffers(limit: number): Promise<IProduct[]> {
-        return getSpecialOffers(limit);
+        // return getSpecialOffers(limit);
+        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
+            let products = shuffle(res.data.data).slice(0,limit)
+            return products;
+        });
     }
 
     getLatestProducts(limit: number): Promise<IProduct[]> {
-        return getLatestProducts(limit);
+        // return getLatestProducts(limit);//
+        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
+            let products = shuffle(res.data.data).slice(0,limit)
+            return products;
+        });
     }
 
     getSearchSuggestions(query: string, options?: IGetSearchSuggestionsOptions): Promise<IGetSearchSuggestionsResult> {
@@ -125,4 +147,24 @@ export class FakeShopApi implements ShopApi {
     checkout(data: ICheckoutData): Promise<IOrder> {
         return checkout(data);
     }
+}
+
+function shuffle(array: any[]) {
+    var currentIndex = array.length,
+        temporaryValue,
+        randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
 }

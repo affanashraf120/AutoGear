@@ -11,7 +11,7 @@ import { IProduct } from '~/interfaces/product';
 import { shopApi } from '~/api';
 
 interface Props {
-    productId: number;
+    productId: string;
 }
 
 function AnalogsTable(props: Props) {
@@ -19,21 +19,21 @@ function AnalogsTable(props: Props) {
     const { productId } = props;
     const [analogs, setAnalogs] = useState<IProduct[]>([]);
 
-    // useEffect(() => {
-    //     let canceled = true;
+    useEffect(() => {
+        let canceled = false;
 
-    //     // shopApi.getProductAnalogs(productId).then((result) => {
-    //     //     if (canceled) {
-    //     //         return;
-    //     //     }
+        shopApi.getProductAnalogs(productId).then((result) => {
+            if (canceled) {
+                return;
+            }
 
-    //     //     setAnalogs(result);
-    //     // });
+            setAnalogs(result);
+        });
 
-    //     return () => {
-    //         canceled = true;
-    //     };
-    // }, [productId]);
+        return () => {
+            canceled = true;
+        };
+    }, [productId]);
 
     return (
         <div className="analogs-table">
@@ -91,7 +91,7 @@ function AnalogsTable(props: Props) {
                                         {analog.brand.name}
                                         <div className="analogs-table__country">
                                             (
-                                            <FormattedMessage id={`COUNTRY_NAME_${analog.brand.country}`} />
+                                            <FormattedMessage id={`COUNTRY_NAME_PAK`} />
                                             )
                                         </div>
                                     </React.Fragment>
