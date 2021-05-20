@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "~/utils/dbconnnect";
 import Product from "~/models/product";
+import { makeApiFetchCarToProduct } from "~/server/utils";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -8,7 +9,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         await dbConnect();
 
-        const products = await Product.find({ sellerId: userId });
+        const carProducts = await Product.find({ sellerId: userId });
+        let products = carProducts.map((carProduct) => makeApiFetchCarToProduct(carProduct, carProduct._id));
 
         if (products) {
             res.status(200).json({
