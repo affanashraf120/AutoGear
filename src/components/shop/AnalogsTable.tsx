@@ -19,21 +19,21 @@ function AnalogsTable(props: Props) {
     const { productId } = props;
     const [analogs, setAnalogs] = useState<IProduct[]>([]);
 
-    useEffect(() => {
-        let canceled = false;
+    // useEffect(() => {
+    //     let canceled = true;
 
-        shopApi.getProductAnalogs(productId).then((result) => {
-            if (canceled) {
-                return;
-            }
+    //     // shopApi.getProductAnalogs(productId).then((result) => {
+    //     //     if (canceled) {
+    //     //         return;
+    //     //     }
 
-            setAnalogs(result);
-        });
+    //     //     setAnalogs(result);
+    //     // });
 
-        return () => {
-            canceled = true;
-        };
-    }, [productId]);
+    //     return () => {
+    //         canceled = true;
+    //     };
+    // }, [productId]);
 
     return (
         <div className="analogs-table">
