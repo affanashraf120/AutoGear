@@ -31,7 +31,7 @@ export function useSignUpForm(options: ISignUpFormOptions = {}) {
     const [submit, submitInProgress] = useAsyncAction((data: ISignUpForm) => {
         setServerError(null);
 
-        return signUp(data.email, data.password).then(
+        return signUp(data.email.toLocaleLowerCase(), data.password).then(
             () => {
                 if (onSuccess) {
                     onSuccess();

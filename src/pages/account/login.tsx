@@ -19,11 +19,7 @@ function Page() {
     const intl = useIntl();
     const user = useUser();
 
-    const onSuccess = (data: ISignInForm) => {
-        localStorage.setItem("userEmail", data.email)
-    };
-
-    const signInForm = useSignInForm({ onSuccess });
+    const signInForm = useSignInForm();
     const signUpForm = useSignUpForm();
 
     if (user) {
