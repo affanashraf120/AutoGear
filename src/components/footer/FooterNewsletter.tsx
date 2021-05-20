@@ -1,25 +1,38 @@
 // react
-import React, { FunctionComponent } from 'react';
+import axios from "axios";
+import React, { FunctionComponent } from "react";
 // third-party
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from "react-intl";
+import { toast } from "react-toastify";
 // application
-import AppLink from '~/components/shared/AppLink';
+import AppLink from "~/components/shared/AppLink";
 // data
-import theme from '~/data/theme';
+import theme from "~/data/theme";
+import { getHostUrl } from "~/services/utils";
 
 const FooterNewsletter: FunctionComponent<React.HTMLAttributes<HTMLElement>> = () => {
     const intl = useIntl();
 
     const handleFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+
+        axios
+            .post(`/api/newsletter`, {})
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                toast("Mail sent successfully");
+                console.log(err);
+            });
     };
 
     const socialLinks = [
-        { type: 'facebook', url: theme.author.profile_url, icon: 'fab fa-facebook-f' },
-        { type: 'twitter', url: theme.author.profile_url, icon: 'fab fa-twitter' },
-        { type: 'youtube', url: theme.author.profile_url, icon: 'fab fa-youtube' },
-        { type: 'instagram', url: theme.author.profile_url, icon: 'fab fa-instagram' },
-        { type: 'rss', url: theme.author.profile_url, icon: 'fas fa-rss' },
+        { type: "facebook", url: theme.author.profile_url, icon: "fab fa-facebook-f" },
+        { type: "twitter", url: theme.author.profile_url, icon: "fab fa-twitter" },
+        { type: "youtube", url: theme.author.profile_url, icon: "fab fa-youtube" },
+        { type: "instagram", url: theme.author.profile_url, icon: "fab fa-instagram" },
+        { type: "rss", url: theme.author.profile_url, icon: "fas fa-rss" },
     ];
 
     return (
@@ -39,12 +52,9 @@ const FooterNewsletter: FunctionComponent<React.HTMLAttributes<HTMLElement>> = (
                     id="footer-newsletter-address"
                     type="text"
                     className="footer-newsletter__form-input"
-                    placeholder={intl.formatMessage({ id: 'INPUT_EMAIL_ADDRESS_PLACEHOLDER' })}
+                    placeholder={intl.formatMessage({ id: "INPUT_EMAIL_ADDRESS_PLACEHOLDER" })}
                 />
-                <button
-                    type="submit"
-                    className="footer-newsletter__form-button"
-                >
+                <button type="submit" className="footer-newsletter__form-button">
                     <FormattedMessage id="BUTTON_SUBSCRIBE" />
                 </button>
             </form>
