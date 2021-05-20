@@ -15,11 +15,12 @@ import { IAddress } from "~/interfaces/address";
 import { IOrder } from "~/interfaces/order";
 import { useUser } from "~/store/user/userHooks";
 import { useDispatch } from "react-redux";
+import { userSetCurrent } from "~/store/user/userAction";
 
 function Page() {
     const intl = useIntl();
     const user = useUser();
-    const dispatch =  useDispatch()
+    const dispatch = useDispatch();
     const [address, setAddress] = useState<IAddress | null>(null);
 
     const isAuth = () => {
@@ -39,9 +40,6 @@ function Page() {
     }, [user]);
 
     if (!user) {
-        // if(isAuth){
-        //     dispa
-        // }
         return null;
     }
 

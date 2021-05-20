@@ -128,4 +128,10 @@ export const brands: IBrand[] = [
         image: "/images/brands/zotye.png",
         country: "Pakistan",
     },
+    {
+        name: "NISSAN",
+        slug: "nissan",
+        image: "/images/brands/zotye.png",
+        country: "Pakistan",
+    },
 ];

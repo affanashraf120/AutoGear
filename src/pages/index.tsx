@@ -151,7 +151,7 @@ function Page() {
             <BlockSpace layout="divider-nl" />
             <BlockFeatures layout="top-strip" />
             <BlockSpace layout="divider-nl" />
-            <BlockBrands layout="columns-8-full" brands={brands} />
+            <BlockBrands layout="columns-8-full" brands={brands.slice(0,16)} />
             <BlockSpace layout="divider-xs" />
             <BlockSlideshow slides={slides} />
             <BlockSpace layout="divider-nl" />

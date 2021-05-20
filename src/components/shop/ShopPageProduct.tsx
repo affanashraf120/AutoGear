@@ -1,5 +1,6 @@
 // react
 // third-party
+import axios from "axios";
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { FormProvider } from "react-hook-form";
@@ -42,9 +43,20 @@ function ShopPageProduct(props: Props) {
     const galleryLayout = `product-${layout}` as IProductGalleryLayout;
     const [relatedProducts, setRelatedProducts] = useState<IProduct[]>([]);
     const productForm = useProductForm(product);
+    const [user, setUser] = useState({
+        firstName: "",
+        lastName: "",
+        phone: "-",
+        email: "-",
+    });
 
     useEffect(() => {
         let canceled = false;
+
+        axios.get(`/api/auth/${product.sellerId}`).then((res) => {
+            console.log(res.data.data);
+            setUser(res.data.data);
+        });
 
         shopApi.getRelatedProducts(product.id, 8).then((result) => {
             if (canceled) {
@@ -82,17 +94,18 @@ function ShopPageProduct(props: Props) {
                             <React.Fragment>
                                 <tr>
                                     <th>Make</th>
-                                    <td>
-                                        {/* <AppLink href={url.brand(product.brand)}>{product.brand.name}</AppLink> */}
-                                        {product.brand.name}
-                                    </td>
+                                    <td>{product.brand.name}</td>
+                                </tr>
+                                <tr>
+                                    <th>Model</th>
+                                    <td>{product.name}</td>
                                 </tr>
                                 <tr>
                                     <th>
                                         <FormattedMessage id="TABLE_COUNTRY" />
                                     </th>
                                     <td>
-                                        <FormattedMessage id={`COUNTRY_NAME_${product.brand.country}`} />
+                                        <FormattedMessage id={`COUNTRY_NAME_PAK`} />
                                     </td>
                                 </tr>
                             </React.Fragment>
@@ -100,6 +113,14 @@ function ShopPageProduct(props: Props) {
                         <tr>
                             <th>Transaction Type</th>
                             <td>{product?.transaction?.transactionType}</td>
+                        </tr>
+                        <tr>
+                            <th>Seller Phone</th>
+                            <td>{user.phone}</td>
+                        </tr>
+                        <tr>
+                            <th>Seller Email</th>
+                            <td>{user.email}</td>
                         </tr>
                     </tbody>
                 </table>
