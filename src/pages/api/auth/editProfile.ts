@@ -15,11 +15,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 const { firstName, lastName, phone, email } = req.body;
                 const filter = { email };
                 const update = { firstName, lastName, phone };
-                const userEl = await User.findOneAndUpdate(filter, update, {
+                await User.findOneAndUpdate(filter, update, {
                     useFindAndModify: true,
                 });
+                const userEl = await User.findOne({ email });
                 if (userEl) {
                     const user = _.pick(userEl, ["_id", "firstName", "lastName", "email", "phone"]);
+                    console.log(user);
                     res.status(200).json({
                         success: true,
                         data: {

@@ -79,9 +79,9 @@ const Page = () => {
         ));
     };
 
-    if (!user?.phone) {
-        return <Redirect href={url.accountProfile()} />;
-    }
+    // if (!user?.phone) {
+    //     return <Redirect href={url.accountProfile()} />;
+    // }
 
     const getNextId = makeIdGenerator();
 
@@ -107,7 +107,7 @@ const Page = () => {
         try {
             const mediaUrl = await imageUpload();
             const url = mediaUrl.replace("upload", "upload/c_scale,h_800,w_800");
-            if (vehicle && user._id) {
+            if (vehicle && user && user._id) {
                 const car: ICarProduct = {
                     ...data,
                     make: vehicle.make,

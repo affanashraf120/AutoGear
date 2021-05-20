@@ -1,8 +1,8 @@
 // application
-import { IAddress, IAddressData } from '~/interfaces/address';
-import { IOrder } from '~/interfaces/order';
-import { IOrdersList } from '~/interfaces/list';
-import { IUser } from '~/interfaces/user';
+import { IAddress, IAddressData } from "~/interfaces/address";
+import { IOrder } from "~/interfaces/order";
+import { IOrdersList } from "~/interfaces/list";
+import { IUser } from "~/interfaces/user";
 
 export interface IEditProfileData {
     firstName: string;
@@ -30,7 +30,7 @@ export abstract class AccountApi {
 
     abstract editProfile(data: IEditProfileData): Promise<IUser>;
 
-    abstract changePassword(oldPassword: string, newPassword: string): Promise<void>;
+    abstract changePassword(oldPassword: string, newPassword: string, id: string): Promise<void>;
 
     abstract addAddress(data: IEditAddressData): Promise<IAddress>;
 

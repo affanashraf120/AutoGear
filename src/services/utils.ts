@@ -34,6 +34,6 @@ export function isArrayOfNumbers(value: any): value is number[] {
 }
 
 export const getHostUrl = (): string => {
-    const url = process.env.NODE_ENV === "development" ? "http://localhost:3000" : `${process.env.VERCEL_URL}`;
+    const url = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://autogear.pk";
     return url;
 };

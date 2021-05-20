@@ -1,24 +1,29 @@
 // react
-import React from 'react';
+import React from "react";
 // third-party
-import classNames from 'classnames';
-import { FormattedMessage, useIntl } from 'react-intl';
+import classNames from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
 // application
-import AppLink from '~/components/shared/AppLink';
-import BlockSpace from '~/components/blocks/BlockSpace';
-import Checkbox from '~/components/shared/Checkbox';
-import PageTitle from '~/components/shared/PageTitle';
-import Redirect from '~/components/shared/Redirect';
-import url from '~/services/url';
-import { useSignInForm } from '~/services/forms/sign-in';
-import { useSignUpForm } from '~/services/forms/sign-up';
-import { useUser } from '~/store/user/userHooks';
-import { validateEmail } from '~/services/validators';
+import AppLink from "~/components/shared/AppLink";
+import BlockSpace from "~/components/blocks/BlockSpace";
+import Checkbox from "~/components/shared/Checkbox";
+import PageTitle from "~/components/shared/PageTitle";
+import Redirect from "~/components/shared/Redirect";
+import url from "~/services/url";
+import { ISignInForm, useSignInForm } from "~/services/forms/sign-in";
+import { useSignUpForm } from "~/services/forms/sign-up";
+import { useUser } from "~/store/user/userHooks";
+import { validateEmail } from "~/services/validators";
 
 function Page() {
     const intl = useIntl();
     const user = useUser();
-    const signInForm = useSignInForm();
+
+    const onSuccess = (data: ISignInForm) => {
+        localStorage.setItem("userEmail", data.email)
+    };
+
+    const signInForm = useSignInForm({ onSuccess });
     const signUpForm = useSignUpForm();
 
     if (user) {
@@ -27,7 +32,7 @@ function Page() {
 
     return (
         <React.Fragment>
-            <PageTitle>{intl.formatMessage({ id: 'HEADER_LOGIN' })}</PageTitle>
+            <PageTitle>{intl.formatMessage({ id: "HEADER_LOGIN" })}</PageTitle>
 
             <BlockSpace layout="after-header" />
 
@@ -53,8 +58,8 @@ function Page() {
                                             <input
                                                 id="signin-email"
                                                 type="email"
-                                                className={classNames('form-control', {
-                                                    'is-invalid': signInForm.errors.email,
+                                                className={classNames("form-control", {
+                                                    "is-invalid": signInForm.errors.email,
                                                 })}
                                                 placeholder="customer@example.com"
                                                 name="email"
@@ -64,10 +69,10 @@ function Page() {
                                                 })}
                                             />
                                             <div className="invalid-feedback">
-                                                {signInForm.errors.email?.type === 'required' && (
+                                                {signInForm.errors.email?.type === "required" && (
                                                     <FormattedMessage id="ERROR_FORM_REQUIRED" />
                                                 )}
-                                                {signInForm.errors.email?.type === 'email' && (
+                                                {signInForm.errors.email?.type === "email" && (
                                                     <FormattedMessage id="ERROR_FORM_INCORRECT_EMAIL" />
                                                 )}
                                             </div>
@@ -79,23 +84,23 @@ function Page() {
                                             <input
                                                 id="signin-password"
                                                 type="password"
-                                                className={classNames('form-control', {
-                                                    'is-invalid': signInForm.errors.password,
+                                                className={classNames("form-control", {
+                                                    "is-invalid": signInForm.errors.password,
                                                 })}
-                                                placeholder={intl.formatMessage({ id: 'INPUT_PASSWORD_PLACEHOLDER' })}
+                                                placeholder={intl.formatMessage({ id: "INPUT_PASSWORD_PLACEHOLDER" })}
                                                 name="password"
                                                 ref={signInForm.register({ required: true })}
                                             />
                                             <div className="invalid-feedback">
-                                                {signInForm.errors.password?.type === 'required' && (
+                                                {signInForm.errors.password?.type === "required" && (
                                                     <FormattedMessage id="ERROR_FORM_REQUIRED" />
                                                 )}
                                             </div>
-                                            <small className="form-text text-muted">
+                                            {/* <small className="form-text text-muted">
                                                 <AppLink href="/">
                                                     <FormattedMessage id="LINK_FORGOT_PASSWORD" />
                                                 </AppLink>
-                                            </small>
+                                            </small> */}
                                         </div>
                                         <div className="form-group">
                                             <div className="form-check">
@@ -113,8 +118,8 @@ function Page() {
                                         <div className="form-group mb-0">
                                             <button
                                                 type="submit"
-                                                className={classNames('btn', 'btn-primary', 'mt-3', {
-                                                    'btn-loading': signInForm.submitInProgress,
+                                                className={classNames("btn", "btn-primary", "mt-3", {
+                                                    "btn-loading": signInForm.submitInProgress,
                                                 })}
                                             >
                                                 <FormattedMessage id="BUTTON_LOGIN" />
@@ -144,8 +149,8 @@ function Page() {
                                             <input
                                                 id="signup-email"
                                                 type="email"
-                                                className={classNames('form-control', {
-                                                    'is-invalid': signUpForm.errors.email,
+                                                className={classNames("form-control", {
+                                                    "is-invalid": signUpForm.errors.email,
                                                 })}
                                                 placeholder="customer@example.com"
                                                 name="email"
@@ -155,10 +160,10 @@ function Page() {
                                                 })}
                                             />
                                             <div className="invalid-feedback">
-                                                {signUpForm.errors.email?.type === 'required' && (
+                                                {signUpForm.errors.email?.type === "required" && (
                                                     <FormattedMessage id="ERROR_FORM_REQUIRED" />
                                                 )}
-                                                {signUpForm.errors.email?.type === 'email' && (
+                                                {signUpForm.errors.email?.type === "email" && (
                                                     <FormattedMessage id="ERROR_FORM_INCORRECT_EMAIL" />
                                                 )}
                                             </div>
@@ -171,17 +176,17 @@ function Page() {
                                             <input
                                                 id="signup-password"
                                                 type="password"
-                                                className={classNames('form-control', {
-                                                    'is-invalid': signUpForm.errors.password,
+                                                className={classNames("form-control", {
+                                                    "is-invalid": signUpForm.errors.password,
                                                 })}
-                                                placeholder={intl.formatMessage({ id: 'INPUT_PASSWORD_PLACEHOLDER' })}
+                                                placeholder={intl.formatMessage({ id: "INPUT_PASSWORD_PLACEHOLDER" })}
                                                 name="password"
                                                 ref={signUpForm.register({
                                                     required: true,
                                                 })}
                                             />
                                             <div className="invalid-feedback">
-                                                {signUpForm.errors.password?.type === 'required' && (
+                                                {signUpForm.errors.password?.type === "required" && (
                                                     <FormattedMessage id="ERROR_FORM_REQUIRED" />
                                                 )}
                                             </div>
@@ -193,25 +198,25 @@ function Page() {
                                             <input
                                                 id="signup-confirm"
                                                 type="password"
-                                                className={classNames('form-control', {
-                                                    'is-invalid': signUpForm.errors.confirmPassword,
+                                                className={classNames("form-control", {
+                                                    "is-invalid": signUpForm.errors.confirmPassword,
                                                 })}
                                                 placeholder={intl.formatMessage({
-                                                    id: 'INPUT_PASSWORD_REPEAT_PLACEHOLDER',
+                                                    id: "INPUT_PASSWORD_REPEAT_PLACEHOLDER",
                                                 })}
                                                 name="confirmPassword"
                                                 ref={signUpForm.register({
                                                     required: true,
                                                     validate: {
-                                                        match: (value) => value === signUpForm.watch('password'),
+                                                        match: (value) => value === signUpForm.watch("password"),
                                                     },
                                                 })}
                                             />
                                             <div className="invalid-feedback">
-                                                {signUpForm.errors.confirmPassword?.type === 'required' && (
+                                                {signUpForm.errors.confirmPassword?.type === "required" && (
                                                     <FormattedMessage id="ERROR_FORM_REQUIRED" />
                                                 )}
-                                                {signUpForm.errors.confirmPassword?.type === 'match' && (
+                                                {signUpForm.errors.confirmPassword?.type === "match" && (
                                                     <FormattedMessage id="ERROR_FORM_PASSWORD_DOES_NOT_MATCH" />
                                                 )}
                                             </div>
@@ -219,8 +224,8 @@ function Page() {
                                         <div className="form-group mb-0">
                                             <button
                                                 type="submit"
-                                                className={classNames('btn', 'btn-primary', 'mt-3', {
-                                                    'btn-loading': signUpForm.submitInProgress,
+                                                className={classNames("btn", "btn-primary", "mt-3", {
+                                                    "btn-loading": signUpForm.submitInProgress,
                                                 })}
                                             >
                                                 <FormattedMessage id="BUTTON_REGISTER" />

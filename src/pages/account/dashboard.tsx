@@ -14,11 +14,20 @@ import { accountApi } from "~/api";
 import { IAddress } from "~/interfaces/address";
 import { IOrder } from "~/interfaces/order";
 import { useUser } from "~/store/user/userHooks";
+import { useDispatch } from "react-redux";
 
 function Page() {
     const intl = useIntl();
     const user = useUser();
+    const dispatch =  useDispatch()
     const [address, setAddress] = useState<IAddress | null>(null);
+
+    const isAuth = () => {
+        const user = localStorage.getItem("userEmail");
+        if (user) {
+            return true;
+        } else return false;
+    };
 
     useEffect(() => {
         console.log(user);
@@ -30,6 +39,9 @@ function Page() {
     }, [user]);
 
     if (!user) {
+        // if(isAuth){
+        //     dispa
+        // }
         return null;
     }
 

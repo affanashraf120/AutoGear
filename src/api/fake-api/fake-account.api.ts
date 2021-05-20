@@ -27,7 +27,7 @@ import axios from "axios";
 export class FakeAccountApi extends AccountApi {
     signIn(email: string, password: string): Promise<IUser> {
         return axios.post("/api/auth/loginUser", { email: email, password: password }).then((response) => {
-            console.log(response.data.data)
+            console.log(response.data.data);
             return {
                 ...response.data.data,
             };
@@ -36,7 +36,7 @@ export class FakeAccountApi extends AccountApi {
 
     signUp(email: string, password: string): Promise<IUser> {
         return axios.post("/api/auth/registerUser", { email: email, password: password }).then((response) => {
-            console.log(response.data.data)
+            console.log(response.data.data);
             return {
                 ...response.data.data,
             };
@@ -48,16 +48,22 @@ export class FakeAccountApi extends AccountApi {
     }
 
     editProfile(data: IEditProfileData): Promise<IUser> {
-        return axios.put("/api/auth/editProfile",data).then((response)=>{
-            console.log(response.data.data)
+        return axios.put("/api/auth/editProfile", data).then((response) => {
+            console.log(response.data.data);
             return {
-                ...response.data.data
-            }
-        })
+                ...response.data.data,
+            };
+        });
     }
 
-    changePassword(oldPassword: string, newPassword: string): Promise<void> {
-        return accountChangePassword(oldPassword, newPassword);
+    changePassword(oldPassword: string, newPassword: string, id: string): Promise<void> {
+        const data = { oldPassword, newPassword, id };
+        
+        console.log(data);
+        return axios.put("/api/auth/changePassword", data).then((res) => {
+            console.log(res.data.data);
+            return res.data.data;
+        });
     }
 
     addAddress(data: IEditAddressData): Promise<IAddress> {

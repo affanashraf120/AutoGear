@@ -91,9 +91,9 @@ function AccountMenu(props: Props) {
                                 name="password"
                                 ref={signInForm.register({ required: true })}
                             />
-                            <AppLink href={url.passwordRecovery()} className="account-menu__form-forgot-link">
+                            {/* <AppLink href={url.passwordRecovery()} className="account-menu__form-forgot-link">
                                 <FormattedMessage id="LINK_FORGOT" />
-                            </AppLink>
+                            </AppLink> */}
                         </div>
                         <div className="invalid-feedback">
                             {signInForm.errors.password?.type === "required" && (

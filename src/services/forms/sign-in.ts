@@ -1,13 +1,13 @@
 // react
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from "react";
 // third-party
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 // application
-import { useAsyncAction } from '~/store/hooks';
-import { useUserSignIn } from '~/store/user/userHooks';
+import { useAsyncAction } from "~/store/hooks";
+import { useUserSignIn } from "~/store/user/userHooks";
 
 interface ISignInFormOptions {
-    onSuccess?: () => void;
+    onSuccess?: (data: ISignInForm) => void;
 }
 
 export interface ISignInForm {
@@ -22,26 +22,29 @@ export function useSignInForm(options: ISignInFormOptions = {}) {
     const [serverError, setServerError] = useState<string | null>(null);
     const methods = useForm<ISignInForm>({
         defaultValues: {
-            email: 'affan@gmail.com',
-            password: '123456',
+            email: "affan@gmail.com",
+            password: "12345678",
             remember: false,
         },
     });
     const { handleSubmit } = methods;
-    const [submit, submitInProgress] = useAsyncAction((data: ISignInForm) => {
-        setServerError(null);
+    const [submit, submitInProgress] = useAsyncAction(
+        (data: ISignInForm) => {
+            setServerError(null);
 
-        return signIn(data.email, data.password).then(
-            () => {
-                if (onSuccess) {
-                    onSuccess();
+            return signIn(data.email, data.password).then(
+                () => {
+                    if (onSuccess) {
+                        onSuccess(data);
+                    }
+                },
+                (error: Error) => {
+                    setServerError(`ERROR_API_${error.message}`);
                 }
-            },
-            (error: Error) => {
-                setServerError(`ERROR_API_${error.message}`);
-            },
-        );
-    }, [signIn, setServerError, onSuccess]);
+            );
+        },
+        [signIn, setServerError, onSuccess]
+    );
 
     return {
         submit: useMemo(() => handleSubmit(submit), [handleSubmit, submit]),
