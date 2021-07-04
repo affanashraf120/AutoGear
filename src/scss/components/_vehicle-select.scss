@@ -1,12 +1,11 @@
 /*
 // .vehicle-select
 */
-@import '../variables';
-@import '../svg';
-@import '../mixins/breakpoints';
-@import '../mixins/direction';
-@import '../mixins/loader';
-
+@import "../variables";
+@import "../svg";
+@import "../mixins/breakpoints";
+@import "../mixins/direction";
+@import "../mixins/loader";
 
 $local-control-gutter: 14px;
 
@@ -14,6 +13,7 @@ $local-control-gutter: 14px;
 .vehicle-select {
     display: block;
 }
+
 .vehicle-select__list {
     display: flex;
     flex-wrap: wrap;
@@ -34,7 +34,7 @@ $local-control-gutter: 14px;
 
     pointer-events: none;
     opacity: 0;
-    transition: opacity .2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
 
     &:before {
         opacity: 1;
@@ -61,9 +61,7 @@ $local-control-gutter: 14px;
     background-repeat: no-repeat;
     background-size: 5px 10px;
     background-image: url(svg-select-arrow($block-finder-select-arrow-color));
-    transition:
-        opacity .25s ease-in-out,
-        color .25s ease-in-out;
+    transition: opacity 0.25s ease-in-out, color 0.25s ease-in-out;
 
     @include direction {
         #{$padding-inline-start}: 16px;
@@ -77,7 +75,7 @@ $local-control-gutter: 14px;
     }
 
     &:disabled {
-        opacity: .65;
+        opacity: 0.65;
         color: $block-finder-select-disabled-font-color;
     }
 }

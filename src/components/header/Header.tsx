@@ -3,7 +3,7 @@ import React, { useMemo, useRef } from 'react';
 // third-party
 import { FormattedMessage } from 'react-intl';
 // application
-import AccountMenu from '~/components/header/AccountMenu';
+import AccountMenu from '~/components/header/AccountMenu/AccountMenu';
 import AppLink from '~/components/shared/AppLink';
 import CurrencyFormat from '~/components/shared/CurrencyFormat';
 import Departments from '~/components/header/Departments';

@@ -1,33 +1,37 @@
 // react
-import React, { ComponentType, useEffect, useMemo } from 'react';
+import React, { ComponentType, useEffect, useMemo } from "react";
 // third-party
-import AppBase, { AppContext, AppProps } from 'next/app';
-import Head from 'next/head';
-import { NextComponentType, NextPageContext } from 'next';
-import { useStore } from 'react-redux';
+import AppBase, { AppContext, AppProps } from "next/app";
+import Head from "next/head";
+import { NextComponentType, NextPageContext } from "next";
+import { useStore } from "react-redux";
 // application
-import config from '~/config';
-import LanguageProvider, { getLanguageInitialProps, ILanguageProviderProps } from '~/services/i18n/provider';
-import Layout from '~/components/Layout';
-import PageTitle from '~/components/shared/PageTitle';
-import { AppDispatch } from '~/store/types';
-import { CurrentVehicleGarageProvider } from '~/services/current-vehicle';
-import { getLanguageByLocale, getLanguageByPath } from '~/services/i18n/utils';
-import { load, save, wrapper } from '~/store/store';
-import { optionsSetAll } from '~/store/options/optionsActions';
-import { useApplyClientState } from '~/store/client';
-import { useLoadUserVehicles } from '~/store/garage/garageHooks';
+import config from "~/config";
+import LanguageProvider, { getLanguageInitialProps, ILanguageProviderProps } from "~/services/i18n/provider";
+import Layout from "~/components/Layout";
+import PageTitle from "~/components/shared/PageTitle";
+import { AppDispatch } from "~/store/types";
+import { CurrentVehicleGarageProvider } from "~/services/current-vehicle";
+import { getLanguageByLocale, getLanguageByPath } from "~/services/i18n/utils";
+import { load, save, wrapper } from "~/store/store";
+import { optionsSetAll } from "~/store/options/optionsActions";
+import { useApplyClientState } from "~/store/client";
+import { useLoadUserVehicles } from "~/store/garage/garageHooks";
 // styles
-import '../scss/index.scss';
-import '../scss/style.header-classic-variant-one.scss';
-import '../scss/style.mobile-header-variant-one.scss';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "../scss/index.scss";
+import "../scss/style.header-classic-variant-one.scss";
+import "../scss/style.mobile-header-variant-one.scss";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+// firebase
+import { FirebaseDatabaseProvider } from "@react-firebase/database";
+import firebase from "firebase";
+import { firebaseConfig } from "~/api/config";
 
 interface Props extends AppProps {
     languageInitialProps: ILanguageProviderProps;
     Component: NextComponentType<NextPageContext, any> & {
-        Layout: ComponentType,
-    }
+        Layout: ComponentType;
+    };
 }
 
 function App(props: Props) {
@@ -56,7 +60,7 @@ function App(props: Props) {
 
     // preloader
     useEffect(() => {
-        const preloader = document.querySelector('.site-preloader');
+        const preloader = document.querySelector(".site-preloader");
 
         if (!preloader) {
             return;
@@ -90,8 +94,9 @@ function App(props: Props) {
                 <Head>
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                 </Head>
-
-                {page}
+                <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}>
+                    {page}
+                </FirebaseDatabaseProvider>
             </CurrentVehicleGarageProvider>
         </LanguageProvider>
     );
@@ -100,14 +105,16 @@ function App(props: Props) {
 App.getInitialProps = async (context: AppContext) => {
     const dispatch = context.ctx.store.dispatch as AppDispatch;
 
-    await dispatch(optionsSetAll({
-        desktopHeaderVariant: config.desktopHeaderVariant,
-        mobileHeaderVariant: config.mobileHeaderVariant,
-    }));
+    await dispatch(
+        optionsSetAll({
+            desktopHeaderVariant: config.desktopHeaderVariant,
+            mobileHeaderVariant: config.mobileHeaderVariant,
+        })
+    );
 
     let language;
 
-    if (typeof context.ctx.query.lang === 'string') {
+    if (typeof context.ctx.query.lang === "string") {
         language = getLanguageByLocale(context.ctx.query.lang);
     } else {
         language = getLanguageByPath(context.ctx.asPath || context.ctx.pathname);

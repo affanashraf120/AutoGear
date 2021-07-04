@@ -15,6 +15,7 @@ import { useSignUpForm } from "~/services/forms/sign-up";
 import { useUser } from "~/store/user/userHooks";
 import { validateEmail } from "~/services/validators";
 
+
 function Page() {
     const intl = useIntl();
     const user = useUser();

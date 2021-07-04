@@ -1,0 +1,50 @@
+[
+  {
+    "make": "Honda",
+    "model": "Civic",
+    "reserved_amount": 3200000,
+    "bid_amount": 100000
+  },
+  {
+    "make": "Toyota",
+    "model": "XLi",
+    "reserved_amount": 3200000,
+    "bid_amount": 100000
+  },
+  {
+    "make": "KIA",
+    "model": "Sportage",
+    "reserved_amount": 3200000,
+    "bid_amount": 100000
+  },
+  {
+    "make": "Suzuki",
+    "model": "Cultus",
+    "reserved_amount": 3200000,
+    "bid_amount": 100000
+  },
+  {
+    "make": "Audi",
+    "model": "A1",
+    "reserved_amount": 3200000,
+    "bid_amount": 100000
+  },
+  {
+    "make": "Mercedes",
+    "model": "Version1",
+    "reserved_amount": 3200000,
+    "bid_amount": 100000
+  },
+  {
+    "make": "Range Rover",
+    "model": "",
+    "reserved_amount": 3200000,
+    "bid_amount": 100000
+  },
+  {
+    "make": "Changaan",
+    "model": "V1",
+    "reserved_amount": 3200000,
+    "bid_amount": 100000
+  }
+]

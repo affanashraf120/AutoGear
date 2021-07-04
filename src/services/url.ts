@@ -12,7 +12,8 @@ import { IProduct } from "~/interfaces/product";
 const url = {
     //Admin
     addVehicle: () => "/admin/add-vehicle",
-    vehicles: () => "/admin/vehicles",
+    addAuction: () => "/admin/add-auction",
+    viewAuction: () => "/admin/view-auction",
     // common
     home: () => "/",
     category: (category: ICategory): IAppLinkHref => {
@@ -41,6 +42,7 @@ const url = {
         href: `/products/[slug]?slug=${product.slug}`,
         as: `/products/${product.slug}`,
     }),
+    auctionProduct: (id: string) => `/auction/${id}`,
     brand: (brand: IBrand) => "/",
     cart: () => "/cart",
     checkout: () => "/cart/checkout",
@@ -51,6 +53,7 @@ const url = {
     wishlist: () => "/wishlist",
     compare: () => "/compare",
     trackOrder: () => "/track-order",
+    auction: () => "/auction",
 
     // blog pages
     blog: () => "/demo/blog/classic-right-sidebar",
@@ -89,7 +92,7 @@ const url = {
     pageTerms: () => "/terms",
 
     //404
-    notFound: () => "/404"
+    notFound: () => "/404",
 };
 
 export default url;

@@ -1,0 +1,38 @@
+.drop-zone {
+    min-width: 250px;
+    min-height: 250px;
+    border-style: dashed;
+    border-color: rgb(2, 138, 244);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  
+    > input {
+      display: none;
+    }
+  }
+  
+  .drop-zone-image {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-content: center;
+    justify-content: center;
+  
+    > p {
+      color: rgb(2, 138, 244);
+    }
+  }
+  
+  .drop-zone-enter {
+    border-style: solid;
+  }
+  
+  .image-cards-container {
+    height: 300px;
+    overflow-y: auto;
+  }
+  

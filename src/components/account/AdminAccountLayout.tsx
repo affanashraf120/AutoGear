@@ -1,19 +1,19 @@
 // react
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from "react";
 // third-party
-import classNames from 'classnames';
-import { FormattedMessage, useIntl } from 'react-intl';
+import classNames from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
 // application
-import AppLink from '~/components/shared/AppLink';
-import BlockSpace from '~/components/blocks/BlockSpace';
-import Redirect from '~/components/shared/Redirect';
-import url from '~/services/url';
-import { ILink } from '~/interfaces/link';
-import { useAppRouter } from '~/services/router';
-import { useAsyncAction } from '~/store/hooks';
-import { useUser, useUserSignOut } from '~/store/user/userHooks';
+import AppLink from "~/components/shared/AppLink";
+import BlockSpace from "~/components/blocks/BlockSpace";
+import Redirect from "~/components/shared/Redirect";
+import url from "~/services/url";
+import { ILink } from "~/interfaces/link";
+import { useAppRouter } from "~/services/router";
+import { useAsyncAction } from "~/store/hooks";
+import { useUser, useUserSignOut } from "~/store/user/userHooks";
 
-interface Props extends PropsWithChildren<{}> { }
+interface Props extends PropsWithChildren<{}> {}
 
 function AccountLayout(props: Props) {
     const { children } = props;
@@ -21,8 +21,9 @@ function AccountLayout(props: Props) {
     const router = useAppRouter();
 
     const navigation: ILink[] = [
-        { title: `Add vehicle` , url: url.addVehicle() },
-        { title: `Vehicles` , url: url.vehicles() },
+        { title: `Add Vehicle`, url: url.addVehicle() },
+        { title: `Add Auction`, url: url.addAuction() },
+        { title: `View Auctions`, url: url.viewAuction() },
     ];
 
     return (
@@ -41,13 +42,11 @@ function AccountLayout(props: Props) {
                                     {navigation.map((item, index) => (
                                         <li
                                             key={index}
-                                            className={classNames('account-nav__item', {
-                                                'account-nav__item--active': router.pathname === item.url,
+                                            className={classNames("account-nav__item", {
+                                                "account-nav__item--active": router.pathname === item.url,
                                             })}
                                         >
-                                            <AppLink href={item.url}>
-                                                {item.title}
-                                            </AppLink>
+                                            <AppLink href={item.url}>{item.title}</AppLink>
                                         </li>
                                     ))}
                                     {/* <li className="account-nav__divider" role="presentation" /> */}
@@ -60,9 +59,7 @@ function AccountLayout(props: Props) {
                                 </ul>
                             </div>
                         </div>
-                        <div className="col-12 col-lg-9 mt-4 mt-lg-0">
-                            {children}
-                        </div>
+                        <div className="col-12 col-lg-9 mt-4 mt-lg-0">{children}</div>
                     </div>
                 </div>
             </div>

@@ -76,7 +76,7 @@ function BlockSale(props: Props) {
                             onClick={handlePrevClick}
                         />
                         <div className="block-sale__link">
-                            <AppLink href="/">
+                            <AppLink href="/auction">
                                 {/* <FormattedMessage id="LINK_VIEW_ALL_AVAILABLE_OFFERS" /> */}
                                 View all auction cars here
                             </AppLink>
