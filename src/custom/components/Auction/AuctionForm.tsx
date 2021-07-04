@@ -19,10 +19,13 @@ var price = "";
 type Props = {
     runMutation: RunMutation;
 };
+interface AuctionFormData extends ICarForm {
+    images: File[];
+}
 
 const Page = (props: Props) => {
     const [vehicle, setVehicle] = useState<IVehicle>();
-    const methods = useForm<ICarForm>();
+    const methods = useForm<AuctionFormData>();
     const { register, handleSubmit, errors, control } = methods;
     const { runMutation } = props;
     const [loading, setLoading] = useState(false);
@@ -75,7 +78,7 @@ const Page = (props: Props) => {
         if (vehicle !== null) setVehicle(vehicle);
     };
 
-    const submitHandler = (data: ICarForm) => {
+    const submitHandler = (data: AuctionFormData) => {
         startLoading();
         let promises: Promise<string>[] = [];
         data.images.forEach((image) => promises.push(uploadImage(image)));

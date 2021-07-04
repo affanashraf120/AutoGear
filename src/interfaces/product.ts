@@ -122,7 +122,7 @@ export interface ICarForm {
     engineDisplacement: number;
     transmission: string;
 
-    images: [File];
+    // images: [File];
     color: string;
     assembly: string;
     bodyType: string;
@@ -137,7 +137,7 @@ export interface ICarProduct extends ICarForm {
     version: string;
     year: number;
 
-    // images: string[];
+    images: string[];
 
     rating: number;
     reviews: Object[];
