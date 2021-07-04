@@ -47,10 +47,14 @@ import EngineFormGroup from "~/custom/components/CarFormElements/EngineFormGroup
 const minimumChars = 200;
 const maximumChars = 1000;
 
+interface CarFormData extends ICarForm {
+    images: File[];
+}
+
 const Page = () => {
     const user = useUser();
     const [vehicle, setVehicle] = useState<IVehicle>();
-    const methods = useForm<ICarForm>();
+    const methods = useForm<CarFormData>();
     const [intervalError, setIntervalError] = useState<boolean>(false);
     const { register, handleSubmit, errors, control } = methods;
     const [file, setFile] = useState<File | null>(null);
@@ -58,7 +62,7 @@ const Page = () => {
     const descriptionCount = useRef<HTMLElement>(null);
     const vehicleSelect = useRef<HTMLDivElement>(null);
 
-    const imageUpload = async (file:File) => {
+    const imageUpload = async (file: File) => {
         if (file !== null) {
             const data = new FormData();
             data.append("file", file);
@@ -96,7 +100,6 @@ const Page = () => {
             console.log(data.interval, data.terms);
             return;
         }
-        if (data.images) console.log(data);
         // try {
         //     console.log(data);
         //     const mediaUrl = await imageUpload();

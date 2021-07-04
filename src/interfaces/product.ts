@@ -122,7 +122,6 @@ export interface ICarForm {
     engineDisplacement: number;
     transmission: string;
 
-    // images: [File];
     color: string;
     assembly: string;
     bodyType: string;
