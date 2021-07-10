@@ -7,22 +7,28 @@ import AppLink from "~/components/shared/AppLink";
 import { IUser } from "~/interfaces/user";
 import url from "~/services/url";
 import { useUser, useUserSignOut } from "~/store/user/userHooks";
+import { removeUserAuthToken } from "~/utils/auth";
+
+type User = {
+    avatar: string;
+    email: string;
+    _id: string;
+    fullName: string;
+};
 
 interface Props {
     onCloseMenu: () => void;
-    user: IUser;
+    user: User;
+    onLogout: () => void;
 }
 
 function AccountMenuList(props: Props) {
-    const { onCloseMenu, user } = props;
-    const userSignOut = useUserSignOut();
+    const { onCloseMenu, user, onLogout } = props;
 
     const onLogOutButtonClick = () => {
-        userSignOut().then(() => {
-            if (onCloseMenu) {
-                onCloseMenu();
-            }
-        });
+        removeUserAuthToken();
+        onCloseMenu();
+        onLogout();
     };
 
     return (
@@ -32,9 +38,7 @@ function AccountMenuList(props: Props) {
                     <AppImage src={user.avatar} />
                 </div>
                 <div className=" account-menu__user-info">
-                    <div className=" account-menu__user-name">
-                        {`${user.firstName ? user.firstName : ``} ${user.lastName ? user.lastName : ``}`}
-                    </div>
+                    <div className=" account-menu__user-name">{`${user.fullName}`}</div>
                     <div className=" account-menu__user-email">{user.email}</div>
                 </div>
             </AppLink>
@@ -47,33 +51,33 @@ function AccountMenuList(props: Props) {
                 </li>
                 <li>
                     <AppLink href={url.accountGarage()} onClick={onCloseMenu}>
-                        <FormattedMessage id="LINK_ACCOUNT_GARAGE" />
+                        My Posts
                     </AppLink>
                 </li>
                 <li>
                     <AppLink href={url.accountProfile()} onClick={onCloseMenu}>
-                        <FormattedMessage id="LINK_ACCOUNT_PROFILE" />
+                        Edit Profile
                     </AppLink>
                 </li>
                 <li>
                     <AppLink href={url.addCar()} onClick={onCloseMenu}>
-                        <FormattedMessage id="LINK_ACCOUNT_ADD_CAR" />
+                        Add New Post
                     </AppLink>
                 </li>
                 <li>
                     <AppLink href={url.accountAddresses()} onClick={onCloseMenu}>
-                        <FormattedMessage id="LINK_ACCOUNT_ADDRESSES" />
+                        Edit Address
                     </AppLink>
                 </li>
             </ul>
             <div className="account-menu__divider" />
-            <ul className="account-menu__links">
+            {/* <ul className="account-menu__links">
                 <li>
                     <button type="button" onClick={onLogOutButtonClick}>
                         <FormattedMessage id="LINK_ACCOUNT_LOGOUT" />
                     </button>
                 </li>
-            </ul>
+            </ul> */}
         </React.Fragment>
     );
 }

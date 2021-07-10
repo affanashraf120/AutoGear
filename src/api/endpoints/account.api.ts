@@ -58,7 +58,7 @@ export class FakeAccountApi extends AccountApi {
 
     changePassword(oldPassword: string, newPassword: string, id: string): Promise<void> {
         const data = { oldPassword, newPassword, id };
-        
+
         console.log(data);
         return axios.put("/api/auth/changePassword", data).then((res) => {
             console.log(res.data.data);

@@ -26,6 +26,11 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { FirebaseDatabaseProvider } from "@react-firebase/database";
 import firebase from "firebase";
 import { firebaseConfig } from "~/api/config";
+import { getHostUrl } from "~/services/utils";
+import url from "~/services/url";
+import { isAuthorized } from "~/utils/user";
+import { AuthContext } from "~/custom/AuthContext";
+import useAuthorizedUser from "~/custom/hooks/useAuthorizedUser";
 
 interface Props extends AppProps {
     languageInitialProps: ILanguageProviderProps;
@@ -39,6 +44,7 @@ function App(props: Props) {
     const store = useStore();
     const applyClientState = useApplyClientState();
     const loadUserVehicles = useLoadUserVehicles();
+    const { user, logout, getAuthorizedUser, setAuthorizedUser, isUserExist } = useAuthorizedUser();
 
     // Loading and saving state on the client side (cart, wishlist, etc.).
     useEffect(() => {
@@ -95,7 +101,17 @@ function App(props: Props) {
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                 </Head>
                 <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}>
-                    {page}
+                    <AuthContext.Provider
+                        value={{
+                            logout,
+                            user,
+                            isUserExist,
+                            setAuthorizedUser,
+                            getAuthorizedUser,
+                        }}
+                    >
+                        {page}
+                    </AuthContext.Provider>
                 </FirebaseDatabaseProvider>
             </CurrentVehicleGarageProvider>
         </LanguageProvider>
@@ -119,6 +135,11 @@ App.getInitialProps = async (context: AppContext) => {
     } else {
         language = getLanguageByPath(context.ctx.asPath || context.ctx.pathname);
     }
+
+    //Addition
+    const loginBaseUrl = `${getHostUrl()}${url.signIn()}`;
+    const loginUrl = url.signIn();
+    const userApiUrl = `${getHostUrl()}/api/user`;
 
     return {
         ...(await AppBase.getInitialProps(context)),

@@ -1,5 +1,5 @@
 // react
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // third-party
 import classNames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -11,6 +11,10 @@ import PageTitle from "~/components/shared/PageTitle";
 import { accountApi } from "~/api";
 import { useAsyncAction } from "~/store/hooks";
 import { useUser } from "~/store/user/userHooks";
+import { useAuthContext } from "~/custom/hooks/useAuthContext";
+import { useAppRouter } from "~/services/router";
+import url from "~/services/url";
+import Loader from "~/custom/components/Loader";
 
 interface IForm {
     currentPassword: string;
@@ -23,6 +27,9 @@ function Page() {
     const user = useUser();
     const [serverError, setServerError] = useState<string | null>(null);
     const { register, errors, watch, handleSubmit } = useForm<IForm>();
+    const [loading, setLoading] = useState(true);
+    const history = useAppRouter();
+    const { isUserExist } = useAuthContext();
 
     const getUserId = (): string => {
         if (user && user._id) {
@@ -35,22 +42,27 @@ function Page() {
     const [submit, submitInProgress] = useAsyncAction(
         (data: IForm) => {
             setServerError(null);
-            return accountApi
-                .changePassword(data.currentPassword, data.newPassword, getUserId())
-                .then(
-                    (res) => {
-                        console.log(res);
-                        toast.success(intl.formatMessage({ id: "TEXT_TOAST_PASSWORD_CHANGED" }));
-                    },
-                    (error: Error) => {
-                        setServerError(`ERROR_API_${error.message}`);
-                    }
-                )
+            return accountApi.changePassword(data.currentPassword, data.newPassword, getUserId()).then(
+                (res) => {
+                    console.log(res);
+                    toast.success(intl.formatMessage({ id: "TEXT_TOAST_PASSWORD_CHANGED" }));
+                },
+                (error: Error) => {
+                    setServerError(`ERROR_API_${error.message}`);
+                }
+            );
         },
         [intl]
     );
 
-    return (
+    useEffect(() => {
+        if (!isUserExist()) {
+            history.push(url.signIn());
+        } else setLoading(false);
+    }, []);
+    return loading ? (
+        <Loader />
+    ) : (
         <div className="card">
             <PageTitle>{intl.formatMessage({ id: "HEADER_CHANGE_PASSWORD" })}</PageTitle>
 

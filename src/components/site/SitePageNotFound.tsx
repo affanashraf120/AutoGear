@@ -1,29 +1,23 @@
 // react
-import React from 'react';
+import React from "react";
 // application
-import AppLink from '~/components/shared/AppLink';
-import BlockSpace from '~/components/blocks/BlockSpace';
-import PageTitle from '~/components/shared/PageTitle';
-import url from '~/services/url';
+import AppLink from "~/components/shared/AppLink";
+import BlockSpace from "~/components/blocks/BlockSpace";
+import PageTitle from "~/components/shared/PageTitle";
+import url from "~/services/url";
 
 function SitePageNotFound() {
     return (
         <React.Fragment>
-            <PageTitle>
-                Product Not Found
-            </PageTitle>
+            <PageTitle>Product Not Found</PageTitle>
 
             <BlockSpace layout="spaceship-ledge-height" />
 
             <div className="block">
                 <div className="container">
                     <div className="not-found">
-                        <div className="not-found__404">
-                            Oops! Product not found or deleted
-                        </div>
-
                         <div className="not-found__content">
-                            <h1 className="not-found__title">Product Not Found</h1>
+                            <h1 className="not-found__title">Page Not Found</h1>
 
                             {/* <p className="not-found__text">
                                 {'We can\'t seem to find the page you\'re looking for.'}
@@ -42,9 +36,7 @@ function SitePageNotFound() {
                                 </button>
                             </form> */}
 
-                            <p className="not-found__text">
-                                Or go to the home page to start over.
-                            </p>
+                            <p className="not-found__text">Or go to the home page to start over.</p>
 
                             <AppLink href={url.home()} className="btn btn-secondary btn-sm">
                                 Go To Home Page

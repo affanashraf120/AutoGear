@@ -1,9 +1,22 @@
 // react
 import React, { useCallback } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import Loader from "~/custom/components/Loader";
+import { useAuthContext } from "~/custom/hooks/useAuthContext";
+import useAuthorizedUser from "~/custom/hooks/useAuthorizedUser";
 import { useSignInForm } from "~/services/forms/sign-in";
 import { useUser } from "~/store/user/userHooks";
+import { getUserAuthToken, getUserFromToken } from "~/utils/auth";
 import AccountMenuList from "./AccountMenuList";
 import AccountMenuLogin from "./AccountMenuLogin";
+
+type User = {
+    avatar: string;
+    email: string;
+    _id: string;
+    fullName: string;
+};
 
 interface Props {
     onCloseMenu: () => void;
@@ -11,21 +24,19 @@ interface Props {
 
 function AccountMenu(props: Props) {
     const { onCloseMenu } = props;
-    const user = useUser();
+    const { user, logout } = useAuthContext();
 
-    const signInForm = useSignInForm({
-        onSuccess: useCallback(() => {
-            if (onCloseMenu) {
-                onCloseMenu();
-            }
-        }, [onCloseMenu]),
-    });
-    
+    const signOutUser = () => {
+        logout();
+    };
+
     return (
-        <div className="account-menu" onSubmit={signInForm.submit}>
-            {user === null && <AccountMenuLogin {...props} />}
-
-            {user !== null && <AccountMenuList user={user} onCloseMenu={onCloseMenu} />}
+        <div className="account-menu">
+            {user ? (
+                <AccountMenuList user={user} onCloseMenu={onCloseMenu} onLogout={signOutUser} />
+            ) : (
+                <AccountMenuLogin {...props} />
+            )}
         </div>
     );
 }

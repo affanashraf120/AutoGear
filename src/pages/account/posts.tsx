@@ -1,49 +1,52 @@
 // react
-import React, { useEffect, useState } from "react";
+import axios from "axios";
 // third-party
 import classNames from "classnames";
-import { FormattedMessage, useIntl } from "react-intl";
+import { NextPageContext } from "next";
+import React, { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
 // application
 import AccountLayout from "~/components/account/AccountLayout";
-import AppLink from "~/components/shared/AppLink";
-import AsyncAction from "~/components/shared/AsyncAction";
-import PageTitle from "~/components/shared/PageTitle";
-import url from "~/services/url";
-import VehicleForm from "~/components/shared/VehicleForm";
-import { IVehicle } from "~/interfaces/vehicle";
-import { Cross12Svg, RecycleBin16Svg } from "~/svg";
-import { useGarageAddItem, useGarageRemoveItem, useUserVehicles } from "~/store/garage/garageHooks";
-import axios from "axios";
-import { useUser } from "~/store/user/userHooks";
-import CurrencyFormat from "~/components/shared/CurrencyFormat";
-import Rating from "~/components/shared/Rating";
 import AppImage from "~/components/shared/AppImage";
-import { wishlistRemoveItem } from "~/store/wishlist/wishlistActions";
+import AppLink from "~/components/shared/AppLink";
+import CurrencyFormat from "~/components/shared/CurrencyFormat";
+import PageTitle from "~/components/shared/PageTitle";
+import Rating from "~/components/shared/Rating";
+import Loader from "~/custom/components/Loader";
+import { useAuthContext } from "~/custom/hooks/useAuthContext";
 import { IProduct } from "~/interfaces/product";
+import { useAppRouter } from "~/services/router";
+import url from "~/services/url";
+import { getHostUrl } from "~/services/utils";
+import { isAuthorized } from "~/utils/user";
 
 function Page() {
-    const intl = useIntl();
-    const user = useUser();
-    const vehicles = useUserVehicles();
-    const [vehicle, setVehicle] = useState<IVehicle | null>(null);
-    const garageAddItem = useGarageAddItem();
-    const garageRemoveItem = useGarageRemoveItem();
     const [items, setItems] = useState<IProduct[]>([]);
-
+    const { user, isUserExist } = useAuthContext();
+    const [loading, setLoading] = useState(true);
+    const history = useAppRouter();
     const getUserCars = () => {
-        axios
-            .get(`/api/products/${user?._id}`)
-            .then((res) => {
-                console.log(res.data.data);
-                setItems(res.data.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        // axios
+        //     .get(`/api/products/${user?._id}`)
+        //     .then((res) => {
+        //         console.log(res.data.data);
+        //         setItems(res.data.data);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
     };
     useEffect(getUserCars, []);
 
-    return (
+    useEffect(() => {
+        if (!isUserExist()) {
+            history.push(url.signIn());
+        } else setLoading(false);
+    }, []);
+
+    return loading ? (
+        <Loader />
+    ) : (
         <div className="card">
             <PageTitle>My Cars</PageTitle>
             <React.Fragment>
@@ -65,11 +68,6 @@ function Page() {
                                 <th className="wishlist__column wishlist__column--head wishlist__column--price">
                                     <FormattedMessage id="TABLE_PRICE" />
                                 </th>
-                                {/* <th className="wishlist__column wishlist__column--head wishlist__column--remove">
-                                        <span className="sr-only">
-                                            <FormattedMessage id="TABLE_REMOVE" />
-                                        </span>
-                                    </th> */}
                             </tr>
                         </thead>
                         <tbody className="wishlist__body">
@@ -77,7 +75,7 @@ function Page() {
                                 <tr key={index} className="wishlist__row wishlist__row--body">
                                     <td className="wishlist__column wishlist__column--body wishlist__column--image">
                                         <div className="image image--type--product">
-                                            <AppLink  className="image__body">
+                                            <AppLink className="image__body">
                                                 <AppImage
                                                     className="image__tag"
                                                     src={product.images && product.images[0]}
@@ -119,35 +117,6 @@ function Page() {
                                     >
                                         <CurrencyFormat value={product.price} />
                                     </td>
-                                    {/* <td
-                                            className={classNames(
-                                                "wishlist__column",
-                                                "wishlist__column--body",
-                                                "wishlist__column--remove"
-                                            )}
-                                        >
-                                            <AsyncAction
-                                                action={() => {}}
-                                                render={({ run, loading }) => (
-                                                    <button
-                                                        type="button"
-                                                        className={classNames(
-                                                            "wishlist__remove",
-                                                            "btn",
-                                                            "btn-sm",
-                                                            "btn-muted",
-                                                            "btn-icon",
-                                                            {
-                                                                "btn-loading": loading,
-                                                            }
-                                                        )}
-                                                        onClick={run}
-                                                    >
-                                                        <Cross12Svg />
-                                                    </button>
-                                                )}
-                                            />
-                                        </td> */}
                                 </tr>
                             ))}
                         </tbody>
@@ -161,36 +130,18 @@ function Page() {
                 </div>
                 <div className="card-divider" />
             </React.Fragment>
-            
-            {/* <div className="card-header">
-                <h5><FormattedMessage id="HEADER_ADD_VEHICLE" /></h5>
-            </div>
-            <div className="card-divider" /> */}
-            {/* <div className="card-body card-body--padding--2">
-                <VehicleForm location="account" onVehicleChange={setVehicle} />
-
-                <div className="mt-4 pt-3">
-                    <AsyncAction
-                        action={() => (vehicle ? garageAddItem(vehicle.id) : Promise.resolve())}
-                        render={({ run, loading }) => (
-                            <button
-                                type="button"
-                                className={classNames('btn', 'btn-primary', {
-                                    'btn-loading': loading,
-                                })}
-                                disabled={vehicle === null}
-                                onClick={run}
-                            >
-                                <FormattedMessage id="BUTTON_ADD_VEHICLE" />
-                            </button>
-                        )}
-                    />
-                </div>
-            </div> */}
         </div>
     );
 }
 
 Page.Layout = AccountLayout;
+
+// Page.getInitialProps = async (ctx: NextPageContext) => {
+//     const loginBaseUrl = `${getHostUrl()}${url.signIn()}`;
+//     const loginUrl = url.signIn();
+//     const userApiUrl = `${getHostUrl()}/api/user`;
+//     const json = await isAuthorized(userApiUrl, loginBaseUrl, loginUrl, ctx);
+//     return { user: json.data };
+// };
 
 export default Page;

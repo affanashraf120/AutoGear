@@ -1,16 +1,35 @@
+import { FirebaseDatabaseTransaction } from "@react-firebase/database";
 import classNames from "classnames";
+import { min } from "moment";
+
 import React from "react";
+import Countdown from "react-countdown";
 import { FormattedMessage } from "react-intl";
 import { Button, Jumbotron } from "reactstrap";
 import BlockMap from "~/components/blocks/BlockMap";
 import CurrencyFormat from "~/components/shared/CurrencyFormat";
-import PageTitle from "~/components/shared/PageTitle";
+import Redirect from "~/components/shared/Redirect";
 import Timer from "~/components/shared/Timer";
 import ProductGallery, { IProductGalleryLayout } from "~/components/shop/ProductGallery";
-import { IProductAttribute } from "~/interfaces/product";
-import Features from "../Features";
+import { getRealtimeProductById } from "~/services/firebase";
+import url from "~/services/url";
+import Features from "../../custom/components/Features";
+import AuctionBidForm from "./AuctionBidForm";
+
+const getDifference = (start_date: number, last_date: number): number => {
+    // const SEC_PER_DAY = 60 * 60 * 24;
+    // // Discard the time and time-zone information.
+    // const utc1 = Date.UTC(start_date.getFullYear(), start_date.getMonth(), start_date.getDate());
+    // const utc2 = Date.UTC(last_date.getFullYear(), last_date.getMonth(), last_date.getDate());
+
+    // return Math.floor((utc2 - utc1) / SEC_PER_DAY);
+    console.log("start_date", start_date);
+    console.log("last_date", last_date);
+    return last_date - start_date;
+};
 
 type Props = {
+    productId: string;
     make: string;
     model: string;
     excerpt: string;
@@ -48,7 +67,10 @@ const AuctionProductPage = (props: Props) => {
         color,
         bodyType,
         assembly,
+        productId,
     } = props;
+
+    console.log(Date.parse("2021-7-6"));
 
     return (
         <>
@@ -62,7 +84,21 @@ const AuctionProductPage = (props: Props) => {
                             justifyContent: "center",
                         }}
                     >
-                        <Timer time={3 * 24 * 60 * 60} />
+                        {/* <Countdown
+                            autoStart={true}
+                            renderer={({ days, hours, minutes, seconds, completed }) => {
+                                console.log("days", days);
+                                console.log("hours", hours);
+                                console.log("minutes", minutes);
+                                console.log("seconds", seconds);
+                                return (
+                                    <span>
+                                        {days}:{hours}:{minutes}:{seconds}
+                                    </span>
+                                );
+                            }}
+                        /> */}
+                        <Timer time={Date.parse("07/07/2021") - Date.now()} />
                     </div>
                     <div className="block-split__row row no-gutters">
                         <div className="block-split__item block-split__item-content col-auto">
@@ -82,7 +118,14 @@ const AuctionProductPage = (props: Props) => {
                                     </div>
 
                                     <div className="product__main">
-                                        {excerpt && <div className="product__excerpt">{excerpt}</div>}
+                                        {excerpt && (
+                                            <div
+                                                className="product__excerpt"
+                                                style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}
+                                            >
+                                                {excerpt}
+                                            </div>
+                                        )}
 
                                         <div className="product__features">
                                             <div className="product__features-title">
@@ -121,9 +164,12 @@ const AuctionProductPage = (props: Props) => {
                                     <div className="product__info">
                                         {/* Form */}
                                         <div className="product__info-card">
-                                            <div className="product__info-body">
-                                                <div className="product__price product__price--current">
-                                                    <CurrencyFormat value={12122} />
+                                            <div className="product__info-body" style={{ color: "grey" }}>
+                                                <div
+                                                    className="product__price product__price--current"
+                                                    style={{ overflow: "auto" }}
+                                                >
+                                                    <CurrencyFormat value={parseInt(bid_amount)} />
                                                 </div>
                                                 <div className="product__meta">
                                                     <table>
@@ -138,6 +184,10 @@ const AuctionProductPage = (props: Props) => {
                                                                     <td>{model}</td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <th>Version</th>
+                                                                    <td>{engine}</td>
+                                                                </tr>
+                                                                <tr>
                                                                     <th>
                                                                         <FormattedMessage id="TABLE_COUNTRY" />
                                                                     </th>
@@ -150,6 +200,14 @@ const AuctionProductPage = (props: Props) => {
                                                     </table>
                                                 </div>
                                             </div>
+                                            <FirebaseDatabaseTransaction path={`/${productId}/bid_amount`}>
+                                                {({ runTransaction }) => (
+                                                    <AuctionBidForm
+                                                        runTransaction={runTransaction}
+                                                        previous_bid={parseInt(bid_amount)}
+                                                    />
+                                                )}
+                                            </FirebaseDatabaseTransaction>
                                         </div>
 
                                         <Features />
@@ -164,8 +222,11 @@ const AuctionProductPage = (props: Props) => {
                                             >
                                                 <div
                                                     className="typography"
-                                                    dangerouslySetInnerHTML={{ __html: description }}
-                                                />
+                                                    style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}
+                                                    // dangerouslySetInnerHTML={{ __html: description }}
+                                                >
+                                                    {description}
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="product-tabs__content">
@@ -179,7 +240,7 @@ const AuctionProductPage = (props: Props) => {
                                                         <h4 className="spec__section-title">Engine</h4>
                                                         <div className="spec__row">
                                                             <div className="spec__name">Engine Type</div>
-                                                            <div className="spec__value">{transmission}</div>
+                                                            <div className="spec__value">{engineType}</div>
                                                         </div>
                                                         <div className="spec__row">
                                                             <div className="spec__name">Displacement</div>

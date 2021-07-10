@@ -75,6 +75,7 @@ const TransactionFormGroup = (props: Props) => {
                     type="number"
                     id={`price`}
                     name={`price`}
+                    min={1}
                     disabled={disabled}
                     className={classNames("form-control", {
                         "is-invalid": errors?.price,

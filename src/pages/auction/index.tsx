@@ -7,7 +7,7 @@ import BlockHeader from "~/components/blocks/BlockHeader";
 import BlockSpace from "~/components/blocks/BlockSpace";
 import PageTitle from "~/components/shared/PageTitle";
 import Timer from "~/components/shared/Timer";
-import AuctionProductCard from "~/custom/components/Auction/AuctionProductCard";
+import AuctionProductCard from "~/components/Auction/AuctionProductCard";
 import Loader from "~/custom/components/Loader";
 import { useAppRouter } from "~/services/router";
 import url from "~/services/url";

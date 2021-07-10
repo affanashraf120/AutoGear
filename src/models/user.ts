@@ -1,6 +1,7 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
+import { IUser } from "~/interfaces/api/userServices";
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new Schema<IUser>({
     email: {
         type: String,
         unique: true,
@@ -10,18 +11,33 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    firstName: {
+    fullName: {
         type: String,
-    },
-    lastName: {
-        type: String,
+        required: true,
     },
     phone: {
         type: String,
+        unique: true,
+        required: true,
     },
-    addresses: {
-        type: Schema.Types.Mixed,
+    // Address
+    city: {
+        type: String,
+        required: true,
     },
+    state: {
+        type: String,
+        required: true,
+    },
+    postCode: {
+        type: String,
+        required: true,
+    },
+    address: {
+        type: String,
+        required: true,
+    },
+    // Limit
 });
 
-export default mongoose.models.User || mongoose.model("User", userSchema);
+export default mongoose.models.User || model<IUser>("User", UserSchema);

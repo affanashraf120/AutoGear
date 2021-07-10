@@ -19,12 +19,13 @@ function CurrencyFormat(props: Props) {
         currency: currency.code,
         minimumFractionDigits: 0,
     });
+    const currencyString = formatter.format(value * currency.rate);
 
     return (
         <React.Fragment>
-            {formatter.format(value * currency.rate)}
-            {/* {currency.symbol}
-            {(value * currency.rate).toFixed(0)} */}
+            {currency.code === "PKR" || currency.code === "RUB" ? currencyString.substring(4) : currencyString.substring(1)}
+            {" "}
+            {currency.symbol}
         </React.Fragment>
     );
 }

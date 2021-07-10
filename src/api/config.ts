@@ -8,3 +8,6 @@ export const firebaseConfig = {
     appId: "1:1011115670817:web:825c753b15341e3903d260",
     measurementId: "G-LSPMM6EHGP",
 };
+
+
+export  const JWT_PRIVATE_KEY = "pushandpop"

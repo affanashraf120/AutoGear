@@ -1,5 +1,5 @@
 // react
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // third-party
 import classNames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -11,6 +11,10 @@ import PageTitle from "~/components/shared/PageTitle";
 import { useAsyncAction } from "~/store/hooks";
 import { useUser, useUserEditProfile } from "~/store/user/userHooks";
 import { validateEmail } from "~/services/validators";
+import { useAuthContext } from "~/custom/hooks/useAuthContext";
+import { useAppRouter } from "~/services/router";
+import url from "~/services/url";
+import Loader from "~/custom/components/Loader";
 
 interface IForm {
     firstName: string;
@@ -21,8 +25,10 @@ interface IForm {
 
 function Page() {
     const intl = useIntl();
-    const user = useUser();
     const userEditProfile = useUserEditProfile();
+    const { user, isUserExist } = useAuthContext();
+    const [loading, setLoading] = useState(true);
+    const history = useAppRouter();
 
     const { register, handleSubmit, reset, errors } = useForm<IForm>({
         defaultValues: {
@@ -35,24 +41,31 @@ function Page() {
 
     const [submit, submitInProgress] = useAsyncAction(
         async (data: IForm) => {
-            if(user && user.email)
-            await userEditProfile({ ...data, email: user?.email });
+            if (user && user.email) await userEditProfile({ ...data, email: user?.email });
 
             toast.success(intl.formatMessage({ id: "TEXT_TOAST_PROFILE_SAVED" }));
         },
         [userEditProfile, intl]
     );
 
-    useEffect(() => {
-        reset({
-            firstName: user?.firstName || "",
-            lastName: user?.lastName || "",
-            // email: user?.email || "",
-            phone: user?.phone || "",
-        });
-    }, [user, reset]);
+    // useEffect(() => {
+    //     reset({
+    //         firstName: user?.firstName || "",
+    //         lastName: user?.lastName || "",
+    //         // email: user?.email || "",
+    //         phone: user?.phone || "",
+    //     });
+    // }, [user, reset]);
 
-    return (
+    useEffect(() => {
+        if (!isUserExist()) {
+            history.push(url.signIn());
+        } else setLoading(false);
+    }, []);
+
+    return loading ? (
+        <Loader />
+    ) : (
         <div className="card">
             <PageTitle>{intl.formatMessage({ id: "HEADER_EDIT_PROFILE" })}</PageTitle>
 
@@ -107,31 +120,6 @@ function Page() {
                                     )}
                                 </div>
                             </div>
-                            {/* <div className="form-group">
-                                <label htmlFor="profile-email">
-                                    <FormattedMessage id="INPUT_EMAIL_ADDRESS_LABEL" />
-                                </label>
-                                <input
-                                    type="email"
-                                    id="profile-email"
-                                    name="email"
-                                    disabled={true}
-                                    className={classNames("form-control", {
-                                        "is-invalid": errors.email,
-                                    })}
-                                    placeholder={intl.formatMessage({ id: "INPUT_EMAIL_ADDRESS_PLACEHOLDER" })}
-                                    ref={register({
-                                        required: true,
-                                        validate: { email: validateEmail },
-                                    })}
-                                />
-                                <div className="invalid-feedback">
-                                    {errors.email?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
-                                    {errors.email?.type === "email" && (
-                                        <FormattedMessage id="ERROR_FORM_INCORRECT_EMAIL" />
-                                    )}
-                                </div>
-                            </div> */}
                             <div className="form-group">
                                 <label htmlFor="profile-phone">
                                     <FormattedMessage id="INPUT_PHONE_NUMBER_LABEL" />

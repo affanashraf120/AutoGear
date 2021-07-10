@@ -1,10 +1,10 @@
 // react
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from "react";
 // third-party
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 // application
-import { useAsyncAction } from '~/store/hooks';
-import { useUserSignUp } from '~/store/user/userHooks';
+import { useAsyncAction } from "~/store/hooks";
+import { useUserSignUp } from "~/store/user/userHooks";
 
 interface ISignUpFormOptions {
     onSuccess?: () => void;
@@ -22,26 +22,32 @@ export function useSignUpForm(options: ISignUpFormOptions = {}) {
     const [serverError, setServerError] = useState<string | null>(null);
     const methods = useForm<ISignUpForm>({
         defaultValues: {
-            email: 'user@example.com',
-            password: '123456',
-            confirmPassword: '123456',
+            email: "user@example.com",
+            password: "123456",
+            confirmPassword: "123456",
         },
     });
     const { handleSubmit } = methods;
-    const [submit, submitInProgress] = useAsyncAction((data: ISignUpForm) => {
-        setServerError(null);
-
-        return signUp(data.email.toLocaleLowerCase(), data.password).then(
-            () => {
-                if (onSuccess) {
-                    onSuccess();
-                }
-            },
-            (error: Error) => {
-                setServerError(`ERROR_API_${error.message}`);
-            },
-        );
-    }, [signUp, setServerError, onSuccess]);
+    const [submit, submitInProgress] = useAsyncAction(
+        (data: ISignUpForm) => {
+            setServerError(null);
+            return new Promise((resolve) => {
+                resolve("Resolve");
+            });
+            console.log(data);
+            // return signUp(data.email.toLocaleLowerCase(), data.password).then(
+            //     () => {
+            //         if (onSuccess) {
+            //             onSuccess();
+            //         }
+            //     },
+            //     (error: Error) => {
+            //         setServerError(`ERROR_API_${error.message}`);
+            //     },
+            // );
+        },
+        [signUp, setServerError, onSuccess]
+    );
 
     return {
         submit: useMemo(() => handleSubmit(submit), [handleSubmit, submit]),

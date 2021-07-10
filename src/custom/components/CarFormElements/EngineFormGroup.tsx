@@ -2,40 +2,19 @@ import classNames from "classnames";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
+import useInputNumberValidation from "~/custom/hooks/useInputNumberValidation";
 
 type Props = {
     disabled: boolean;
 };
 
-var mileage = "";
-var displacement = "";
-
 const EngineFormGroup = (props: Props) => {
     const { errors, register } = useFormContext();
+
+    const mileageValidation = useInputNumberValidation({ allowLeadingZero: false, limit: 200000 });
+    const displacementValidation = useInputNumberValidation({ allowLeadingZero: false, limit: 10000 });
+
     const { disabled } = props;
-
-    const invalidKey = (key: string): boolean => {
-        if (key === "-" || key === "e" || key === "E") {
-            return true;
-        }
-        return false;
-    };
-
-    const handleNumberKeyValidation = (e: React.KeyboardEvent<HTMLInputElement>, num: string, limit: number) => {
-        if (invalidKey(e.key)) {
-            e.preventDefault();
-            return;
-        }
-        if (e.key === "0" && num === "") {
-            e.preventDefault();
-            return;
-        }
-        num = num.concat(e.key);
-        if (parseInt(num) > limit) {
-            e.preventDefault();
-            return;
-        }
-    };
 
     return (
         <>
@@ -45,6 +24,7 @@ const EngineFormGroup = (props: Props) => {
                     type="number"
                     id={`mileage`}
                     name={`mileage`}
+                    min={1}
                     disabled={disabled}
                     className={classNames("form-control", {
                         "is-invalid": errors?.mileage,
@@ -52,11 +32,9 @@ const EngineFormGroup = (props: Props) => {
                     placeholder={`Enter mileage`}
                     ref={register({ required: true })}
                     onKeyPress={(e) => {
-                        handleNumberKeyValidation(e, mileage, 200000);
+                        mileageValidation.invalidNumberInput(e.key) && e.preventDefault();
                     }}
-                    onChange={(e) => {
-                        mileage = e.target.value;
-                    }}
+                    onChange={mileageValidation.handleChange()}
                 />
                 <div className="invalid-feedback">
                     {errors?.mileage?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
@@ -69,6 +47,7 @@ const EngineFormGroup = (props: Props) => {
                     type="number"
                     id={`engineDisplacement`}
                     name={`engineDisplacement`}
+                    min={1}
                     disabled={disabled}
                     className={classNames("form-control", {
                         "is-invalid": errors?.engineDisplacement,
@@ -76,11 +55,9 @@ const EngineFormGroup = (props: Props) => {
                     placeholder={`Enter Engine  Displacement`}
                     ref={register({ required: true })}
                     onKeyPress={(e) => {
-                        handleNumberKeyValidation(e, displacement, 10000);
+                        displacementValidation.invalidNumberInput(e.key) && e.preventDefault();
                     }}
-                    onChange={(e) => {
-                        displacement = e.target.value;
-                    }}
+                    onChange={displacementValidation.handleChange()}
                 />
                 <div className="invalid-feedback">
                     {errors?.engineDisplacement?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}

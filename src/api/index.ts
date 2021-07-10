@@ -1,8 +1,8 @@
-import { FakeAccountApi } from './fake-api/fake-account.api';
-import { FakeBlogApi } from './fake-api/fake-blog.api';
-import { FakeCountriesApi } from './fake-api/fake-countries.api';
-import { FakeShopApi } from './fake-api/fake-shop.api';
-import { FakeVehicleApi } from './fake-api/fake-vehicle.api';
+import { FakeAccountApi } from './endpoints/account.api';
+import { FakeBlogApi } from './endpoints/fake-blog.api';
+import { FakeCountriesApi } from './endpoints/fake-countries.api';
+import { FakeShopApi } from './endpoints/fake-shop.api';
+import { FakeVehicleApi } from './endpoints/fake-vehicle.api';
 
 export const accountApi = new FakeAccountApi();
 export const blogApi = new FakeBlogApi();

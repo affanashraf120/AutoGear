@@ -4,7 +4,7 @@ import { FirebaseDatabaseMutation } from "@react-firebase/database";
 import React from "react";
 import AdminAccountLayout from "~/components/account/AdminAccountLayout";
 import PageTitle from "~/components/shared/PageTitle";
-import AuctionForm from "~/custom/components/Auction/AuctionForm";
+import AuctionForm from "~/components/Auction/AuctionForm";
 
 const Page = () => {
     return (

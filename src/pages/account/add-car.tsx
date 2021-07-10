@@ -43,6 +43,13 @@ import TransactionFormGroup from "~/custom/components/CarFormElements/Transactio
 import SelectionsFormGroup from "~/custom/components/CarFormElements/SelectionsFormGroup";
 import DescriptionFormGroup from "~/custom/components/CarFormElements/DescriptionFormGroup";
 import EngineFormGroup from "~/custom/components/CarFormElements/EngineFormGroup";
+import { NextPageContext } from "next";
+import { getHostUrl } from "~/services/utils";
+import { isAuthorized } from "~/utils/user";
+import Loader from "~/custom/components/Loader";
+import { getUserFromToken, isUserLoggedIn, setUserAuthToken } from "~/utils/auth";
+import useAuthorizedUser from "~/custom/hooks/useAuthorizedUser";
+import { useAuthContext } from "~/custom/hooks/useAuthContext";
 
 const minimumChars = 200;
 const maximumChars = 1000;
@@ -52,7 +59,6 @@ interface CarFormData extends ICarForm {
 }
 
 const Page = () => {
-    const user = useUser();
     const [vehicle, setVehicle] = useState<IVehicle>();
     const methods = useForm<CarFormData>();
     const [intervalError, setIntervalError] = useState<boolean>(false);
@@ -61,6 +67,15 @@ const Page = () => {
     const [modal, setModal] = useState(false);
     const descriptionCount = useRef<HTMLElement>(null);
     const vehicleSelect = useRef<HTMLDivElement>(null);
+    const { user, isUserExist } = useAuthContext();
+    const [loading, setLoading] = useState(true);
+    const history = useAppRouter();
+
+    useEffect(() => {
+        if (!isUserExist()) {
+            history.push(url.signIn());
+        } else setLoading(false);
+    }, []);
 
     const imageUpload = async (file: File) => {
         if (file !== null) {
@@ -90,16 +105,12 @@ const Page = () => {
         ));
     };
 
-    // if (!user?.phone) {
-    //     return <Redirect href={url.accountProfile()} />;
-    // }
-
     const submitHandler = async (data: ICarForm) => {
         if (data.transactionType === "Leased" && (!data.interval || !data.terms)) {
             setIntervalError(true);
-            console.log(data.interval, data.terms);
             return;
         }
+        console.log(data);
         // try {
         //     console.log(data);
         //     const mediaUrl = await imageUpload();
@@ -137,7 +148,9 @@ const Page = () => {
         // }
     };
 
-    return (
+    return loading ? (
+        <Loader />
+    ) : (
         <div className="card">
             <PageTitle>Add New Car</PageTitle>
 
@@ -202,5 +215,13 @@ const Page = () => {
 };
 
 Page.Layout = AccountLayout;
+
+// Page.getInitialProps = async (ctx: NextPageContext) => {
+//     const loginBaseUrl = `${getHostUrl()}${url.signIn()}`;
+//     const loginUrl = url.signIn();
+//     const userApiUrl = `${getHostUrl()}/api/user`;
+//     const json = await isAuthorized(userApiUrl, loginBaseUrl, loginUrl, ctx);
+//     return { user: json.data };
+// };
 
 export default Page;

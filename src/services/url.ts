@@ -60,22 +60,22 @@ const url = {
     post: (post: IPost) => "/demo/blog/post-full-width",
 
     // user auth pages
-    signIn: () => "/account/login",
-    signUp: () => "/account/login",
-    passwordRecovery: () => "/account/forgot",
+    signIn: () => "/login",
+    signUp: () => "/register",
+    passwordRecovery: () => "/forgot",
 
     // account pages
     addCar: () => "/account/add-car",
-    accountDashboard: (): IAppLinkHref => "/account/dashboard",
-    accountGarage: () => "/account/garage",
+    accountDashboard: () => "/account/dashboard",
+    accountGarage: () => "/account/posts",
     accountProfile: () => "/account/profile",
-    accountPassword: () => "/account/password",
+    accountPassword: () => "/account/change-password",
     accountOrders: () => "/account/orders",
     accountOrderView: (order: Partial<IOrder>): IAppLinkHref => ({
         href: `/account/orders/[id]?id=${order.id}`,
         as: `/account/orders/${order.id}`,
     }),
-    accountAddresses: () => "/account/addresses",
+    accountAddresses: () => "/account/edit-address",
     accountAddressNew: (): IAppLinkHref => ({
         href: "/account/addresses/[id]?id=new",
         as: "/account/addresses/new",
