@@ -3,9 +3,11 @@ import React, { useEffect, useRef } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { Input } from "reactstrap";
+import product from "~/models/product";
 
 type Props = {
     disabled: boolean;
+    product?: any;
 };
 
 const minimumChars = 200;
@@ -21,7 +23,7 @@ const DescriptionFormGroup = (props: Props) => {
     useEffect(() => {
         setCharactersCount(0);
     }, []);
-    const { disabled } = props;
+    const { disabled, product } = props;
     return (
         <>
             <div className="form-group">
@@ -31,6 +33,7 @@ const DescriptionFormGroup = (props: Props) => {
                     id={`excerpt`}
                     name={`excerpt`}
                     disabled={disabled}
+                    defaultValue={product?.excerpt}
                     className={classNames("form-control", {
                         "is-invalid": errors?.excerpt,
                     })}
@@ -54,6 +57,7 @@ const DescriptionFormGroup = (props: Props) => {
                     maxLength={maximumChars}
                     minLength={minimumChars}
                     disabled={disabled}
+                    defaultValue={product?.description}
                     className={classNames("form-control", {
                         "is-invalid": errors?.description,
                     })}

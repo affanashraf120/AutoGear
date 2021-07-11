@@ -7,10 +7,11 @@ import useInputNumberValidation from "~/custom/hooks/useInputNumberValidation";
 type Props = {
     disabled: boolean;
     error: boolean;
+    product: any;
 };
 
 const TransactionFormGroup = (props: Props) => {
-    const { disabled, error } = props;
+    const { disabled, error, product } = props;
     const { register, errors } = useFormContext();
     const [transactionType, setTransactionType] = useState<string>("Cash");
     const priceValidation = useInputNumberValidation({
@@ -37,13 +38,14 @@ const TransactionFormGroup = (props: Props) => {
                     className={classNames("form-control", {
                         "is-invalid": errors?.transactionType,
                     })}
+                    defaultChecked={false}
                     placeholder={`Enter transactionType`}
                     ref={register({ required: true })}
                     onChange={(e) => {
                         setTransactionType(e.target.value);
                     }}
                 >
-                    <option value="Cash">Cash</option>
+                    <option value="Cash" >Cash</option>
                     <option value="Leased">Leased</option>
                 </select>
                 <div className="invalid-feedback">
@@ -59,6 +61,7 @@ const TransactionFormGroup = (props: Props) => {
                     name={`price`}
                     min={1}
                     disabled={disabled}
+                    defaultValue={product?.price}
                     className={classNames("form-control", {
                         "is-invalid": errors?.price,
                     })}

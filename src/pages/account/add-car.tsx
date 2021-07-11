@@ -1,62 +1,28 @@
 // react
-import React, { ChangeEvent, ChangeEventHandler, useCallback, useEffect, useRef, useState } from "react";
 // third-party
 import classNames from "classnames";
-import { FormattedMessage, useIntl } from "react-intl";
+import React, { useEffect, useRef, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
+import { toast } from "react-toastify";
+import EmailService from "~/api-services/EmailService";
+import UserAuthService from "~/api-services/userService/UserAuthService";
 // application
 import AccountLayout from "~/components/account/AccountLayout";
-import AddressForm, { getAddressFormDefaultValue, IAddressForm } from "~/components/shared/AddressForm";
-import Checkbox from "~/components/shared/Checkbox";
 import PageTitle from "~/components/shared/PageTitle";
-import url from "~/services/url";
-import { accountApi } from "~/api";
-import { IAddress } from "~/interfaces/address";
-import { IEditAddressData } from "~/api/base";
-import { useAppRouter } from "~/services/router";
-import { useAsyncAction } from "~/store/hooks";
-import CustomProductForm from "~/components/shared/CustomProductForm";
 import VehicleSelect from "~/components/shared/VehicleSelect";
-import { useUser } from "~/store/user/userHooks";
-import Redirect from "~/components/shared/Redirect";
-import { ICarForm, ICarProduct, IProduct, Transaction } from "~/interfaces/product";
-import { IVehicle } from "~/interfaces/vehicle";
-import { engineTypes } from "~/custom-server/database/engineTypes";
-import { transmissions } from "~/custom-server/database/transmissions";
-import { bodyTypes } from "~/custom-server/database/bodyTypes";
-import { cities } from "~/custom-server/cities";
-import { provinces } from "~/custom-server/provinces";
-import cloudinary from "cloudinary";
-import { brands } from "~/server/database/brands";
-import { attributesGroups } from "~/custom-server/database/product/attributesGroups";
-import { IProductAttributesDef } from "~/server/interfaces/product-def";
-import { resolveProductAttributesDef } from "~/server/database/products";
-import { fill, flatMap } from "lodash";
-import { makeIdGenerator, nameToSlug } from "~/server/utils";
-import { IReview } from "~/interfaces/review";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input } from "reactstrap";
-import { ConnectionStates } from "mongoose";
-import ImageUploader from "~/custom/components/ImageUploader/ImageUploader";
-import TransactionFormGroup from "~/custom/components/CarFormElements/TransactionFormGroup";
-import SelectionsFormGroup from "~/custom/components/CarFormElements/SelectionsFormGroup";
 import DescriptionFormGroup from "~/custom/components/CarFormElements/DescriptionFormGroup";
 import EngineFormGroup from "~/custom/components/CarFormElements/EngineFormGroup";
-import { NextPageContext } from "next";
-import { getHostUrl } from "~/services/utils";
-import { isAuthorized } from "~/utils/user";
+import SelectionsFormGroup from "~/custom/components/CarFormElements/SelectionsFormGroup";
+import TransactionFormGroup from "~/custom/components/CarFormElements/TransactionFormGroup";
+import ImageUploader from "~/custom/components/ImageUploader/ImageUploader";
 import Loader from "~/custom/components/Loader";
-import { getUserFromToken, isUserLoggedIn, setUserAuthToken } from "~/utils/auth";
-import useAuthorizedUser from "~/custom/hooks/useAuthorizedUser";
 import { useAuthContext } from "~/custom/hooks/useAuthContext";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { FormControl, FormGroup, FormLabel } from "@material-ui/core";
-import UserAuthService from "~/api-services/userService/UserAuthService";
-import EmailService from "~/api-services/EmailService";
-
-const minimumChars = 200;
-const maximumChars = 1000;
+import { ICarForm, ICarProduct } from "~/interfaces/product";
+import { IVehicle } from "~/interfaces/vehicle";
+import { useAppRouter } from "~/services/router";
+import url from "~/services/url";
+import { imageUpload } from "~/utils/imageUpload";
 
 interface CarFormData extends ICarForm {
     images: File[];
@@ -66,11 +32,7 @@ const Page = () => {
     const [vehicle, setVehicle] = useState<IVehicle>();
     const methods = useForm<CarFormData>();
     const [intervalError, setIntervalError] = useState<boolean>(false);
-    const { register, handleSubmit, errors, control } = methods;
-    const [file, setFile] = useState<File | null>(null);
-    const [modal, setModal] = useState(false);
-    const descriptionCount = useRef<HTMLElement>(null);
-    const vehicleSelect = useRef<HTMLDivElement>(null);
+    const { handleSubmit, errors, control } = methods;
     const { isUserExist, getAuthorizedUser } = useAuthContext();
     const [loading, setLoading] = useState(true);
     const history = useAppRouter();
@@ -84,21 +46,6 @@ const Page = () => {
             history.push(url.signIn());
         } else setLoading(false);
     }, []);
-
-    const imageUpload = async (file: File) => {
-        if (file !== null) {
-            const data = new FormData();
-            data.append("file", file);
-            data.append("upload_preset", "products");
-            data.append("cloud_name", "autogear");
-            const res = await fetch("https://api.cloudinary.com/v1_1/autogear/image/upload", {
-                method: "POST",
-                body: data,
-            });
-            const res2 = await res.json();
-            return res2.url;
-        }
-    };
 
     const getImageUrls = (files: File[]) => {
         let promises: Promise<string>[] = [];
@@ -225,7 +172,7 @@ const Page = () => {
 
                             <div className="form-group">
                                 <Controller
-                                    render={({onChange}) => (
+                                    render={({ onChange }) => (
                                         <ImageUploader
                                             className={classNames("form-control", {
                                                 "is-invalid": errors?.images,

@@ -1,9 +1,11 @@
-import { AxiosInterceptorManager, AxiosRequestConfig } from "axios";
 import { getHostUrl } from "~/services/utils";
 import { getUserAuthToken } from "~/utils/auth";
 import GenericService from "../GenericService";
 
 const ADD_POST = "addPost";
+const GET_POSTS = "getPosts";
+const EDIT_POST = "editPost";
+const DELETE_POST = "deletePost";
 
 class UserAuthService extends GenericService {
     constructor() {
@@ -18,6 +20,9 @@ class UserAuthService extends GenericService {
         );
     }
     addPost = (data: any) => this.post(ADD_POST, data).then((response) => response.data);
+    getPosts = (_id: string) => this.get(GET_POSTS, { _id }).then((response) => response.data);
+    editPost = (data: any) => this.put(EDIT_POST, { ...data }).then((response) => response.data);
+    deletePost = (productId: string) => this.delete(DELETE_POST, { productId }).then((response) => response.data);
 }
 
 export default new UserAuthService();

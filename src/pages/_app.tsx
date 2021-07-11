@@ -1,36 +1,33 @@
 // react
-import React, { ComponentType, useEffect, useMemo } from "react";
-// third-party
-import AppBase, { AppContext, AppProps } from "next/app";
-import Head from "next/head";
-import { NextComponentType, NextPageContext } from "next";
-import { useStore } from "react-redux";
-// application
-import config from "~/config";
-import LanguageProvider, { getLanguageInitialProps, ILanguageProviderProps } from "~/services/i18n/provider";
-import Layout from "~/components/Layout";
-import PageTitle from "~/components/shared/PageTitle";
-import { AppDispatch } from "~/store/types";
-import { CurrentVehicleGarageProvider } from "~/services/current-vehicle";
-import { getLanguageByLocale, getLanguageByPath } from "~/services/i18n/utils";
-import { load, save, wrapper } from "~/store/store";
-import { optionsSetAll } from "~/store/options/optionsActions";
-import { useApplyClientState } from "~/store/client";
-import { useLoadUserVehicles } from "~/store/garage/garageHooks";
-// styles
-import "../scss/index.scss";
-import "../scss/style.header-classic-variant-one.scss";
-import "../scss/style.mobile-header-variant-one.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 // firebase
 import { FirebaseDatabaseProvider } from "@react-firebase/database";
 import firebase from "firebase";
+import { NextComponentType, NextPageContext } from "next";
+// third-party
+import AppBase, { AppContext, AppProps } from "next/app";
+import Head from "next/head";
+import React, { ComponentType, useEffect, useMemo } from "react";
+import { useStore } from "react-redux";
 import { firebaseConfig } from "~/api/config";
-import { getHostUrl } from "~/services/utils";
-import url from "~/services/url";
-import { isAuthorized } from "~/utils/user";
+import Layout from "~/components/Layout";
+import PageTitle from "~/components/shared/PageTitle";
+// application
+import config from "~/config";
 import { AuthContext } from "~/custom/AuthContext";
 import useAuthorizedUser from "~/custom/hooks/useAuthorizedUser";
+import { CurrentVehicleGarageProvider } from "~/services/current-vehicle";
+import LanguageProvider, { getLanguageInitialProps, ILanguageProviderProps } from "~/services/i18n/provider";
+import { getLanguageByLocale, getLanguageByPath } from "~/services/i18n/utils";
+import { useApplyClientState } from "~/store/client";
+import { useLoadUserVehicles } from "~/store/garage/garageHooks";
+import { optionsSetAll } from "~/store/options/optionsActions";
+import { load, save, wrapper } from "~/store/store";
+import { AppDispatch } from "~/store/types";
+// styles
+import "../scss/index.scss";
+import "../scss/style.header-classic-variant-one.scss";
+import "../scss/style.mobile-header-variant-one.scss";
 
 interface Props extends AppProps {
     languageInitialProps: ILanguageProviderProps;
@@ -135,11 +132,6 @@ App.getInitialProps = async (context: AppContext) => {
     } else {
         language = getLanguageByPath(context.ctx.asPath || context.ctx.pathname);
     }
-
-    //Addition
-    const loginBaseUrl = `${getHostUrl()}${url.signIn()}`;
-    const loginUrl = url.signIn();
-    const userApiUrl = `${getHostUrl()}/api/user`;
 
     return {
         ...(await AppBase.getInitialProps(context)),

@@ -24,7 +24,6 @@ const Page = () => {
         return <Redirect href={url.home()} />;
     }
 
-
     return (
         <div className="dashboard">
             <PageTitle>{intl.formatMessage({ id: 'HEADER_DASHBOARD' })}</PageTitle>

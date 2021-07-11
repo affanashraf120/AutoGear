@@ -1,147 +1,140 @@
 // react
-import axios from "axios";
-// third-party
-import classNames from "classnames";
-import { NextPageContext } from "next";
+import { Edit } from "@material-ui/icons";
+import { Action, Column } from "material-table";
 import React, { useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import UserAuthService from "~/api-services/userService/UserAuthService";
 // application
 import AccountLayout from "~/components/account/AccountLayout";
-import AppImage from "~/components/shared/AppImage";
-import AppLink from "~/components/shared/AppLink";
-import CurrencyFormat from "~/components/shared/CurrencyFormat";
 import PageTitle from "~/components/shared/PageTitle";
-import Rating from "~/components/shared/Rating";
+import DataTable from "~/custom/components/CustomTable/DataTable";
 import Loader from "~/custom/components/Loader";
 import { useAuthContext } from "~/custom/hooks/useAuthContext";
-import { IProduct } from "~/interfaces/product";
 import { useAppRouter } from "~/services/router";
 import url from "~/services/url";
-import { getHostUrl } from "~/services/utils";
-import { isAuthorized } from "~/utils/user";
+
+type TableData = {
+    _id: string;
+    make: string;
+    model: string;
+    price: string;
+    status: string;
+    productType: string;
+    postedDate: string;
+};
+
+const headers: Column<TableData>[] = [
+    {
+        title: "Make",
+        field: "make",
+    },
+    {
+        title: "Model",
+        field: "model",
+    },
+    {
+        title: "Price",
+        field: "price",
+    },
+    {
+        title: "Status",
+        field: "status",
+    },
+    {
+        title: "Type",
+        field: "productType",
+    },
+    {
+        title: "Date",
+        field: "postedDate",
+    },
+];
 
 function Page() {
-    const [items, setItems] = useState<IProduct[]>([]);
-    const { user, isUserExist } = useAuthContext();
+    const [data, setData] = useState<TableData[]>([]);
+    const { isUserExist, getAuthorizedUser } = useAuthContext();
     const [loading, setLoading] = useState(true);
+    const [dataFetched, setDataFetched] = useState(false);
     const history = useAppRouter();
-    const getUserCars = () => {
-        // axios
-        //     .get(`/api/products/${user?._id}`)
-        //     .then((res) => {
-        //         console.log(res.data.data);
-        //         setItems(res.data.data);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
+
+    const handleEdit = (_id: string) => {
+        history.push(url.editCar(_id));
     };
-    useEffect(getUserCars, []);
+
+    const actions: Action<any>[] = [
+        {
+            icon: Edit,
+            tooltip: "Edit Post",
+            onClick: (event, data) => {
+                handleEdit(data._id);
+            },
+        },
+    ];
+
+    const handleDelete = (data: any) =>
+        UserAuthService.deletePost(data._id)
+            .then((responseData) => {
+                console.log(responseData);
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+
+    const getUserCars = () => {
+        const user = getAuthorizedUser();
+        if (user) {
+            UserAuthService.getPosts(user._id)
+                .then((responseData) => {
+                    const products = responseData.data;
+                    const tableRecods: TableData[] = products.map((product: any) => {
+                        const { isFeatured, isApproved } = product;
+                        let status = isApproved ? "Approved" : "Not Approved";
+                        let productType = isFeatured ? "Featured" : "Post";
+                        const record: TableData = {
+                            _id: product._id,
+                            make: product.make,
+                            model: product.model,
+                            price: product.price,
+                            status: status,
+                            productType: productType,
+                            postedDate: product.postedDate,
+                        };
+                        return record;
+                    });
+                    console.log(responseData);
+                    setDataFetched(true);
+                    setData(tableRecods);
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                    setDataFetched(true);
+                });
+        }
+    };
 
     useEffect(() => {
         if (!isUserExist()) {
             history.push(url.signIn());
         } else setLoading(false);
+        getUserCars();
     }, []);
 
     return loading ? (
         <Loader />
     ) : (
         <div className="card">
-            <PageTitle>My Cars</PageTitle>
-            <React.Fragment>
-                <div className="card-header">
-                    <h5>Cars Posts</h5>
-                </div>
-                <div className="card-divider" />
-
-                <div className="wishlist">
-                    <table className="wishlist__table">
-                        <thead className="wishlist__head">
-                            <tr className="wishlist__row wishlist__row--head">
-                                <th className="wishlist__column wishlist__column--head wishlist__column--image">
-                                    <FormattedMessage id="TABLE_IMAGE" />
-                                </th>
-                                <th className="wishlist__column wishlist__column--head wishlist__column--product">
-                                    <FormattedMessage id="TABLE_PRODUCT" />
-                                </th>
-                                <th className="wishlist__column wishlist__column--head wishlist__column--price">
-                                    <FormattedMessage id="TABLE_PRICE" />
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="wishlist__body">
-                            {items.map((product, index) => (
-                                <tr key={index} className="wishlist__row wishlist__row--body">
-                                    <td className="wishlist__column wishlist__column--body wishlist__column--image">
-                                        <div className="image image--type--product">
-                                            <AppLink className="image__body">
-                                                <AppImage
-                                                    className="image__tag"
-                                                    src={product.images && product.images[0]}
-                                                />
-                                            </AppLink>
-                                        </div>
-                                    </td>
-                                    <td
-                                        className={classNames(
-                                            "wishlist__column",
-                                            "wishlist__column--body",
-                                            "wishlist__column--product"
-                                        )}
-                                    >
-                                        <div className="wishlist__product-name">
-                                            <AppLink href={url.product(product)}>{product.name}</AppLink>
-                                        </div>
-                                        <div className="wishlist__product-rating">
-                                            <div className="wishlist__product-rating-stars">
-                                                <Rating value={product.rating || 0} />
-                                            </div>
-                                            <div className="wishlist__product-rating-title">
-                                                <FormattedMessage
-                                                    id="TEXT_RATING_LABEL"
-                                                    values={{
-                                                        rating: product.rating,
-                                                        reviews: product.reviews,
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td
-                                        className={classNames(
-                                            "wishlist__column",
-                                            "wishlist__column--body",
-                                            "wishlist__column--price"
-                                        )}
-                                    >
-                                        <CurrencyFormat value={product.price} />
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="card-body card-body--padding--2">
-                    <div className="vehicles-list vehicles-list--layout--account">
-                        <div className="vehicles-list__body"></div>
-                    </div>
-                </div>
-                <div className="card-divider" />
-            </React.Fragment>
+            <PageTitle>My Posts</PageTitle>
+            <DataTable
+                actions={actions}
+                onRowDelete={handleDelete}
+                loading={!dataFetched}
+                title="My Posts"
+                columns={headers}
+                data={data}
+            />
         </div>
     );
 }
 
 Page.Layout = AccountLayout;
-
-// Page.getInitialProps = async (ctx: NextPageContext) => {
-//     const loginBaseUrl = `${getHostUrl()}${url.signIn()}`;
-//     const loginUrl = url.signIn();
-//     const userApiUrl = `${getHostUrl()}/api/user`;
-//     const json = await isAuthorized(userApiUrl, loginBaseUrl, loginUrl, ctx);
-//     return { user: json.data };
-// };
 
 export default Page;

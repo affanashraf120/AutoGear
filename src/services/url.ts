@@ -65,6 +65,7 @@ const url = {
     passwordRecovery: () => "/forgot",
 
     // account pages
+    editCar: (productId: string) => `/account/editPost/${productId}`,
     addCar: () => "/account/add-car",
     accountDashboard: () => "/account/dashboard",
     accountGarage: () => "/account/posts",
