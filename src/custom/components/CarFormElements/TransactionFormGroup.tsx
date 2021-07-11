@@ -7,7 +7,7 @@ import useInputNumberValidation from "~/custom/hooks/useInputNumberValidation";
 type Props = {
     disabled: boolean;
     error: boolean;
-    product: any;
+    product?: any;
 };
 
 const TransactionFormGroup = (props: Props) => {

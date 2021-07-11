@@ -168,7 +168,10 @@ const Page = () => {
 
                             <SelectionsFormGroup disabled={vehicle === undefined} />
 
-                            <TransactionFormGroup disabled={vehicle === undefined} error={intervalError} />
+                            <TransactionFormGroup
+                                disabled={vehicle === undefined}
+                                error={intervalError}
+                            />
 
                             <div className="form-group">
                                 <Controller
