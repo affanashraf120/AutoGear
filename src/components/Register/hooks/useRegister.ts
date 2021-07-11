@@ -17,6 +17,7 @@ const useRegister = () => {
     const [step, setStep] = useState<number>(1);
     const userSignUp = useUserSignUp();
     const { isUserExist } = useAuthContext();
+    const { setAuthorizedUser } = useAuthContext();
     const history = useAppRouter();
     const methods = useForm<RegisterData>({
         defaultValues: { ...defaultValues },
@@ -47,7 +48,8 @@ const useRegister = () => {
         UserService.register(customData)
             .then((responseData) => {
                 toast.success("User registered successfully");
-                setUserAuthToken(responseData.data.token);
+                setAuthorizedUser(responseData.data.token);
+                history.push(url.accountDashboard())
             })
             .catch((err) => {
                 toast.error("User not registered." + err.response.data.message);
