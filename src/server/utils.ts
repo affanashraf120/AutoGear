@@ -70,7 +70,7 @@ export function makeApiFetchCarToProduct(carProduct: ICarProduct, _id: string): 
         badges,
         isFeatured,
         isApproved,
-        isInspected,
+        isAutoGear,
         customFields,
         postedDate,
     } = carProduct;

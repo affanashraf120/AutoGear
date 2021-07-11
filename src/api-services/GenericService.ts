@@ -2,14 +2,9 @@ import axios, { AxiosInstance, AxiosInterceptorManager, AxiosRequestConfig, Axio
 
 class GenericService {
     private axios: AxiosInstance;
-    constructor(
-        config: AxiosRequestConfig,
-        requestIntercepters?: AxiosInterceptorManager<AxiosRequestConfig>,
-        responseIntercepters?: AxiosInterceptorManager<AxiosResponse<any>>
-    ) {
+    constructor(config: AxiosRequestConfig, AuthorizationFunction?: (value: AxiosRequestConfig) => AxiosRequestConfig) {
         this.axios = axios.create(config);
-        if (requestIntercepters) this.axios.interceptors.request = requestIntercepters;
-        if (responseIntercepters) this.axios.interceptors.response = responseIntercepters;
+        if (AuthorizationFunction) this.axios.interceptors.request.use(AuthorizationFunction);
     }
 
     protected get = (url?: string, params?: any) =>

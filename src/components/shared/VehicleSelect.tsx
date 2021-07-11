@@ -17,11 +17,10 @@ function VehicleSelect(props: Props) {
         onChange: onVehicleChange,
     });
 
-
     return (
         <div className={rootClasses} {...rootProps}>
             <div className="vehicle-select__list">
-                {form.items.map((item, itemIdx) => {
+                {form.items.map((item: any, itemIdx: number) => {
                     const options = item.options as Array<number | string | IVehicle>;
 
                     return (

@@ -1,6 +1,5 @@
 // react
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 // third-party
 import { FormattedMessage, useIntl } from "react-intl";
 // application

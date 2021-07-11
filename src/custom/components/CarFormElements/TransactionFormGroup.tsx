@@ -2,46 +2,28 @@ import classNames from "classnames";
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
+import useInputNumberValidation from "~/custom/hooks/useInputNumberValidation";
 
 type Props = {
     disabled: boolean;
     error: boolean;
 };
 
-var price = "";
-var terms = "";
-
 const TransactionFormGroup = (props: Props) => {
     const { disabled, error } = props;
     const { register, errors } = useFormContext();
     const [transactionType, setTransactionType] = useState<string>("Cash");
+    const priceValidation = useInputNumberValidation({
+        allowLeadingZero: false,
+        limit: 100000000,
+    });
+    const termsValidation = useInputNumberValidation({
+        allowLeadingZero: false,
+        limit: 70,
+    });
 
     const isCash = (): boolean => {
         return transactionType === "Cash";
-    };
-
-    const invalidKey = (key: string): boolean => {
-        if (key === "-" || key === "e" || key === "E") {
-            return true;
-        }
-        return false;
-    };
-
-    const handleNumberKeyValidation = (e: React.KeyboardEvent<HTMLInputElement>, num: string, limit: number) => {
-        if (invalidKey(e.key)) {
-            e.preventDefault();
-            return;
-        }
-        if (e.key === "0" && num === "") {
-            e.preventDefault();
-            return;
-        }
-        num = num.concat(e.key);
-        console.log(num, limit);
-        if (parseInt(num) > limit) {
-            e.preventDefault();
-            return;
-        }
     };
 
     return (
@@ -83,11 +65,9 @@ const TransactionFormGroup = (props: Props) => {
                     placeholder={`Enter ${transactionType === "Cash" ? "Price" : "Leased Amount"}`}
                     ref={register({ required: true })}
                     onKeyPress={(e) => {
-                        handleNumberKeyValidation(e, price, 100000000);
+                        priceValidation.invalidNumberInput(e.key) && e.preventDefault();
                     }}
-                    onChange={(e) => {
-                        price = e.target.value;
-                    }}
+                    onChange={priceValidation.handleChange()}
                 />
                 <div className="invalid-feedback">
                     {errors?.price?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
@@ -128,11 +108,9 @@ const TransactionFormGroup = (props: Props) => {
                     ref={register}
                     disabled={transactionType === "Cash"}
                     onKeyPress={(e) => {
-                        handleNumberKeyValidation(e, terms, 70);
+                        termsValidation.invalidNumberInput(e.key) && e.preventDefault();
                     }}
-                    onChange={(e) => {
-                        terms = e.target.value;
-                    }}
+                    onChange={termsValidation.handleChange()}
                     className={classNames("form-control", {
                         "is-invalid": !isCash() && error,
                     })}

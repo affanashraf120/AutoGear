@@ -108,7 +108,7 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
-    isInspected: {
+    isAutoGear: {
         type: Boolean,
         required: true,
     },

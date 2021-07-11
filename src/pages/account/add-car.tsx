@@ -50,6 +50,10 @@ import Loader from "~/custom/components/Loader";
 import { getUserFromToken, isUserLoggedIn, setUserAuthToken } from "~/utils/auth";
 import useAuthorizedUser from "~/custom/hooks/useAuthorizedUser";
 import { useAuthContext } from "~/custom/hooks/useAuthContext";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { FormControl, FormGroup, FormLabel } from "@material-ui/core";
+import UserAuthService from "~/api-services/userService/UserAuthService";
+import EmailService from "~/api-services/EmailService";
 
 const minimumChars = 200;
 const maximumChars = 1000;
@@ -67,9 +71,13 @@ const Page = () => {
     const [modal, setModal] = useState(false);
     const descriptionCount = useRef<HTMLElement>(null);
     const vehicleSelect = useRef<HTMLDivElement>(null);
-    const { user, isUserExist } = useAuthContext();
+    const { isUserExist, getAuthorizedUser } = useAuthContext();
     const [loading, setLoading] = useState(true);
     const history = useAppRouter();
+    const [isFeatured, setIsFeatured] = useState(false);
+
+    const NEW_BADGE = "new";
+    const FEATURED = "featured";
 
     useEffect(() => {
         if (!isUserExist()) {
@@ -92,6 +100,15 @@ const Page = () => {
         }
     };
 
+    const getImageUrls = (files: File[]) => {
+        let promises: Promise<string>[] = [];
+        files.forEach((file) => {
+            promises.push(imageUpload(file));
+        });
+
+        return Promise.all([...promises]);
+    };
+
     const handleVehicleChange = (vehicle: IVehicle | null) => {
         if (vehicle !== null) setVehicle(vehicle);
     };
@@ -105,47 +122,63 @@ const Page = () => {
         ));
     };
 
-    const submitHandler = async (data: ICarForm) => {
+    const submitHandler = async (data: CarFormData) => {
         if (data.transactionType === "Leased" && (!data.interval || !data.terms)) {
             setIntervalError(true);
             return;
         }
-        console.log(data);
-        // try {
-        //     console.log(data);
-        //     const mediaUrl = await imageUpload();
-        //     const url = mediaUrl.replace("upload", "upload/c_scale,h_800,w_800");
-        //     if (vehicle && user && user._id) {
-        //         const car: ICarProduct = {
-        //             ...data,
-        //             make: vehicle.make,
-        //             model: vehicle.model,
-        //             version: vehicle.engine,
-        //             year: vehicle.year,
-        //             images: [url],
-        //             rating: 0,
-        //             reviews: [],
-        //             sellerId: user._id,
-        //             badges: [],
-        //             isFeatured: false,
-        //             isApproved: false,
-        //             isInspected: false,
-        //             customFields: ["Bumper to bumper original"],
-        //             postedDate: new Date().toLocaleDateString(),
-        //         };
-        //         axios
-        //             .post("/api/products/addProduct", { ...car })
-        //             .then((res) => {
-        //                 console.log(res);
-        //                 toast("Car added successfully.");
-        //             })
-        //             .catch((err) => {
-        //                 console.log(err);
-        //             });
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        setLoading(true);
+        const user = getAuthorizedUser();
+        user &&
+            vehicle &&
+            getImageUrls(data.images)
+                .then((urls: string[]) => {
+                    let badges = [];
+                    isFeatured && badges.push(FEATURED);
+                    const { id, engine, ...rest } = vehicle;
+                    const { images, ...customData } = data;
+                    const car: ICarProduct = {
+                        ...customData,
+                        ...rest,
+                        version: engine,
+                        images: [...urls],
+                        rating: 0,
+                        reviews: [],
+                        sellerId: user._id,
+                        badges: badges,
+                        isFeatured: isFeatured ? true : false,
+                        isApproved: false,
+                        isAutoGear: false,
+                        postedDate: new Date().toLocaleDateString(),
+                    };
+                    UserAuthService.addPost(car)
+                        .then((responseData) => {
+                            console.log(responseData);
+                            setLoading(false);
+                            setIsFeatured(false);
+                            toast.success("Post created successfully");
+                            if (isFeatured) {
+                                EmailService.postConfirmation(user.email, user.fullName);
+                                EmailService.featuredAd(user.email);
+                            } else {
+                                EmailService.postConfirmation(user.email, user.fullName);
+                            }
+                        })
+                        .catch((error) => {
+                            if (error.response.status === 429) {
+                                console.log(error.response);
+                                if (error.response.data.data.dayPosts) toast.error("Posts limit exeeded for today");
+                                if (error.response.data.data.monthPosts) toast.error("Monthly post limit exeeded");
+                            } else toast.error("Server error");
+                            setLoading(false);
+                            setIsFeatured(false);
+                        });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                    toast.error("Images not uploaded successfully");
+                });
     };
 
     return loading ? (
@@ -169,6 +202,17 @@ const Page = () => {
                         onVehicleChange={handleVehicleChange}
                     />
                     <div className="invalid-feedback">Select vehicle</div>
+                    <div className="form-group">
+                        <input
+                            style={{ width: "1rem", cursor: "pointer", backgroundColor: "green" }}
+                            checked={isFeatured}
+                            type="checkbox"
+                            onChange={() => {
+                                isFeatured ? setIsFeatured(false) : setIsFeatured(true);
+                            }}
+                        />
+                        <label style={{ margin: "1rem", color: "green" }}>Featured</label>
+                    </div>
                     <FormProvider {...methods}>
                         <form className="col-12 col-lg-12 col-xl-12" onSubmit={handleSubmit(submitHandler)}>
                             <DescriptionFormGroup disabled={vehicle === undefined} />
@@ -181,12 +225,12 @@ const Page = () => {
 
                             <div className="form-group">
                                 <Controller
-                                    as={(controllerProps) => (
+                                    render={({onChange}) => (
                                         <ImageUploader
                                             className={classNames("form-control", {
                                                 "is-invalid": errors?.images,
                                             })}
-                                            onChange={controllerProps.onChange}
+                                            onChange={onChange}
                                         />
                                     )}
                                     name="images"
@@ -200,7 +244,7 @@ const Page = () => {
                                 <button
                                     type="submit"
                                     className={classNames("btn", "btn-primary", "mt-3", {
-                                        "btn-loading": false,
+                                        "btn-loading": loading,
                                     })}
                                 >
                                     <FormattedMessage id="BUTTON_SAVE" />
@@ -215,13 +259,5 @@ const Page = () => {
 };
 
 Page.Layout = AccountLayout;
-
-// Page.getInitialProps = async (ctx: NextPageContext) => {
-//     const loginBaseUrl = `${getHostUrl()}${url.signIn()}`;
-//     const loginUrl = url.signIn();
-//     const userApiUrl = `${getHostUrl()}/api/user`;
-//     const json = await isAuthorized(userApiUrl, loginBaseUrl, loginUrl, ctx);
-//     return { user: json.data };
-// };
 
 export default Page;

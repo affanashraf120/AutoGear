@@ -2,7 +2,7 @@
 import { DependencyList, useCallback, useEffect, useMemo, useRef, useState } from "react";
 // third-party
 import { UseFormMethods } from "react-hook-form";
-import { FieldElement, FieldName, Ref } from "react-hook-form/dist/types/fields";
+import { FieldElement, FieldName, Ref } from "react-hook-form";
 // import { FieldElement, FieldName, Ref, UseFormMethods } from "react-hook-form/dist/types/form";
 // application
 import { IProduct } from "~/interfaces/product";
@@ -147,13 +147,14 @@ export function useDetachableForm<T extends Record<string, any>>(formMethods: Us
         }
     }, [detached, unregister, trigger]);
 
-    return (rules: any = {}) => (ref: (FieldElement<T> & Ref) | null) => {
-        if (!detached) {
-            if (ref && !fieldNamesRef.current.includes(ref.name)) {
-                fieldNamesRef.current.push(ref.name);
-            }
+    return (rules: any = {}) =>
+        (ref: (FieldElement<T> & Ref) | null) => {
+            if (!detached) {
+                if (ref && !fieldNamesRef.current.includes(ref.name)) {
+                    fieldNamesRef.current.push(ref.name);
+                }
 
-            originalRegister()(ref);
-        }
-    };
+                originalRegister()(ref);
+            }
+        };
 }

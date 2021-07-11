@@ -144,8 +144,8 @@ export interface ICarProduct extends ICarForm {
     badges: string[];
     isFeatured: boolean;
     isApproved: boolean;
-    isInspected: boolean;
-    customFields: any;
+    isAutoGear: boolean;
+    customFields?: any;
     postedDate: string;
 }
 
