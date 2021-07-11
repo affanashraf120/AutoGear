@@ -20,11 +20,10 @@ const usePhoneVerification = () => {
     const [code, setCode] = useState("");
     const { getValues, trigger } = useFormContext();
     const captchaRef = useRef<HTMLDivElement>(null);
-    const { invalidNumberInput, handleChange } = useInputNumberValidation({ maxLength: 7, allowLeadingZero: true });
 
     const setUpRecaptcha = () => {
         window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha", {
-            size: "invisible",
+            size: "normal",
             callback: (response: any) => {
                 // reCAPTCHA solved, allow signInWithPhoneNumber.
                 toast.success("Recaptcha Resolved");
@@ -47,6 +46,7 @@ const usePhoneVerification = () => {
             })
             .catch((error) => {
                 // Error; SMS not sent
+                console.log(error.response);
                 toast.error("Recaptcha not resolved");
                 setLoading(false);
             });
