@@ -9,7 +9,7 @@ import { useAuthContext } from "~/custom/hooks/useAuthContext";
 import useAuthorizedUser from "~/custom/hooks/useAuthorizedUser";
 import { useAppRouter } from "~/services/router";
 import url from "~/services/url";
-import Cards from "react-credit-cards";
+// import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 
 const Page = () => {
@@ -27,7 +27,7 @@ const Page = () => {
         <React.Fragment>
             <PageTitle>Apply for auction</PageTitle>
             <BlockSpace layout="after-header" />
-            <Cards />
+            {/* <Cards /> */}
             <BlockSpace layout="before-footer" />
         </React.Fragment>
     );
