@@ -14,16 +14,7 @@ import AppImage from "~/components/shared/AppImage";
 const Page = () => {
     const intl = useIntl();
     const router = useRouter();
-    const { password } = router.query;
-
-    const isAuthorized = (password: string | undefined | string[]) => {
-        return password === "secret";
-    };
-
-    if (!isAuthorized(password)) {
-        return <Redirect href={url.home()} />;
-    }
-
+    
     return (
         <div className="dashboard">
             <PageTitle>{intl.formatMessage({ id: 'HEADER_DASHBOARD' })}</PageTitle>

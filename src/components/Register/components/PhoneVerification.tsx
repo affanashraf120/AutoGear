@@ -77,8 +77,7 @@ const PhoneVerification = () => {
                 </div>
             )}
             {/*  */}
-            <div style={{ margin: "2rem" }} />
-            <div id="recaptcha" ref={captchaRef}></div>
+            <div id="recaptcha" style={{ margin: "2rem" }} ref={captchaRef}></div>
         </>
     );
 };

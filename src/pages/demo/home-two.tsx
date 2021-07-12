@@ -10,7 +10,7 @@ import BlockFeatures from '~/components/blocks/BlockFeatures';
 import BlockPosts from '~/components/blocks/BlockPosts';
 import BlockProductsCarousel from '~/components/blocks/BlockProductsCarousel';
 import BlockProductsColumns from '~/components/blocks/BlockProductsColumns';
-import BlockSale from '~/components/blocks/BlockSale';
+import BlockSale from '~/components/blocks/BlockAuction';
 import BlockSlideshow from '~/components/blocks/BlockSlideshow';
 import BlockSpace from '~/components/blocks/BlockSpace';
 import url from '~/services/url';

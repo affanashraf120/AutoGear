@@ -6,9 +6,8 @@ import { FormattedMessage } from "react-intl";
 import { toast } from "react-toastify";
 import { Label } from "reactstrap";
 import CurrencyFormat from "~/components/shared/CurrencyFormat";
+import useInputNumberValidation from "~/custom/hooks/useInputNumberValidation";
 import Loader from "../../custom/components/Loader";
-
-var bid = "";
 
 type BidForm = {
     bid_amount: number;
@@ -22,12 +21,11 @@ const AuctionBidForm = (props: Props) => {
     const { runTransaction, previous_bid } = props;
     const { handleSubmit, errors, register } = useForm<BidForm>();
     const [loading, setLoading] = useState(false);
-    const invalidKey = (key: string): boolean => {
-        if (key === "-" || key === "e" || key === "E") {
-            return true;
-        }
-        return false;
-    };
+    const { handleChange, invalidNumberInput } = useInputNumberValidation({
+        allowLeadingZero: false,
+        limit: 1000000000,
+    });
+
     const [previousBid, setPreviousBid] = useState<number>(previous_bid);
     const [value, setValue] = useState<number>();
 
@@ -39,27 +37,11 @@ const AuctionBidForm = (props: Props) => {
         });
     }, []);
 
-    const handleNumberKeyValidation = (e: React.KeyboardEvent<HTMLInputElement>, num: string, limit: number) => {
-        if (invalidKey(e.key)) {
-            e.preventDefault();
-            return;
-        }
-        if (e.key === "0" && num === "") {
-            e.preventDefault();
-            return;
-        }
-        num = num.concat(e.key);
-        if (parseInt(num) > limit) {
-            e.preventDefault();
-            return;
-        }
-    };
     const submitHandler = (data: BidForm) => {
         const { bid_amount } = data;
         setLoading(true);
         runTransaction({
             reducer: (val) => {
-                console.log(parseInt(val));
                 if (bid_amount > parseInt(val)) return bid_amount;
                 throw { message: `Bidding amount must be higher than ${val}` };
             },
@@ -97,14 +79,13 @@ const AuctionBidForm = (props: Props) => {
                             placeholder={`Enter bid amount`}
                             ref={register({ required: true })}
                             onKeyPress={(e) => {
-                                handleNumberKeyValidation(e, bid, 1000000000);
+                                invalidNumberInput(e.key) && e.preventDefault();
                             }}
                             min={1}
                             value={value}
-                            onChange={(e) => {
-                                bid = e.target.value;
+                            onChange={handleChange((e) => {
                                 setValue(parseInt(e.target.value));
-                            }}
+                            })}
                         />
                     )}
                     <div className="invalid-feedback">
@@ -155,6 +136,22 @@ const AuctionBidForm = (props: Props) => {
                             setValue((prev) => prev && prev + 100000);
                         }}
                     >{`100,000`}</button>
+                </div>
+                <div className="form-group">
+                    <button
+                        className={classNames("btn", "btn-primary", "mt-3")}
+                        style={{ margin: "5px", backgroundColor: "grey" }}
+                        onClick={() => {
+                            setValue((prev) => prev && prev + 1000000);
+                        }}
+                    >{`1,000,000`}</button>
+                    <button
+                        className={classNames("btn", "btn-primary", "mt-3")}
+                        style={{ margin: "5px", backgroundColor: "grey" }}
+                        onClick={() => {
+                            setValue((prev) => prev && prev + 2000000);
+                        }}
+                    >{`2,000,000`}</button>
                 </div>
             </div>
         </div>

@@ -31,7 +31,7 @@ const Auction = () => {
                         <Loader />
                     ) : (
                         <Container>
-                            <div
+                            {/* <div
                                 style={{
                                     margin: "1rem",
                                     display: "flex",
@@ -40,7 +40,7 @@ const Auction = () => {
                                 }}
                             >
                                 <Timer time={3 * 24 * 60 * 60} />
-                            </div>
+                            </div> */}
                             <Row noGutters>
                                 {element.value &&
                                     Object.entries(element.value).map(([key, value], index) => (

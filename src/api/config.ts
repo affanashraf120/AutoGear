@@ -1,3 +1,4 @@
+
 export const firebaseConfig = {
     apiKey: "AIzaSyBZ8XDtz71bUnRD83QuWNwySVY3HzAtDNU",
     authDomain: "autogear-e9096.firebaseapp.com",
@@ -10,4 +11,4 @@ export const firebaseConfig = {
 };
 
 
-export  const JWT_PRIVATE_KEY = "pushandpop"
+export const JWT_PRIVATE_KEY = "pushandpop";

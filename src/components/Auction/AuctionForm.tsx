@@ -13,6 +13,7 @@ import ImageUploader from "~/custom/components/ImageUploader/ImageUploader";
 import { ICarForm } from "~/interfaces/product";
 import { IVehicle } from "~/interfaces/vehicle";
 import Loader from "~/custom/components/Loader";
+import useInputNumberValidation from "~/custom/hooks/useInputNumberValidation";
 
 var price = "";
 
@@ -29,6 +30,10 @@ const Page = (props: Props) => {
     const { register, handleSubmit, errors, control } = methods;
     const { runMutation } = props;
     const [loading, setLoading] = useState(false);
+    const { invalidNumberInput, handleChange } = useInputNumberValidation({
+        allowLeadingZero: false,
+        limit: 100000000,
+    });
 
     const uploadImage = (file: File): Promise<string> => {
         const data = new FormData();
@@ -41,29 +46,6 @@ const Page = (props: Props) => {
         })
             .then((res) => res.json())
             .then((res) => res.url);
-    };
-
-    const invalidKey = (key: string): boolean => {
-        if (key === "-" || key === "e" || key === "E") {
-            return true;
-        }
-        return false;
-    };
-
-    const handleNumberKeyValidation = (e: React.KeyboardEvent<HTMLInputElement>, num: string, limit: number) => {
-        if (invalidKey(e.key)) {
-            e.preventDefault();
-            return;
-        }
-        if (e.key === "0" && num === "") {
-            e.preventDefault();
-            return;
-        }
-        num = num.concat(e.key);
-        if (parseInt(num) > limit) {
-            e.preventDefault();
-            return;
-        }
     };
 
     const startLoading = () => {
@@ -84,6 +66,7 @@ const Page = (props: Props) => {
         data.images.forEach((image) => promises.push(uploadImage(image)));
         Promise.all([...promises])
             .then((values) => {
+                console.log("Images", values);
                 runMutation({ ...data, bid_amount: 0, images: [...values], ...vehicle })
                     .then((res) => {
                         stopLoading();
@@ -101,8 +84,7 @@ const Page = (props: Props) => {
                 stopLoading();
             });
     };
-    
-              
+
     return (
         <>
             {!loading && (
@@ -140,11 +122,9 @@ const Page = (props: Props) => {
                                     placeholder={`Enter Price`}
                                     ref={register({ required: true })}
                                     onKeyPress={(e) => {
-                                        handleNumberKeyValidation(e, price, 100000000);
+                                        invalidNumberInput(e.key) && e.preventDefault();
                                     }}
-                                    onChange={(e) => {
-                                        price = e.target.value;
-                                    }}
+                                    onChange={handleChange()}
                                 />
                                 <div className="invalid-feedback">
                                     {errors?.price?.type === "required" && (

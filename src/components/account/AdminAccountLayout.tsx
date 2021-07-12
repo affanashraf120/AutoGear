@@ -1,5 +1,5 @@
 // react
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 // third-party
 import classNames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -12,6 +12,7 @@ import { ILink } from "~/interfaces/link";
 import { useAppRouter } from "~/services/router";
 import { useAsyncAction } from "~/store/hooks";
 import { useUser, useUserSignOut } from "~/store/user/userHooks";
+import Loader from "~/custom/components/Loader";
 
 interface Props extends PropsWithChildren<{}> {}
 
@@ -19,6 +20,7 @@ function AccountLayout(props: Props) {
     const { children } = props;
     const intl = useIntl();
     const router = useAppRouter();
+    const [loading, setLoading] = useState(true);
 
     const navigation: ILink[] = [
         { title: `Add Vehicle`, url: url.addVehicle() },
@@ -26,7 +28,20 @@ function AccountLayout(props: Props) {
         { title: `View Auctions`, url: url.viewAuction() },
     ];
 
-    return (
+    const onSignOutClick = () => {
+        localStorage.removeItem("ALLOW_ADMIN");
+        router.push(url.home());
+    };
+
+    useEffect(() => {
+        const admin = localStorage.getItem("ALLOW_ADMIN");
+        if (!admin) router.push(url.adminLogin());
+        admin && setLoading(false);
+    }, []);
+
+    return loading ? (
+        <Loader />
+    ) : (
         <React.Fragment>
             <BlockSpace layout="after-header" />
 
@@ -49,12 +64,12 @@ function AccountLayout(props: Props) {
                                             <AppLink href={item.url}>{item.title}</AppLink>
                                         </li>
                                     ))}
-                                    {/* <li className="account-nav__divider" role="presentation" /> */}
+                                    <li className="account-nav__divider" role="presentation" />
                                     <li className="account-nav__item">
                                         {/* eslint-disable-next-line */}
-                                        {/* <button type="button" onClick={onSignOutClick}>
+                                        <button type="button" onClick={onSignOutClick}>
                                             <FormattedMessage id="LINK_ACCOUNT_LOGOUT" />
-                                        </button> */}
+                                        </button>
                                     </li>
                                 </ul>
                             </div>

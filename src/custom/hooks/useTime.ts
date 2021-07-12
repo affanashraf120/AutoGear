@@ -1,15 +1,17 @@
-import React from "react";
-import moment from "moment";
-
 type Props = {
-    last_date: Date;
+    day: number;
+    month: number;
+    year: number;
 };
 
 const useTime = (props: Props) => {
-    const date_time = new Date(2011, 0, 1, 0, 0, 0, 0);
-    const { last_date } = props;
+    const { day, month, year } = props;
+    const lastDate = new Date(`${month}/${day}/${year}`);
+    const startDate = new Date();
 
-    return {};
+    return {
+        seconds: parseInt(`${(lastDate.getTime() - startDate.getTime()) / 1000}`),
+    };
 };
 
 export default useTime;

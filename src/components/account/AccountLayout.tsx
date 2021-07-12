@@ -94,12 +94,4 @@ function AccountLayout(props: Props) {
     );
 }
 
-// AccountLayout.getInitialProps = async (ctx: NextPageContext) => {
-//     const loginBaseUrl = `${getHostUrl()}${url.signIn()}`;
-//     const loginUrl = url.signIn();
-//     const userApiUrl = `${getHostUrl()}/api/user`;
-//     const json = await isAuthorized(userApiUrl, loginBaseUrl, loginUrl, ctx);
-//     return { user: json.data };
-// };
-
 export default AccountLayout;

@@ -10,7 +10,7 @@ import BlockFinder from "~/components/blocks/BlockFinder";
 import BlockPosts from "~/components/blocks/BlockPosts";
 import BlockProductsCarousel from "~/components/blocks/BlockProductsCarousel";
 import BlockProductsColumns from "~/components/blocks/BlockProductsColumns";
-import BlockSale from "~/components/blocks/BlockSale";
+import BlockAuction from "~/components/blocks/BlockAuction";
 import BlockSpace from "~/components/blocks/BlockSpace";
 import BlockZone from "~/components/blocks/BlockZone";
 import url from "~/services/url";
@@ -20,6 +20,8 @@ import BlockSlideshow from "~/components/blocks/BlockSlideshow";
 import HeroHeader from "~/custom/components/heroHeader/HeroHeader";
 import { IBrand } from "~/interfaces/brand";
 import { brands } from "~/myData/brandsData";
+import { getRealtimeProducts } from "~/services/firebase";
+import firebase from "firebase";
 
 function Page() {
     const intl = useIntl();
@@ -28,8 +30,10 @@ function Page() {
         () => [
             {
                 url: "/find-cars",
-                desktopImage: "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_1350/v1621514394/Postors/jridteuujlsizggo3bmk.jpg",
-                mobileImage: "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_1350/v1621514394/Postors/jridteuujlsizggo3bmk.jpg",
+                desktopImage:
+                    "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_1350/v1621514394/Postors/jridteuujlsizggo3bmk.jpg",
+                mobileImage:
+                    "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_1350/v1621514394/Postors/jridteuujlsizggo3bmk.jpg",
                 offer: "Secure Auction",
                 title: "Bid your favourite car",
                 details: "Bid higher to win your favourite cars.",
@@ -37,18 +41,21 @@ function Page() {
             },
             {
                 url: "/find-cars",
-                desktopImage: "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_13500/v1621514877/Postors/pkeffh0mlmcp0c24sa1d.jpg",
-                mobileImage: "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_13500/v1621514877/Postors/pkeffh0mlmcp0c24sa1d.jpg",
+                desktopImage:
+                    "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_13500/v1621514877/Postors/pkeffh0mlmcp0c24sa1d.jpg",
+                mobileImage:
+                    "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_13500/v1621514877/Postors/pkeffh0mlmcp0c24sa1d.jpg",
                 title: "Featured Ad",
                 offer: "Boost Your Sales",
-                details:
-                    "App ly for Ad to rank up your products.",
+                details: "App ly for Ad to rank up your products.",
                 buttonLabel: "Explore",
             },
             {
                 url: "/find-cars",
-                desktopImage: "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_1350/v1621515129/Postors/krq0l5edphsnahqxstep.jpg",
-                mobileImage: "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_1350/v1621515129/Postors/krq0l5edphsnahqxstep.jpg",
+                desktopImage:
+                    "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_1350/v1621515129/Postors/krq0l5edphsnahqxstep.jpg",
+                mobileImage:
+                    "https://res.cloudinary.com/autogear/image/upload/c_crop,h_500,w_1350/v1621515129/Postors/krq0l5edphsnahqxstep.jpg",
                 offer: "Sell And Buy",
                 title: "Sell and buy your car",
                 details: "Sell your car and buy your avourite one.",
@@ -143,16 +150,31 @@ function Page() {
         )
     );
 
-    
+    useEffect(() => {
+        const db = firebase.database();
+        const ref = db.ref("/");
+        ref.on(
+            "value",
+            (snapshot) => {
+                console.log(snapshot.val());
+                return snapshot.val();
+            },
+            (errorObject) => {
+                console.log(errorObject);
+                return undefined;
+            }
+        );
+    }, []);
+
     return (
         <React.Fragment>
             <BlockFinder />
-            
+
             {/* <HeroHeader/> */}
             <BlockSpace layout="divider-nl" />
             <BlockFeatures layout="top-strip" />
             <BlockSpace layout="divider-nl" />
-            <BlockBrands layout="columns-8-full" brands={brands.slice(0,16)} />
+            <BlockBrands layout="columns-8-full" brands={brands.slice(0, 16)} />
             <BlockSpace layout="divider-xs" />
             <BlockSlideshow slides={slides} />
             <BlockSpace layout="divider-nl" />
@@ -166,7 +188,7 @@ function Page() {
                 onChangeGroup={featuredProducts.handleTabChange}
             />
             <BlockSpace layout="divider-nl" />
-            <BlockSale products={blockSale.data} loading={blockSale.isLoading} />
+            <BlockAuction products={blockSale.data} loading={blockSale.isLoading} />
             {/* <BlockSpace layout="divider-lg" /> */}
 
             {/* {blockZones.map((blockZone, blockZoneIdx) => (
