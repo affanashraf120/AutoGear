@@ -7,7 +7,7 @@ type DateObject = {
     year: number;
 };
 
-const DAY_POST_LIMIT = 3;
+const DAY_POST_LIMIT = 30;
 const MONTH_POST_LIMIT = 20;
 
 export const validatePostLimit =
