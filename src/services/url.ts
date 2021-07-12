@@ -13,9 +13,11 @@ const url = {
     //Admin
     addVehicle: () => "/admin/add-vehicle",
     addAuction: () => "/admin/add-auction",
-    viewAuction: () => "/admin/view-auction",
     adminLogin: () => "/admin/admin-login",
     adminDashboard: () => "/admin/dashboard",
+    manageAuction: () => "/admin/manage-auction",
+    managePosts: () => "/admin/manage-posts",
+    manageUsers: () => "/admin/manage-users",
     // common
     home: () => "/",
     category: (category: ICategory): IAppLinkHref => {

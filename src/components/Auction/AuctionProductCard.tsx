@@ -4,6 +4,7 @@ import { Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Car
 import CurrencyFormat from "~/components/shared/CurrencyFormat";
 import useTime from "~/custom/hooks/useTime";
 import { useAppRouter } from "~/services/router";
+import Redirect from "../shared/Redirect";
 import Timer from "../shared/Timer";
 
 type AuctionCar = {

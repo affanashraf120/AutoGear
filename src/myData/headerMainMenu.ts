@@ -33,6 +33,10 @@ const navItems: IMainMenuLink[] = [
         title: "FAQ",
         url: "/faq",
     },
+    {
+        title: "Apply For Auction",
+        url: "/apply-for-auction",
+    },
 ];
 
 export default navItems;

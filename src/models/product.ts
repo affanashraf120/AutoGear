@@ -112,6 +112,10 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
+    isPaymentVerified: {
+        type: Boolean,
+        required: true,
+    },
     customFields: {
         type: Schema.Types.Mixed,
     },

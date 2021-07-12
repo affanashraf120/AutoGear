@@ -25,7 +25,9 @@ function AccountLayout(props: Props) {
     const navigation: ILink[] = [
         { title: `Add Vehicle`, url: url.addVehicle() },
         { title: `Add Auction`, url: url.addAuction() },
-        { title: `View Auctions`, url: url.viewAuction() },
+        { title: `Manage Auction`, url: url.manageAuction() },
+        { title: `Manage Users`, url: url.manageUsers() },
+        { title: `Manage Posts`, url: url.managePosts() },
     ];
 
     const onSignOutClick = () => {

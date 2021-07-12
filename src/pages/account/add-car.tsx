@@ -96,9 +96,10 @@ const Page = () => {
                         isFeatured: isFeatured ? true : false,
                         isApproved: false,
                         isAutoGear: false,
+                        isPaymentVerified: false,
                         postedDate: new Date().toLocaleDateString(),
                     };
-                    UserAuthService.addPost(car)
+                    UserAuthService.addPost({ ...car, user: getAuthorizedUser() })
                         .then((responseData) => {
                             console.log(responseData);
                             setLoading(false);
@@ -168,10 +169,7 @@ const Page = () => {
 
                             <SelectionsFormGroup disabled={vehicle === undefined} />
 
-                            <TransactionFormGroup
-                                disabled={vehicle === undefined}
-                                error={intervalError}
-                            />
+                            <TransactionFormGroup disabled={vehicle === undefined} error={intervalError} />
 
                             <div className="form-group">
                                 <Controller

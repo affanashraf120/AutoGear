@@ -145,6 +145,7 @@ export interface ICarProduct extends ICarForm {
     isFeatured: boolean;
     isApproved: boolean;
     isAutoGear: boolean;
+    isPaymentVerified: boolean;
     customFields?: any;
     postedDate: string;
 }
