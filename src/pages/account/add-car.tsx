@@ -117,6 +117,8 @@ const Page = () => {
                                 console.log(error.response);
                                 if (error.response.data.data.dayPosts) toast.error("Posts limit exeeded for today");
                                 if (error.response.data.data.monthPosts) toast.error("Monthly post limit exeeded");
+                            } else if (error.response.status === 504) {
+                                toast.error("Timeout error. Server response or internet might be slow.");
                             } else toast.error("Server error");
                             setLoading(false);
                             setIsFeatured(false);

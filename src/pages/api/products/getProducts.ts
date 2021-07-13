@@ -33,9 +33,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 const options: IListOptions = req.body.options;
                 const filterValues: IFilterValues = req.body.filterValues;
 
-                console.log("******Before Filter*******");
-                console.log("Filters Values", filterValues);
-                console.log("Options", options);
                 const filters: AbstractFilterBuilder[] = [
                     // new CategoryFilterBuilder("category", "Categories"),
                     // new VehicleFilterBuilder("vehicle", "Vehicle"),
@@ -47,23 +44,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 ];
 
                 if (filterValues) {
-                    console.log("******After Filter*******");
-                    console.log("Filters", filters);
+                  
                     filters.forEach((filter) => {
                         filter.makeItems(products, filterValues[filter.slug]);
                     });
-                    console.log("******After Make Items*******");
-
+                   
                     // Calculate items count for filter values.
                     filters.forEach((filter) => filter.calc(dbProducts, filters));
 
-                    console.log("***********After Items Count****************");
+                  
 
                     // Apply filters to products list.
                     products = products.filter((product) =>
                         filters.reduce<boolean>((mr, filter) => mr && filter.test(product), true)
                     );
-                    console.log("***********After Apply Filters****************");
+                   
                 }
 
                 const page = options?.page || 1;

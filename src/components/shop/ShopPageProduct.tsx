@@ -3,7 +3,7 @@
 import axios from "axios";
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
-import { FormProvider } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { shopApi } from "~/api";
 import BlockHeader from "~/components/blocks/BlockHeader";
@@ -28,6 +28,9 @@ import url from "~/services/url";
 import { useCompareAddItem } from "~/store/compare/compareHooks";
 import { useWishlistAddItem } from "~/store/wishlist/wishlistHooks";
 import { Compare16Svg, Wishlist16Svg } from "~/svg";
+import { Sms, LocationCity, LocationOn } from "@material-ui/icons";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import SendMessage from "~/custom/components/SendMessage";
 
 interface Props {
     product: IProduct;
@@ -43,11 +46,15 @@ function ShopPageProduct(props: Props) {
     const galleryLayout = `product-${layout}` as IProductGalleryLayout;
     const [relatedProducts, setRelatedProducts] = useState<IProduct[]>([]);
     const productForm = useProductForm(product);
+    const [modal, setModal] = useState(false);
+
+    const toggle = () => setModal(!modal);
     const [user, setUser] = useState({
         firstName: "",
         lastName: "",
         phone: "-",
         email: "-",
+        city: "-",
     });
 
     useEffect(() => {
@@ -116,11 +123,17 @@ function ShopPageProduct(props: Props) {
                         </tr>
                         <tr>
                             <th>Seller Phone</th>
-                            <td>{user.phone}</td>
+                            <td>+{user.phone}</td>
                         </tr>
                         <tr>
                             <th>Seller Email</th>
                             <td>{user.email}</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <LocationOn />
+                            </th>
+                            <td>{product.registeredCity}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -164,6 +177,14 @@ function ShopPageProduct(props: Props) {
                     </button>
                 )}
             />
+            <button
+                type="button"
+                className={classNames("product__actions-item product__actions-item--compare")}
+                onClick={toggle}
+            >
+                <Sms />
+                <span>Send Message</span>
+            </button>
         </div>
     );
 
@@ -276,6 +297,12 @@ function ShopPageProduct(props: Props) {
                                                 {productInfoBody}
 
                                                 {productActions}
+                                                <Modal isOpen={modal} toggle={toggle}>
+                                                    <ModalHeader toggle={toggle}>Message</ModalHeader>
+                                                    <ModalBody>
+                                                        <SendMessage userId={product.sellerId} />
+                                                    </ModalBody>
+                                                </Modal>
 
                                                 {productTagsAndShareLinks}
                                             </form>
@@ -300,12 +327,6 @@ function ShopPageProduct(props: Props) {
                                 </React.Fragment>
                             )}
                         </div>
-
-                        {layout === "sidebar" && sidebarPosition === "end" && (
-                            <div className="block-split__item block-split__item-sidebar col-auto">
-                                <ProductSidebar />
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>

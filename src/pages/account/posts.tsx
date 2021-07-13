@@ -53,7 +53,7 @@ function Page() {
     const [data, setData] = useState<TableData[]>([]);
     const { isUserExist, getAuthorizedUser } = useAuthContext();
     const [loading, setLoading] = useState(true);
-    const [dataFetched, setDataFetched] = useState(false);
+    const [dataFetched, setDataFetched] = useState(true);
     const history = useAppRouter();
 
     const handleEdit = (_id: string) => {
@@ -74,6 +74,7 @@ function Page() {
         UserAuthService.deletePost(data._id)
             .then((responseData) => {
                 console.log(responseData);
+                getUserCars();
             })
             .catch((error) => {
                 console.log(error.response);
@@ -82,6 +83,7 @@ function Page() {
     const getUserCars = () => {
         const user = getAuthorizedUser();
         if (user) {
+            setDataFetched(false);
             UserAuthService.getPosts(user._id)
                 .then((responseData) => {
                     const products = responseData.data;

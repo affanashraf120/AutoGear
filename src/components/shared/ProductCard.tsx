@@ -1,7 +1,8 @@
 // react
-import React from "react";
+import { LocationOn } from "@material-ui/icons";
 // third-party
 import classNames from "classnames";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 // application
 import AppImage from "~/components/shared/AppImage";
@@ -10,13 +11,12 @@ import AsyncAction from "~/components/shared/AsyncAction";
 import CompatibilityStatusBadge from "~/components/shared/CompatibilityStatusBadge";
 import CurrencyFormat from "~/components/shared/CurrencyFormat";
 import Rating from "~/components/shared/Rating";
-import url from "~/services/url";
 import { IProduct } from "~/interfaces/product";
-import { useCartAddItem } from "~/store/cart/cartHooks";
+import url from "~/services/url";
 import { useCompareAddItem } from "~/store/compare/compareHooks";
 import { useQuickviewOpen } from "~/store/quickview/quickviewHooks";
 import { useWishlistAddItem } from "~/store/wishlist/wishlistHooks";
-import { Cart20Svg, Compare16Svg, Quickview16Svg, Wishlist16Svg } from "~/svg";
+import { Compare16Svg, Quickview16Svg, Wishlist16Svg } from "~/svg";
 
 export type IProductCardElement = "actions" | "status-badge" | "meta" | "features" | "buttons" | "list-buttons";
 
@@ -32,7 +32,6 @@ function ProductCard(props: Props) {
     const { product, layout, exclude = [], className, ...rootProps } = props;
     const intl = useIntl();
     const featuredAttributes = product.attributes.filter((x) => x.featured);
-    const cartAddItem = useCartAddItem();
     const quickviewOpen = useQuickviewOpen();
     const compareAddItem = useCompareAddItem();
     const wishlistAddItem = useWishlistAddItem();
@@ -114,15 +113,15 @@ function ProductCard(props: Props) {
 
             <div className="product-card__info">
                 <div className="product-card__meta"></div>
-                {/* {!exclude.includes('meta') && (
+                {!exclude.includes("meta") && (
                     <div className="product-card__meta">
                         <span className="product-card__meta-title">
-                            <FormattedMessage id="TEXT_SKU" />
-                            {': '}
+                            <LocationOn />
+                            {product.registeredCity}
                         </span>
                         {product.sku}
                     </div>
-                )} */}
+                )}
 
                 <div className="product-card__name">
                     {product.badges && product.badges.length > 0 && (
@@ -185,37 +184,8 @@ function ProductCard(props: Props) {
                 </div>
                 {!exclude.includes("buttons") && (
                     <React.Fragment>
-                        {/* <AsyncAction
-                            action={() => cartAddItem(product)}
-                            render={({ run, loading }) => (
-                                <button
-                                    type="button"
-                                    className={classNames('product-card__addtocart-icon', {
-                                        'product-card__addtocart-icon--loading': loading,
-                                    })}
-                                    aria-label={intl.formatMessage({ id: 'BUTTON_ADD_TO_CART' })}
-                                    onClick={run}
-                                >
-                                    <Cart20Svg />
-                                </button>
-                            )}
-                        /> */}
                         {!exclude.includes("list-buttons") && (
                             <React.Fragment>
-                                {/* <AsyncAction
-                                    action={() => cartAddItem(product)}
-                                    render={({ run, loading }) => (
-                                        <button
-                                            type="button"
-                                            className={classNames('product-card__addtocart-full', {
-                                                'product-card__addtocart-full--loading': loading,
-                                            })}
-                                            onClick={run}
-                                        >
-                                            <FormattedMessage id="BUTTON_ADD_TO_CART" />
-                                        </button>
-                                    )}
-                                /> */}
                                 <AsyncAction
                                     action={() => addToWishlist()}
                                     render={({ run, loading }) => (

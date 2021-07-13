@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useAppRouter } from "~/services/router";
 import url from "~/services/url";
 import {
-    getUserAuthToken,
     getUserFromToken,
     isUserLoggedIn,
     removeUserAuthToken,

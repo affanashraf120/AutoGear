@@ -89,7 +89,7 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
     reviews: {
-        type: [Schema.Types.ObjectId],
+        type: [Schema.Types.Mixed],
         required: true,
     },
     sellerId: {

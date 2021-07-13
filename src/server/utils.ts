@@ -71,6 +71,7 @@ export function makeApiFetchCarToProduct(carProduct: ICarProduct, _id: string): 
         isFeatured,
         isApproved,
         isAutoGear,
+        isPaymentVerified,
         customFields,
         postedDate,
     } = carProduct;
@@ -131,6 +132,7 @@ export function makeApiFetchCarToProduct(carProduct: ICarProduct, _id: string): 
         partNumber: "",
         stock: "in-stock",
         compatibility: "unknown",
+        registeredCity: registeredCity,
     };
 
     return product;

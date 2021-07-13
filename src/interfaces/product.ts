@@ -76,6 +76,7 @@ export interface IProduct {
     //
     sellerId?: string;
     version?: string;
+    registeredCity?: string;
     /**
      * A short product description without HTML tags.
      */

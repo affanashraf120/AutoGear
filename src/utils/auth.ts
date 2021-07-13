@@ -5,6 +5,7 @@ type User = {
     email: string;
     _id: string;
     fullName: string;
+    city: string;
 };
 
 export const setUserAuthToken = (token: string) => {

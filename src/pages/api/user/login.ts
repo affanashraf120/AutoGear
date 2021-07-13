@@ -26,8 +26,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
                 const user = await User.findOne({ email, password });
                 if (user) {
-                    const { _id, fullName, phone, email } = user;
-                    let token = jwt.sign({ _id, fullName, phone, email }, JWT_PRIVATE_KEY);
+                    const { _id, fullName, phone, email, city } = user;
+                    let token = jwt.sign({ _id, fullName, phone, email, city }, JWT_PRIVATE_KEY);
                     // res.setHeader(
                     //     "Set-Cookie",
                     //     cookie.serialize("USER_AUTH_TOKEN", token, {
