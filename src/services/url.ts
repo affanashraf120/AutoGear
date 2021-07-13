@@ -20,6 +20,7 @@ const url = {
     manageUsers: () => "/admin/manage-users",
     // common
     home: () => "/",
+    accountMessages: () => "/account/messages",
     category: (category: ICategory): IAppLinkHref => {
         if (category.type === "shop") {
             return url.shopCategory(category);

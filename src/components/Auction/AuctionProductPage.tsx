@@ -11,6 +11,7 @@ import CurrencyFormat from "~/components/shared/CurrencyFormat";
 import Redirect from "~/components/shared/Redirect";
 import Timer from "~/components/shared/Timer";
 import ProductGallery, { IProductGalleryLayout } from "~/components/shop/ProductGallery";
+import useTime from "~/custom/hooks/useTime";
 import { getRealtimeProductById } from "~/services/firebase";
 import url from "~/services/url";
 import Features from "../../custom/components/Features";
@@ -72,6 +73,12 @@ const AuctionProductPage = (props: Props) => {
 
     console.log(Date.parse("2021-7-6"));
 
+    const { seconds } = useTime({
+        day: 14,
+        month: 7,
+        year: 2021,
+    });
+
     return (
         <>
             <div className={classNames("block-split", { "block-split--has-sidebar": false })}>
@@ -84,21 +91,7 @@ const AuctionProductPage = (props: Props) => {
                             justifyContent: "center",
                         }}
                     >
-                        {/* <Countdown
-                            autoStart={true}
-                            renderer={({ days, hours, minutes, seconds, completed }) => {
-                                console.log("days", days);
-                                console.log("hours", hours);
-                                console.log("minutes", minutes);
-                                console.log("seconds", seconds);
-                                return (
-                                    <span>
-                                        {days}:{hours}:{minutes}:{seconds}
-                                    </span>
-                                );
-                            }}
-                        /> */}
-                        <Timer time={Date.parse("07/07/2021") - Date.now()} />
+                        <Timer time={seconds} />
                     </div>
                     <div className="block-split__row row no-gutters">
                         <div className="block-split__item block-split__item-content col-auto">

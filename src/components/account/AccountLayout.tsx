@@ -44,9 +44,10 @@ function AccountLayout(props: Props) {
     const navigation: ILink[] = [
         { title: intl.formatMessage({ id: "LINK_ACCOUNT_DASHBOARD" }), url: url.accountDashboard() },
         { title: "My Posts", url: url.accountGarage() },
-        { title: intl.formatMessage({ id: "LINK_ACCOUNT_PROFILE" }), url: url.accountProfile() },
+        { title: "Messages", url: url.accountMessages() },
+        // { title: intl.formatMessage({ id: "LINK_ACCOUNT_PROFILE" }), url: url.accountProfile() },
         { title: "Add New Post", url: url.addCar() },
-        { title: "Change Password", url: url.accountPassword() },
+        // { title: "Change Password", url: url.accountPassword() },
     ];
 
     return loading ? (

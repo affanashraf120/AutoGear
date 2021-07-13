@@ -6,6 +6,7 @@ type User = {
     _id: string;
     fullName: string;
     city: string;
+    isPaymentMethod: boolean;
 };
 
 export const setUserAuthToken = (token: string) => {

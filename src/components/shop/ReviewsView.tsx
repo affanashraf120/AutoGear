@@ -1,17 +1,18 @@
 // react
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 // third-party
-import classNames from 'classnames';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
+import classNames from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 // application
-import ReviewsList from '~/components/shop/ReviewsList';
-import { IProductPageLayout } from '~/interfaces/pages';
-import { IReviewsList } from '~/interfaces/list';
-import { shopApi } from '~/api';
-import { useAsyncAction, useIsUnmountedRef } from '~/store/hooks';
-import { validateEmail } from '~/services/validators';
+import ReviewsList from "~/components/shop/ReviewsList";
+import { IProductPageLayout } from "~/interfaces/pages";
+import { IReviewsList } from "~/interfaces/list";
+import { shopApi } from "~/api";
+import { useAsyncAction, useIsUnmountedRef } from "~/store/hooks";
+import { validateEmail } from "~/services/validators";
+import ReviewService from "~/api-services/ReviewService";
 
 interface IForm {
     rating: string;
@@ -29,15 +30,10 @@ function ReviewsView(props: Props) {
     const intl = useIntl();
     const { productId, productPageLayout } = props;
     const [page, setPage] = useState<number>(1);
-    const listMetaRef = useRef<{ productId: string, page: number } | null>(null);
+    const listMetaRef = useRef<{ productId: string; page: number } | null>(null);
     const [list, setList] = useState<IReviewsList | null>(null);
     const formMethods = useForm<IForm>();
-    const {
-        handleSubmit,
-        register,
-        errors,
-        reset,
-    } = formMethods;
+    const { handleSubmit, register, errors, reset } = formMethods;
 
     const isUnmountedRef = useIsUnmountedRef();
 
@@ -55,6 +51,17 @@ function ReviewsView(props: Props) {
             setList(result);
             setPage(result.page);
         });
+        // await ReviewService.getReviews(productId)
+        //     .then((responseData) => {
+        //         const { reviews } = responseData.data[0];
+        //         const list: IReviewsList = [{
+
+        //         }];
+        //         console.log(reviews);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error.response);
+        //     });
     };
 
     useEffect(() => {
@@ -69,32 +76,31 @@ function ReviewsView(props: Props) {
         };
     }, [productId, page]);
 
-    const [submit, submitInProgress] = useAsyncAction(async (data: IForm) => {
-        await shopApi.addProductReview(productId, {
-            ...data,
-            rating: parseFloat(data.rating),
-        });
+    const [submit, submitInProgress] = useAsyncAction(
+        async (data: IForm) => {
+            await shopApi.addProductReview(productId, {
+                ...data,
+                rating: parseFloat(data.rating),
+            });
 
-        await load(productId, 1);
+            await load(productId, 1);
 
-        if (isUnmountedRef.current) {
-            return;
-        }
+            if (isUnmountedRef.current) {
+                return;
+            }
 
-        reset();
+            reset();
 
-        toast.success(intl.formatMessage({ id: 'TEXT_TOAST_REVIEW_ADDED' }));
-    }, [productId, reset]);
+            toast.success(intl.formatMessage({ id: "TEXT_TOAST_REVIEW_ADDED" }));
+        },
+        [productId, reset]
+    );
 
     return (
         <div className="reviews-view">
             {list && (
                 <div className="reviews-view__list">
-                    <ReviewsList
-                        list={list}
-                        page={page}
-                        onPageChange={setPage}
-                    />
+                    <ReviewsList list={list} page={page} onPageChange={setPage} />
                 </div>
             )}
 
@@ -105,8 +111,8 @@ function ReviewsView(props: Props) {
                 <div className="row">
                     <div
                         className={classNames({
-                            'col-xxl-8 col-xl-10 col-lg-9 col-12': productPageLayout === 'full',
-                            'col-xxl-12 col-xl-10 col-12': productPageLayout === 'sidebar',
+                            "col-xxl-8 col-xl-10 col-lg-9 col-12": productPageLayout === "full",
+                            "col-xxl-12 col-xl-10 col-12": productPageLayout === "sidebar",
                         })}
                     >
                         <div className="form-row">
@@ -117,22 +123,20 @@ function ReviewsView(props: Props) {
                                 <select
                                     id="review-stars"
                                     name="rating"
-                                    className={classNames('form-control', {
-                                        'is-invalid': errors.rating,
+                                    className={classNames("form-control", {
+                                        "is-invalid": errors.rating,
                                     })}
                                     ref={register({ required: true })}
                                 >
-                                    <option value="">
-                                        {intl.formatMessage({ id: 'INPUT_RATING_PLACEHOLDER' })}
-                                    </option>
+                                    <option value="">{intl.formatMessage({ id: "INPUT_RATING_PLACEHOLDER" })}</option>
                                     {[5, 4, 3, 2, 1].map((stars) => (
                                         <option key={stars} value={stars}>
-                                            {intl.formatMessage({ id: 'INPUT_RATING_OPTION' }, { stars })}
+                                            {intl.formatMessage({ id: "INPUT_RATING_OPTION" }, { stars })}
                                         </option>
                                     ))}
                                 </select>
                                 <div className="invalid-feedback">
-                                    {errors.rating?.type === 'required' && (
+                                    {errors.rating?.type === "required" && (
                                         <FormattedMessage id="ERROR_FORM_REQUIRED" />
                                     )}
                                 </div>
@@ -145,14 +149,14 @@ function ReviewsView(props: Props) {
                                     type="text"
                                     id="review-author"
                                     name="author"
-                                    className={classNames('form-control', {
-                                        'is-invalid': errors.author,
+                                    className={classNames("form-control", {
+                                        "is-invalid": errors.author,
                                     })}
-                                    placeholder={intl.formatMessage({ id: 'INPUT_YOUR_NAME_PLACEHOLDER' })}
+                                    placeholder={intl.formatMessage({ id: "INPUT_YOUR_NAME_PLACEHOLDER" })}
                                     ref={register({ required: true })}
                                 />
                                 <div className="invalid-feedback">
-                                    {errors.author?.type === 'required' && (
+                                    {errors.author?.type === "required" && (
                                         <FormattedMessage id="ERROR_FORM_REQUIRED" />
                                     )}
                                 </div>
@@ -165,20 +169,18 @@ function ReviewsView(props: Props) {
                                     type="text"
                                     id="review-email"
                                     name="email"
-                                    className={classNames('form-control', {
-                                        'is-invalid': errors.email,
+                                    className={classNames("form-control", {
+                                        "is-invalid": errors.email,
                                     })}
-                                    placeholder={intl.formatMessage({ id: 'INPUT_EMAIL_ADDRESS_PLACEHOLDER' })}
+                                    placeholder={intl.formatMessage({ id: "INPUT_EMAIL_ADDRESS_PLACEHOLDER" })}
                                     ref={register({
                                         required: true,
                                         validate: { email: validateEmail },
                                     })}
                                 />
                                 <div className="invalid-feedback">
-                                    {errors.email?.type === 'required' && (
-                                        <FormattedMessage id="ERROR_FORM_REQUIRED" />
-                                    )}
-                                    {errors.email?.type === 'email' && (
+                                    {errors.email?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
+                                    {errors.email?.type === "email" && (
                                         <FormattedMessage id="ERROR_FORM_INCORRECT_EMAIL" />
                                     )}
                                 </div>
@@ -192,23 +194,21 @@ function ReviewsView(props: Props) {
                                 id="review-text"
                                 rows={6}
                                 name="content"
-                                className={classNames('form-control', {
-                                    'is-invalid': errors.content,
+                                className={classNames("form-control", {
+                                    "is-invalid": errors.content,
                                 })}
-                                placeholder={intl.formatMessage({ id: 'INPUT_YOUR_REVIEW_PLACEHOLDER' })}
+                                placeholder={intl.formatMessage({ id: "INPUT_YOUR_REVIEW_PLACEHOLDER" })}
                                 ref={register({ required: true })}
                             />
                             <div className="invalid-feedback">
-                                {errors.content?.type === 'required' && (
-                                    <FormattedMessage id="ERROR_FORM_REQUIRED" />
-                                )}
+                                {errors.content?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
                             </div>
                         </div>
                         <div className="form-group mb-0 mt-4">
                             <button
                                 type="submit"
-                                className={classNames('btn', 'btn-primary', {
-                                    'btn-loading': submitInProgress,
+                                className={classNames("btn", "btn-primary", {
+                                    "btn-loading": submitInProgress,
                                 })}
                             >
                                 <FormattedMessage id="BUTTON_POST_REVIEW" />

@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useAppRouter } from "~/services/router";
 import url from "~/services/url";
-import {
-    getUserFromToken,
-    isUserLoggedIn,
-    removeUserAuthToken,
-    setUserAuthToken,
-} from "~/utils/auth";
+import { getUserFromToken, isUserLoggedIn, removeUserAuthToken, setUserAuthToken } from "~/utils/auth";
 
 type User = {
     avatar: string;
     email: string;
     _id: string;
     fullName: string;
+    city: string;
+    isPaymentMethod: boolean;
 };
 
 const useAuthorizedUser = () => {

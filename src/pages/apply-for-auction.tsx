@@ -14,12 +14,14 @@ import { useAppRouter } from "~/services/router";
 import url from "~/services/url";
 import MaskInput from "react-maskinput";
 import useInputNumberValidation from "~/custom/hooks/useInputNumberValidation";
+import UserAuthService from "~/api-services/userService/UserAuthService";
+import { toast } from "react-toastify";
 
 type CreditCard = {
     name: string;
     number: number;
     cvc: number;
-    expiry: number;
+    expiry: string;
 };
 
 const Page = () => {
@@ -50,6 +52,18 @@ const Page = () => {
 
     const submit = (data: CreditCard) => {
         console.log(data);
+        const user = getAuthorizedUser();
+        user &&
+            UserAuthService.addPaymentMethod({ ...data, userId: user._id })
+                .then((responseData) => {
+                    console.log(responseData);
+                    toast.success("Payment method verified");
+                    history.push(url.auction());
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                    toast.error("Payment method not verified");
+                });
     };
 
     return loading ? (

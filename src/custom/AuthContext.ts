@@ -4,6 +4,8 @@ type User = {
     email: string;
     _id: string;
     fullName: string;
+    city: string;
+    isPaymentMethod: boolean;
 };
 
 interface ContextType {

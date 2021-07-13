@@ -300,7 +300,11 @@ function ShopPageProduct(props: Props) {
                                                 <Modal isOpen={modal} toggle={toggle}>
                                                     <ModalHeader toggle={toggle}>Message</ModalHeader>
                                                     <ModalBody>
-                                                        <SendMessage userId={product.sellerId} />
+                                                        <SendMessage
+                                                            productId={product.id}
+                                                            sellerId={product.sellerId}
+                                                            onClose={toggle}
+                                                        />
                                                     </ModalBody>
                                                 </Modal>
 

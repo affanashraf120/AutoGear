@@ -1,5 +1,7 @@
 import React, { forwardRef } from "react";
-import MaterialTable, { Action, Column } from "material-table";
+import dynamic from "next/dynamic";
+import { Action, Column } from "material-table";
+const MaterialTable = dynamic(() => import("material-table"), { ssr: false });
 import {
     AddBox,
     ArrowUpward,

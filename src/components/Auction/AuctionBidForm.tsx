@@ -6,8 +6,12 @@ import { FormattedMessage } from "react-intl";
 import { toast } from "react-toastify";
 import { Label } from "reactstrap";
 import CurrencyFormat from "~/components/shared/CurrencyFormat";
+import { useAuthContext } from "~/custom/hooks/useAuthContext";
 import useInputNumberValidation from "~/custom/hooks/useInputNumberValidation";
+import user from "~/models/user";
+import url from "~/services/url";
 import Loader from "../../custom/components/Loader";
+import AppLink from "../shared/AppLink";
 
 type BidForm = {
     bid_amount: number;
@@ -21,6 +25,8 @@ const AuctionBidForm = (props: Props) => {
     const { runTransaction, previous_bid } = props;
     const { handleSubmit, errors, register } = useForm<BidForm>();
     const [loading, setLoading] = useState(false);
+    const [verified, setVerified] = useState(false);
+    const { getAuthorizedUser } = useAuthContext();
     const { handleChange, invalidNumberInput } = useInputNumberValidation({
         allowLeadingZero: false,
         limit: 1000000000,
@@ -35,6 +41,7 @@ const AuctionBidForm = (props: Props) => {
                 setPreviousBid(val);
             },
         });
+        getAuthorizedUser()?.isPaymentMethod && setVerified(true);
     }, []);
 
     const submitHandler = (data: BidForm) => {
@@ -58,102 +65,112 @@ const AuctionBidForm = (props: Props) => {
     };
     return (
         <div className="product__actions" style={{ backgroundColor: "black", padding: "1rem" }}>
-            <form className="col-12 col-lg-12 col-xl-12" onSubmit={handleSubmit(submitHandler)}>
-                <div className="form-group">
-                    <label style={{ color: "white", wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
-                        Bid must be higher then{" "}
-                    </label>
-                    <div style={{ color: "red", wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
-                        <CurrencyFormat value={previousBid} />
-                    </div>{" "}
-                    {loading ? (
-                        <Loader />
-                    ) : (
-                        <input
-                            type="number"
-                            id={`bid_amount`}
-                            name={`bid_amount`}
-                            className={classNames("form-control", {
-                                "is-invalid": errors?.bid_amount,
-                            })}
-                            placeholder={`Enter bid amount`}
-                            ref={register({ required: true })}
-                            onKeyPress={(e) => {
-                                invalidNumberInput(e.key) && e.preventDefault();
+            {verified ? (
+                <form className="col-12 col-lg-12 col-xl-12" onSubmit={handleSubmit(submitHandler)}>
+                    <div className="form-group">
+                        <label style={{ color: "white", wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
+                            Bid must be higher then{" "}
+                        </label>
+                        <div style={{ color: "red", wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
+                            <CurrencyFormat value={previousBid} />
+                        </div>{" "}
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <input
+                                type="number"
+                                id={`bid_amount`}
+                                name={`bid_amount`}
+                                className={classNames("form-control", {
+                                    "is-invalid": errors?.bid_amount,
+                                })}
+                                placeholder={`Enter bid amount`}
+                                ref={register({ required: true })}
+                                onKeyPress={(e) => {
+                                    invalidNumberInput(e.key) && e.preventDefault();
+                                }}
+                                min={1}
+                                value={value}
+                                onChange={handleChange((e) => {
+                                    setValue(parseInt(e.target.value));
+                                })}
+                            />
+                        )}
+                        <div className="invalid-feedback">
+                            {errors?.bid_amount?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
+                        </div>
+                        <div className="form-group">
+                            <button
+                                type="submit"
+                                className={classNames("btn", "btn-primary", "mt-3", {
+                                    "btn-loading": loading,
+                                })}
+                            >
+                                Bid
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            ) : (
+                <>
+                    <div className="form-group">
+                        <AppLink href="/apply-for-auction">Get yourself verified first</AppLink>
+                    </div>
+                </>
+            )}
+            {verified && (
+                <div className="col-12 col-xs-6 col-sm-6 col-lg-12 col-xl-12">
+                    <Label style={{ color: "white" }}>Steps</Label>
+                    <div className="form-group">
+                        <button
+                            className={classNames("btn", "btn-primary", "mt-3")}
+                            style={{ margin: "5px", backgroundColor: "grey" }}
+                            onClick={() => {
+                                setValue((prev) => prev && prev + 10000);
                             }}
-                            min={1}
-                            value={value}
-                            onChange={handleChange((e) => {
-                                setValue(parseInt(e.target.value));
-                            })}
-                        />
-                    )}
-                    <div className="invalid-feedback">
-                        {errors?.bid_amount?.type === "required" && <FormattedMessage id="ERROR_FORM_REQUIRED" />}
+                        >{`10,000`}</button>
+                        <button
+                            className={classNames("btn", "btn-primary", "mt-3")}
+                            style={{ margin: "5px", backgroundColor: "grey" }}
+                            onClick={() => {
+                                setValue((prev) => prev && prev + 30000);
+                            }}
+                        >{`30,000`}</button>
                     </div>
                     <div className="form-group">
                         <button
-                            type="submit"
-                            className={classNames("btn", "btn-primary", "mt-3", {
-                                "btn-loading": loading,
-                            })}
-                        >
-                            Bid
-                        </button>
+                            className={classNames("btn", "btn-primary", "mt-3")}
+                            style={{ margin: "5px", backgroundColor: "grey" }}
+                            onClick={() => {
+                                setValue((prev) => prev && prev + 50000);
+                            }}
+                        >{`50,000`}</button>
+                        <button
+                            className={classNames("btn", "btn-primary", "mt-3")}
+                            style={{ margin: "5px", backgroundColor: "grey" }}
+                            onClick={() => {
+                                setValue((prev) => prev && prev + 100000);
+                            }}
+                        >{`100,000`}</button>
+                    </div>
+                    <div className="form-group">
+                        <button
+                            className={classNames("btn", "btn-primary", "mt-3")}
+                            style={{ margin: "5px", backgroundColor: "grey" }}
+                            onClick={() => {
+                                setValue((prev) => prev && prev + 1000000);
+                            }}
+                        >{`1,000,000`}</button>
+                        <button
+                            className={classNames("btn", "btn-primary", "mt-3")}
+                            style={{ margin: "5px", backgroundColor: "grey" }}
+                            onClick={() => {
+                                setValue((prev) => prev && prev + 2000000);
+                            }}
+                        >{`2,000,000`}</button>
                     </div>
                 </div>
-            </form>
-            <div className="col-12 col-xs-6 col-sm-6 col-lg-12 col-xl-12">
-                <Label style={{ color: "white" }}>Steps</Label>
-                <div className="form-group">
-                    <button
-                        className={classNames("btn", "btn-primary", "mt-3")}
-                        style={{ margin: "5px", backgroundColor: "grey" }}
-                        onClick={() => {
-                            setValue((prev) => prev && prev + 10000);
-                        }}
-                    >{`10,000`}</button>
-                    <button
-                        className={classNames("btn", "btn-primary", "mt-3")}
-                        style={{ margin: "5px", backgroundColor: "grey" }}
-                        onClick={() => {
-                            setValue((prev) => prev && prev + 30000);
-                        }}
-                    >{`30,000`}</button>
-                </div>
-                <div className="form-group">
-                    <button
-                        className={classNames("btn", "btn-primary", "mt-3")}
-                        style={{ margin: "5px", backgroundColor: "grey" }}
-                        onClick={() => {
-                            setValue((prev) => prev && prev + 50000);
-                        }}
-                    >{`50,000`}</button>
-                    <button
-                        className={classNames("btn", "btn-primary", "mt-3")}
-                        style={{ margin: "5px", backgroundColor: "grey" }}
-                        onClick={() => {
-                            setValue((prev) => prev && prev + 100000);
-                        }}
-                    >{`100,000`}</button>
-                </div>
-                <div className="form-group">
-                    <button
-                        className={classNames("btn", "btn-primary", "mt-3")}
-                        style={{ margin: "5px", backgroundColor: "grey" }}
-                        onClick={() => {
-                            setValue((prev) => prev && prev + 1000000);
-                        }}
-                    >{`1,000,000`}</button>
-                    <button
-                        className={classNames("btn", "btn-primary", "mt-3")}
-                        style={{ margin: "5px", backgroundColor: "grey" }}
-                        onClick={() => {
-                            setValue((prev) => prev && prev + 2000000);
-                        }}
-                    >{`2,000,000`}</button>
-                </div>
-            </div>
+            )}
         </div>
     );
 };
