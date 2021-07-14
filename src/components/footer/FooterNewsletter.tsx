@@ -1,9 +1,11 @@
 // react
 import axios from "axios";
 import React, { FunctionComponent } from "react";
+import { useForm } from "react-hook-form";
 // third-party
 import { FormattedMessage, useIntl } from "react-intl";
 import { toast } from "react-toastify";
+import SubscriptionService from "~/api-services/SubscriptionService";
 // application
 import AppLink from "~/components/shared/AppLink";
 // data
@@ -13,17 +15,19 @@ import { getHostUrl } from "~/services/utils";
 const FooterNewsletter: FunctionComponent<React.HTMLAttributes<HTMLElement>> = () => {
     const intl = useIntl();
 
-    const handleFormSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
+    const { register, handleSubmit } = useForm<{ email: string }>();
 
-        axios
-            .post(`/api/newsletter`, {})
-            .then((res) => {
-                console.log(res.data);
+    const submit = (data: { email: string }) => {
+        console.log(data.email);
+        SubscriptionService.addSubscription(data.email)
+            .then((responseData) => {
+                toast.success("Successfully subscribed to newsletter");
             })
-            .catch((err) => {
-                toast("Mail sent successfully");
-                console.log(err);
+            .catch((error) => {
+                console.log(error.response);
+                if (error.response.data.data.name === "MongoError") {
+                    toast.success("You are already subscribed");
+                } else toast.error("Server Error");
             });
     };
 
@@ -44,13 +48,17 @@ const FooterNewsletter: FunctionComponent<React.HTMLAttributes<HTMLElement>> = (
                 <FormattedMessage id="TEXT_NEWSLETTER_MESSAGE" />
             </div>
 
-            <form className="footer-newsletter__form" onSubmit={handleFormSubmit}>
+            <form className="footer-newsletter__form" onSubmit={handleSubmit(submit)}>
                 <label className="sr-only" htmlFor="footer-newsletter-address">
                     <FormattedMessage id="INPUT_EMAIL_ADDRESS_LABEL" />
                 </label>
                 <input
                     id="footer-newsletter-address"
-                    type="text"
+                    type="email"
+                    name="email"
+                    ref={register({
+                        required: true,
+                    })}
                     className="footer-newsletter__form-input"
                     placeholder={intl.formatMessage({ id: "INPUT_EMAIL_ADDRESS_PLACEHOLDER" })}
                 />
