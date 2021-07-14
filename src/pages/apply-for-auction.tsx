@@ -43,6 +43,7 @@ const Page = () => {
         allowLeadingZero: true,
         maxLength: 3,
     });
+    console.log("Apply");
 
     useEffect(() => {
         if (!getAuthorizedUser()) history.push(url.signIn());

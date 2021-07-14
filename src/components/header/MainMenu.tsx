@@ -30,6 +30,7 @@ function MainMenu() {
     };
 
     const handleItemClick = () => {
+        console.log("click")
         setCurrentItem(null);
     };
 
