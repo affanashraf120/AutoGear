@@ -13,6 +13,7 @@ import { shopApi } from "~/api";
 import { useAsyncAction, useIsUnmountedRef } from "~/store/hooks";
 import { validateEmail } from "~/services/validators";
 import ReviewService from "~/api-services/ReviewService";
+import { IReview } from "~/interfaces/review";
 
 interface IForm {
     rating: string;
@@ -42,7 +43,6 @@ function ReviewsView(props: Props) {
             if (isUnmountedRef.current || canceledRef?.current) {
                 return;
             }
-
             listMetaRef.current = {
                 productId,
                 page,
@@ -51,17 +51,7 @@ function ReviewsView(props: Props) {
             setList(result);
             setPage(result.page);
         });
-        // await ReviewService.getReviews(productId)
-        //     .then((responseData) => {
-        //         const { reviews } = responseData.data[0];
-        //         const list: IReviewsList = [{
 
-        //         }];
-        //         console.log(reviews);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error.response);
-        //     });
     };
 
     useEffect(() => {

@@ -20,7 +20,7 @@ class ReviewService extends GenericService {
             baseURL: `${getHostUrl()}/api/review/`,
         });
     }
-    addReview = (data: Review) => this.post(ADD_REVIEW, data).then((response) => response.data);
+    addReview = (data: Review) => this.put(ADD_REVIEW, data).then((response) => response.data);
     getReviews = (productId: string) => this.get(GET_REVIEWS, { productId }).then((response) => response.data);
 }
 

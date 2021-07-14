@@ -1,5 +1,5 @@
 import { CardActions, CardContent, Icon, IconButton } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, CardFooter } from "reactstrap";
 import CurrencyFormat from "~/components/shared/CurrencyFormat";
 import useTime from "~/custom/hooks/useTime";
@@ -15,6 +15,7 @@ type AuctionCar = {
     engineDisplacement: string;
     bodyType: string;
     images: string[];
+    endDate: string;
 };
 
 type Props = {
@@ -24,13 +25,12 @@ type Props = {
 };
 
 const AuctionProductCard = (props: Props) => {
-    const { make, model, bid_amount, images, bodyType, engine, engineDisplacement } = props.product;
+    const { make, model, bid_amount, images, bodyType, engine, engineDisplacement, endDate } = props.product;
     const { onClick, id } = props;
     const { seconds } = useTime({
-        day: 14,
-        month: 7,
-        year: 2021,
+        endDate,
     });
+    const [timeCompelete, setTimeCompelete] = useState(false);
 
     return (
         <Card style={{ margin: "0.5rem" }}>
@@ -51,7 +51,14 @@ const AuctionProductCard = (props: Props) => {
             <CardFooter>
                 <CardActions style={{ display: "flex", flexDirection: "column" }}>
                     <div style={{ width: "100%" }}>
-                        <Timer time={seconds} />
+                        {!timeCompelete && (
+                            <Timer
+                                time={seconds}
+                                onCompelete={() => {
+                                    if (!timeCompelete) setTimeCompelete(true);
+                                }}
+                            />
+                        )}
                     </div>
                     <IconButton
                         onClick={() => {
@@ -59,12 +66,11 @@ const AuctionProductCard = (props: Props) => {
                         }}
                         style={{ alignSelf: "flex-start", marginTop: "10px" }}
                     >
-                        <img
-                            src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
-                            alt="bid"
-                            height="35px"
-                            width="30px"
-                        />
+                        {!timeCompelete ? (
+                            <img src="images/bid.png" alt="bid" height="50px" width="50px" />
+                        ) : (
+                            <img height="50px" width="40px" alt="Closed" src="images/close.png" />
+                        )}
                     </IconButton>
                 </CardActions>
             </CardFooter>

@@ -39,6 +39,7 @@ const UserSchema = new Schema<IUser>({
     },
     isPaymentMethod: {
         type: Boolean,
+        required: true,
     },
     // Limit
 });

@@ -1,12 +1,10 @@
 type Props = {
-    day: number;
-    month: number;
-    year: number;
+    endDate: string; // YEAR-MONTH-DAY, MONTH/DAY/YEAR
 };
 
 const useTime = (props: Props) => {
-    const { day, month, year } = props;
-    const lastDate = new Date(`${month}/${day}/${year}`);
+    const { endDate } = props;
+    const lastDate = new Date(endDate);
     const startDate = new Date();
 
     return {

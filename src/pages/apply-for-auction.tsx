@@ -25,7 +25,7 @@ type CreditCard = {
 };
 
 const Page = () => {
-    const { getAuthorizedUser } = useAuthContext();
+    const { getAuthorizedUser, setAuthorizedUser } = useAuthContext();
     const [loading, setLoading] = useState(true);
     const history = useAppRouter();
     const [cvc, setCvc] = useState("");
@@ -56,7 +56,8 @@ const Page = () => {
         user &&
             UserAuthService.addPaymentMethod({ ...data, userId: user._id })
                 .then((responseData) => {
-                    console.log(responseData);
+                    console.log(responseData.data);
+                    setAuthorizedUser(responseData.data);
                     toast.success("Payment method verified");
                     history.push(url.auction());
                 })

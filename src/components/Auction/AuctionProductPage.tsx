@@ -2,7 +2,7 @@ import { FirebaseDatabaseTransaction } from "@react-firebase/database";
 import classNames from "classnames";
 import { min } from "moment";
 
-import React from "react";
+import React, { useState } from "react";
 import Countdown from "react-countdown";
 import { FormattedMessage } from "react-intl";
 import { Button, Jumbotron } from "reactstrap";
@@ -48,6 +48,7 @@ type Props = {
     color: string;
     bodyType: string;
     assembly: string;
+    endDate: string;
 };
 const galleryLayout = `product-full` as IProductGalleryLayout;
 
@@ -69,15 +70,16 @@ const AuctionProductPage = (props: Props) => {
         bodyType,
         assembly,
         productId,
+        endDate,
     } = props;
 
     console.log(Date.parse("2021-7-6"));
 
     const { seconds } = useTime({
-        day: 14,
-        month: 7,
-        year: 2021,
+        endDate,
     });
+
+    const [timeCompelete, setTimeCompelete] = useState(false);
 
     return (
         <>
@@ -91,7 +93,12 @@ const AuctionProductPage = (props: Props) => {
                             justifyContent: "center",
                         }}
                     >
-                        <Timer time={seconds} />
+                        <Timer
+                            time={seconds}
+                            onCompelete={() => {
+                                if (!timeCompelete) setTimeCompelete(true);
+                            }}
+                        />
                     </div>
                     <div className="block-split__row row no-gutters">
                         <div className="block-split__item block-split__item-content col-auto">
@@ -193,14 +200,29 @@ const AuctionProductPage = (props: Props) => {
                                                     </table>
                                                 </div>
                                             </div>
-                                            <FirebaseDatabaseTransaction path={`/${productId}/bid_amount`}>
-                                                {({ runTransaction }) => (
-                                                    <AuctionBidForm
-                                                        runTransaction={runTransaction}
-                                                        previous_bid={parseInt(bid_amount)}
-                                                    />
-                                                )}
-                                            </FirebaseDatabaseTransaction>
+                                            {timeCompelete ? (
+                                                <div className="product__actions">
+                                                    <div
+                                                        className="col-12"
+                                                        style={{
+                                                            color: "red",
+                                                            fontSize: "25px",
+                                                            fontWeight: "bolder",
+                                                        }}
+                                                    >
+                                                        Bid Closed
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <FirebaseDatabaseTransaction path={`/${productId}/bid_amount`}>
+                                                    {({ runTransaction }) => (
+                                                        <AuctionBidForm
+                                                            runTransaction={runTransaction}
+                                                            previous_bid={parseInt(bid_amount)}
+                                                        />
+                                                    )}
+                                                </FirebaseDatabaseTransaction>
+                                            )}
                                         </div>
 
                                         <Features />

@@ -1,7 +1,7 @@
 // react
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 // third-party
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
 const MINUTE = 60;
 const HOUR = MINUTE * 60;
@@ -9,10 +9,11 @@ const DAY = HOUR * 24;
 
 interface Props {
     time: number;
+    onCompelete: () => void;
 }
 
 function Timer(props: Props) {
-    const { time } = props;
+    const { time, onCompelete } = props;
     const [passed, setPassed] = useState(0);
     const left = time - passed;
 
@@ -21,13 +22,17 @@ function Timer(props: Props) {
     const leftMinutes = Math.floor((left - leftDays * DAY - leftHours * HOUR) / MINUTE);
     const leftSeconds = left - leftDays * DAY - leftHours * HOUR - leftMinutes * MINUTE;
 
-    const format = (value: number): string => (`0${value}`).substr(-2);
+    const format = (value: number): string => `0${value}`.substr(-2);
 
     useEffect(() => {
         setPassed(0);
 
         const interval = setInterval(() => {
-            setPassed((prev) => Math.min(prev + 1, time));
+            setPassed((prev) => {
+                const leftTime = Math.min(prev + 1, time);
+                if (leftTime === time) onCompelete();
+                return leftTime;
+            });
         }, 1000);
 
         return () => {

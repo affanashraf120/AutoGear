@@ -87,7 +87,7 @@ export class FakeShopApi implements ShopApi {
     getProductAnalogs(productId: string): Promise<IProduct[]> {
         // return getProductAnalogs(productId);
         return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0,4)
+            let products = shuffle(res.data.data).slice(0, 4);
             return products;
         });
     }
@@ -95,7 +95,7 @@ export class FakeShopApi implements ShopApi {
     getRelatedProducts(productId: string, limit: number): Promise<IProduct[]> {
         // return getRelatedProducts(productId, limit);
         return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0,limit)
+            let products = shuffle(res.data.data).slice(0, limit);
             return products;
         });
     }
@@ -103,7 +103,7 @@ export class FakeShopApi implements ShopApi {
     getFeaturedProducts(categorySlug: string | null, limit: number): Promise<IProduct[]> {
         // return getFeaturedProducts(categorySlug, limit);
         return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0,limit)
+            let products = shuffle(res.data.data).slice(0, limit);
             return products;
         });
     }
@@ -111,7 +111,7 @@ export class FakeShopApi implements ShopApi {
     getPopularProducts(categorySlug: string | null, limit: number): Promise<IProduct[]> {
         // return getPopularProducts(categorySlug, limit);
         return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0,limit)
+            let products = shuffle(res.data.data).slice(0, limit);
             return products;
         });
     }
@@ -119,7 +119,7 @@ export class FakeShopApi implements ShopApi {
     getTopRatedProducts(categorySlug: string | null, limit: number): Promise<IProduct[]> {
         // return getTopRatedProducts(categorySlug, limit);
         return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0,limit)
+            let products = shuffle(res.data.data).slice(0, limit);
             return products;
         });
     }
@@ -127,7 +127,7 @@ export class FakeShopApi implements ShopApi {
     getSpecialOffers(limit: number): Promise<IProduct[]> {
         // return getSpecialOffers(limit);
         return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0,limit)
+            let products = shuffle(res.data.data).slice(0, limit);
             return products;
         });
     }
@@ -135,7 +135,7 @@ export class FakeShopApi implements ShopApi {
     getLatestProducts(limit: number): Promise<IProduct[]> {
         // return getLatestProducts(limit);//
         return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0,limit)
+            let products = shuffle(res.data.data).slice(0, limit);
             return products;
         });
     }

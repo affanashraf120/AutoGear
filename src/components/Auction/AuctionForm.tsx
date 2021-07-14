@@ -14,14 +14,16 @@ import { ICarForm } from "~/interfaces/product";
 import { IVehicle } from "~/interfaces/vehicle";
 import Loader from "~/custom/components/Loader";
 import useInputNumberValidation from "~/custom/hooks/useInputNumberValidation";
-
-var price = "";
+import DateTimePicker from "react-datetime";
+import "react-datetime/css/react-datetime.css";
+import moment from "moment";
 
 type Props = {
     runMutation: RunMutation;
 };
 interface AuctionFormData extends ICarForm {
     images: File[];
+    endDate: string;
 }
 
 const Page = (props: Props) => {
@@ -131,6 +133,27 @@ const Page = (props: Props) => {
                                         <FormattedMessage id="ERROR_FORM_REQUIRED" />
                                     )}
                                 </div>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Auction End Date</label>
+                                <Controller
+                                    render={({ onChange }) => (
+                                        <DateTimePicker
+                                            className={classNames({
+                                                "is-invalid": errors?.endDate,
+                                            })}
+                                            onChange={(value) => {
+                                                const date = moment(value.toLocaleString());
+                                                console.log(date.toISOString());
+                                                onChange(date.toISOString());
+                                            }}
+                                        />
+                                    )}
+                                    name="endDate"
+                                    rules={{ required: true }}
+                                />
+                                <div className="invalid-feedback">{errors?.endDate && "Date and time required"}</div>
                             </div>
 
                             <div className="form-group">

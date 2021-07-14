@@ -8,5 +8,6 @@ export interface IUser {
     state: string;
     postCode: string;
     address: string;
+    isPaymentMethod: boolean;
     // Limit
 }

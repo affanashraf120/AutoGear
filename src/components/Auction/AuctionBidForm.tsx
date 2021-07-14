@@ -64,9 +64,9 @@ const AuctionBidForm = (props: Props) => {
             });
     };
     return (
-        <div className="product__actions" style={{ backgroundColor: "black", padding: "1rem" }}>
+        <div className="product__actions" style={{ backgroundColor: `${verified ? 'black' : 'white'}`, padding: "1rem" }}>
             {verified ? (
-                <form className="col-12 col-lg-12 col-xl-12" onSubmit={handleSubmit(submitHandler)}>
+                <form className="col-12" onSubmit={handleSubmit(submitHandler)}>
                     <div className="form-group">
                         <label style={{ color: "white", wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
                             Bid must be higher then{" "}
@@ -113,8 +113,8 @@ const AuctionBidForm = (props: Props) => {
                 </form>
             ) : (
                 <>
-                    <div className="form-group">
-                        <AppLink href="/apply-for-auction">Get yourself verified first</AppLink>
+                    <div className="form-group" style={{ backgroundColor: "white", padding: "1rem" }}>
+                        <AppLink color="red" style={{color:"red",fontWeight:"bolder"}} href="/apply-for-auction">Get yourself verified first</AppLink>
                     </div>
                 </>
             )}

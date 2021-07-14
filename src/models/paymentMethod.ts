@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const messageSchema = new mongoose.Schema({
+const PaymentMethod = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -8,6 +8,7 @@ const messageSchema = new mongoose.Schema({
     number: {
         type: String,
         required: true,
+        unique: true,
     },
     cvc: {
         type: String,
@@ -20,7 +21,8 @@ const messageSchema = new mongoose.Schema({
     userId: {
         type: Schema.Types.ObjectId,
         required: true,
+        unique: true,
     },
 });
 
-export default mongoose.models.Message || mongoose.model("Message", messageSchema);
+export default mongoose.models.PaymentMethod || mongoose.model("PaymentMethod", PaymentMethod);

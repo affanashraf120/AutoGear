@@ -45,11 +45,11 @@ const useRegister = () => {
     } = methods;
     const submit = (data: RegisterData) => {
         const { confirmPassword, ...customData } = data;
-        UserService.register(customData)
+        UserService.register({ ...customData, isPaymentMethod: false })
             .then((responseData) => {
                 toast.success("User registered successfully");
                 setAuthorizedUser(responseData.data.token);
-                history.push(url.accountDashboard())
+                history.push(url.accountDashboard());
             })
             .catch((err) => {
                 toast.error("User not registered." + err.response.data.message);

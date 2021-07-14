@@ -61,7 +61,6 @@ function ShopPageProduct(props: Props) {
         let canceled = false;
 
         axios.get(`/api/auth/${product.sellerId}`).then((res) => {
-            console.log(res.data.data);
             setUser(res.data.data);
         });
 
