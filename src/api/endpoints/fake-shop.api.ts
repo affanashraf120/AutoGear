@@ -39,6 +39,7 @@ import axios from "axios";
 import { delayResponse } from "~/server/utils";
 import { sendMail } from "~/services/email";
 import { getHostUrl } from "~/services/utils";
+import ProductService from "~/api-services/ProductService";
 
 export class FakeShopApi implements ShopApi {
     getCategoryBySlug(slug: string, options?: IGetCategoryBySlugOptions): Promise<IShopCategory> {
@@ -54,12 +55,7 @@ export class FakeShopApi implements ShopApi {
     }
 
     async getProductsList(options: IListOptions = {}, filters: IFilterValues = {}): Promise<IProductsList> {
-        return axios
-            .post(`${getHostUrl()}/api/products/getProducts`, {
-                options,
-                filterValues: filters,
-            })
-            .then((res) => res.data.data);
+        return ProductService.getFilteredProducts(options, filters).then((responseData) => responseData.data);
     }
 
     async getProductBySlug(slug: string): Promise<IProduct> {
@@ -85,57 +81,50 @@ export class FakeShopApi implements ShopApi {
     }
 
     getProductAnalogs(productId: string): Promise<IProduct[]> {
-        // return getProductAnalogs(productId);
-        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0, 4);
+        return ProductService.getAllProducts().then((res) => {
+            let products = shuffle(res.data).slice(0, 4);
             return products;
         });
     }
 
     getRelatedProducts(productId: string, limit: number): Promise<IProduct[]> {
-        // return getRelatedProducts(productId, limit);
-        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0, limit);
+        return ProductService.getAllProducts().then((res) => {
+            let products = shuffle(res.data).slice(0, limit);
             return products;
         });
     }
 
     getFeaturedProducts(categorySlug: string | null, limit: number): Promise<IProduct[]> {
-        // return getFeaturedProducts(categorySlug, limit);
-        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0, limit);
+        return ProductService.getAllProducts().then((res) => {
+            let products = shuffle(res.data).slice(0, limit);
             return products;
         });
     }
 
     getPopularProducts(categorySlug: string | null, limit: number): Promise<IProduct[]> {
-        // return getPopularProducts(categorySlug, limit);
-        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0, limit);
+        return ProductService.getAllProducts().then((res) => {
+            let products = shuffle(res.data).slice(0, limit);
             return products;
         });
     }
 
     getTopRatedProducts(categorySlug: string | null, limit: number): Promise<IProduct[]> {
-        // return getTopRatedProducts(categorySlug, limit);
-        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0, limit);
+        return ProductService.getAllProducts().then((res) => {
+            let products = shuffle(res.data).slice(0, limit);
             return products;
         });
     }
 
     getSpecialOffers(limit: number): Promise<IProduct[]> {
-        // return getSpecialOffers(limit);
-        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0, limit);
+        return ProductService.getAllProducts().then((res) => {
+            let products = shuffle(res.data).slice(0, limit);
             return products;
         });
     }
 
     getLatestProducts(limit: number): Promise<IProduct[]> {
-        // return getLatestProducts(limit);//
-        return axios.get(`${getHostUrl()}/api/products/getAllProducts`).then((res) => {
-            let products = shuffle(res.data.data).slice(0, limit);
+        return ProductService.getAllProducts().then((res) => {
+            let products = shuffle(res.data).slice(0, limit);
             return products;
         });
     }

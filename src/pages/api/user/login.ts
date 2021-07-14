@@ -4,7 +4,6 @@ import User from "~/models/user";
 import _ from "lodash";
 import jwt from "jsonwebtoken";
 import { JWT_PRIVATE_KEY } from "~/api/config";
-import cookie from "cookie";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { method } = req;
