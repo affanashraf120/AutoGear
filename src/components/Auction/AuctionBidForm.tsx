@@ -38,7 +38,8 @@ const AuctionBidForm = (props: Props) => {
     useEffect(() => {
         runTransaction({
             reducer: (val) => {
-                setPreviousBid(val);
+                console.log(val);
+                val && setPreviousBid(val.bid_amount);
             },
         });
         getAuthorizedUser()?.isPaymentMethod && setVerified(true);
@@ -49,8 +50,17 @@ const AuctionBidForm = (props: Props) => {
         setLoading(true);
         runTransaction({
             reducer: (val) => {
-                if (bid_amount > parseInt(val)) return bid_amount;
-                throw { message: `Bidding amount must be higher than ${val}` };
+                if (bid_amount > parseInt(val.bid_amount)) {
+                    const user = getAuthorizedUser();
+                    if (user && val.bids) {
+                        const value = { ...val, bid_amount, bids: [...val.bids, { ...user, bid_amount }] };
+                        return value;
+                    } else if (user && !val.bids) {
+                        const value = { ...val, bid_amount, bids: [{ ...user, bid_amount }] };
+                        return value;
+                    } else return val;
+                }
+                throw { message: `Bidding amount must be higher than ${val.bid_amount}` };
             },
         })
             .then((res) => {
@@ -64,7 +74,10 @@ const AuctionBidForm = (props: Props) => {
             });
     };
     return (
-        <div className="product__actions" style={{ backgroundColor: `${verified ? 'black' : 'white'}`, padding: "1rem" }}>
+        <div
+            className="product__actions"
+            style={{ backgroundColor: `${verified ? "black" : "white"}`, padding: "1rem" }}
+        >
             {verified ? (
                 <form className="col-12" onSubmit={handleSubmit(submitHandler)}>
                     <div className="form-group">
@@ -114,7 +127,9 @@ const AuctionBidForm = (props: Props) => {
             ) : (
                 <>
                     <div className="form-group" style={{ backgroundColor: "white", padding: "1rem" }}>
-                        <AppLink color="red" style={{color:"red",fontWeight:"bolder"}} href="/apply-for-auction">Get yourself verified first</AppLink>
+                        <AppLink color="red" style={{ color: "red", fontWeight: "bolder" }} href="/apply-for-auction">
+                            Get yourself verified first
+                        </AppLink>
                     </div>
                 </>
             )}

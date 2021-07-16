@@ -55,8 +55,8 @@ function AccountMenuList(props: Props) {
                     </AppLink>
                 </li>
                 <li>
-                    <AppLink href={url.accountProfile()} onClick={onCloseMenu}>
-                        Edit Profile
+                    <AppLink href={url.accountMessages()} onClick={onCloseMenu}>
+                        Messages
                     </AppLink>
                 </li>
                 <li>
@@ -65,8 +65,8 @@ function AccountMenuList(props: Props) {
                     </AppLink>
                 </li>
                 <li>
-                    <AppLink href={url.accountAddresses()} onClick={onCloseMenu}>
-                        Edit Address
+                    <AppLink href={url.accountPassword()} onClick={onCloseMenu}>
+                        Change Password
                     </AppLink>
                 </li>
             </ul>

@@ -8,6 +8,7 @@ const EDIT_POST = "editPost";
 const DELETE_POST = "deletePost";
 const GET_MESSAGES = "getMessages";
 const ADD_PAYMENT_METHOD = "addPaymentMethod";
+const CHANGE_PASSWORD = "changePassword"
 
 type PaymentMethod = {
     name: string;
@@ -16,6 +17,12 @@ type PaymentMethod = {
     expiry: string;
     userId: string;
 };
+
+type ChangePassword = {
+    oldPassword: string,
+    newPassword: string,
+    id:string
+}
 
 class UserAuthService extends GenericService {
     constructor() {
@@ -36,6 +43,7 @@ class UserAuthService extends GenericService {
     deletePost = (productId: string) => this.delete(DELETE_POST, { productId }).then((response) => response.data);
     getMessages = (_id: string) => this.get(GET_MESSAGES, { _id }).then((response) => response.data);
     addPaymentMethod = (data: PaymentMethod) => this.post(ADD_PAYMENT_METHOD, data).then((response) => response.data);
+    changePassword = (data:ChangePassword) => this.put(CHANGE_PASSWORD,data).then((response) => response.data);
 }
 
 export default new UserAuthService();

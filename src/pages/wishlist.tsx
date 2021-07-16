@@ -21,7 +21,6 @@ import { useWishlist, useWishlistRemoveItem } from '~/store/wishlist/wishlistHoo
 function Page() {
     const intl = useIntl();
     const wishlist = useWishlist();
-    const cartAddItem = useCartAddItem();
     const wishlistRemoveItem = useWishlistRemoveItem();
     const { items } = wishlist;
 

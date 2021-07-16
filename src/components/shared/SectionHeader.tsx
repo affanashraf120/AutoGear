@@ -43,7 +43,7 @@ function SectionHeader<T extends ISectionHeaderGroup>(props: Props<T>) {
 
                 <div className="section-header__spring" />
 
-                {groups.length === 0 && links.length > 0 && (
+                {/* {groups.length === 0 && links.length > 0 && (
                     <ul className="section-header__links">
                         {links.map((link, index) => (
                             <li key={index} className="section-header__links-item">
@@ -53,9 +53,9 @@ function SectionHeader<T extends ISectionHeaderGroup>(props: Props<T>) {
                             </li>
                         ))}
                     </ul>
-                )}
+                )} */}
 
-                {groups.length > 0 && (
+                {/* {groups.length > 0 && (
                     <ul className="section-header__groups">
                         {groups.map((group, index) => (
                             <li key={index} className="section-header__groups-item">
@@ -71,7 +71,7 @@ function SectionHeader<T extends ISectionHeaderGroup>(props: Props<T>) {
                             </li>
                         ))}
                     </ul>
-                )}
+                )} */}
 
                 {arrows && (
                     <div className="section-header__arrows">

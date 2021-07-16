@@ -39,24 +39,24 @@ function BlogSidebar() {
 
     return (
         <React.Fragment>
-            <WidgetSearch />
+            {/* <WidgetSearch /> */}
             <WidgetAboutUs />
-            <WidgetCategories
+            {/* <WidgetCategories
                 widgetTitle={<FormattedMessage id="HEADER_CATEGORIES" />}
                 categories={categories}
-            />
+            /> */}
             <WidgetPosts
                 widgetTitle="Latest Posts"
                 posts={posts}
             />
             <WidgetNewsletter />
-            <WidgetComments
+            {/* <WidgetComments
                 widgetTitle="Latest Comments"
                 comments={comments}
             />
             <WidgetTags
                 widgetTitle="Tags Cloud"
-            />
+            /> */}
         </React.Fragment>
     );
 }

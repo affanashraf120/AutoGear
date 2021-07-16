@@ -31,16 +31,6 @@ const Auction = () => {
                         <Loader />
                     ) : (
                         <Container>
-                            {/* <div
-                                style={{
-                                    margin: "1rem",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <Timer time={3 * 24 * 60 * 60} />
-                            </div> */}
                             <Row noGutters>
                                 {element.value &&
                                     Object.entries(element.value).map(([key, value], index) => (

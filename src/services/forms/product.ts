@@ -47,21 +47,21 @@ export function useProductForm(product: IProduct | null) {
 
         const options: ICartItemOption[] = [];
 
-        Object.keys(data.options).forEach((optionSlug) => {
-            const option = product.options.find((x) => x.slug === optionSlug);
+        // Object.keys(data.options).forEach((optionSlug) => {
+        //     const option = product.options.find((x) => x.slug === optionSlug);
 
-            if (!option) {
-                return;
-            }
+        //     if (!option) {
+        //         return;
+        //     }
 
-            const value = option.values.find((x) => x.slug === data.options[optionSlug]);
+        //     const value = option.values.find((x) => x.slug === data.options[optionSlug]);
 
-            if (!value) {
-                return;
-            }
+        //     if (!value) {
+        //         return;
+        //     }
 
-            options.push({ name: option.name, value: value.name });
-        });
+        //     options.push({ name: option.name, value: value.name });
+        // });
 
         return cartAddItem(product, options, typeof data.quantity === 'number' ? data.quantity : 1);
     }, [product, cartAddItem]);

@@ -47,7 +47,7 @@ function AccountLayout(props: Props) {
         { title: "Messages", url: url.accountMessages() },
         // { title: intl.formatMessage({ id: "LINK_ACCOUNT_PROFILE" }), url: url.accountProfile() },
         { title: "Add New Post", url: url.addCar() },
-        // { title: "Change Password", url: url.accountPassword() },
+        { title: "Change Password", url: url.accountPassword() },
     ];
 
     return loading ? (

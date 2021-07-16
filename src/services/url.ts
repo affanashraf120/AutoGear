@@ -11,6 +11,9 @@ import { IProduct } from "~/interfaces/product";
 
 const url = {
     //Admin
+    adminMessages: () => "/admin/admin-messages",
+    pushAdminNotification: () => "/admin/push-notification",
+    addAdminPost: () => "/admin/add-post",
     addVehicle: () => "/admin/add-vehicle",
     addAuction: () => "/admin/add-auction",
     adminLogin: () => "/admin/admin-login",
@@ -99,6 +102,7 @@ const url = {
 
     //404
     notFound: () => "/404",
+    productNotFound: () => "/product-not-found"
 };
 
 export default url;

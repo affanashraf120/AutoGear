@@ -25,7 +25,7 @@ function BlockFinder() {
                 router.push(...hrefToRouterArgs(url.product(res.data.data))).then();
             })
             .catch((err) => {
-                router.push(...hrefToRouterArgs(url.notFound())).then();
+                router.push(...hrefToRouterArgs(url.productNotFound())).then();
             });
     };
 

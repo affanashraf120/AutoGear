@@ -23,11 +23,14 @@ function AccountLayout(props: Props) {
     const [loading, setLoading] = useState(true);
 
     const navigation: ILink[] = [
-        { title: `Add Vehicle`, url: url.addVehicle() },
+        // { title: `Add Post`, url: url.addAdminPost() },
         { title: `Add Auction`, url: url.addAuction() },
         { title: `Manage Auction`, url: url.manageAuction() },
-        { title: `Manage Users`, url: url.manageUsers() },
-        { title: `Manage Posts`, url: url.managePosts() },
+        // { title: `Manage Posts`, url: url.managePosts() },
+        // { title: `Manage Users`, url: url.manageUsers() },
+        { title: `Push Notification`, url: url.pushAdminNotification() },
+        { title: `Messages`, url: url.adminMessages() },
+        { title: `Add Vehicle`, url: url.addVehicle() },
     ];
 
     const onSignOutClick = () => {

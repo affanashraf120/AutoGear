@@ -25,18 +25,18 @@ function PostCard(props: Props) {
     return (
         <div className={rootClasses}>
             <div className="post-card__image">
-                <AppLink href={url.post(post)}>
+                {/* <AppLink href={url.post(post)}> */}
                     <AppImage src={post.image} />
-                </AppLink>
+                {/* </AppLink> */}
             </div>
             <div className="post-card__content">
-                <div className="post-card__category">
+                {/* <div className="post-card__category">
                     {post.categories.map((category, index) => (
                         <AppLink href="/" key={index}>
                             {category}
                         </AppLink>
                     ))}
-                </div>
+                </div> */}
                 <div className="post-card__title">
                     <h2>
                         <AppLink href={url.post(post)}>
@@ -58,11 +58,11 @@ function PostCard(props: Props) {
                         blandit vulputate.
                     </div>
                 </div>
-                <div className="post-card__more">
+                {/* <div className="post-card__more">
                     <AppLink href={url.post(post)} className="btn btn-secondary btn-sm">
                         Read more
                     </AppLink>
-                </div>
+                </div> */}
             </div>
         </div>
     );

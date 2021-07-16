@@ -36,8 +36,8 @@ function BlogPageCategory(props: Props) {
                 pageTitle="Latest News"
                 breadcrumb={[
                     { title: 'Home', url: '' },
-                    { title: 'Breadcrumb', url: '' },
-                    { title: 'Current Page', url: '' },
+                    { title: 'News', url: '' },
+                    // { title: 'Current Page', url: '' },
                 ]}
             />
 
@@ -69,9 +69,9 @@ function BlogPageCategory(props: Props) {
                                         ))}
                                     </div>
                                 </div>
-                                <div className="posts-view__pagination">
+                                {/* <div className="posts-view__pagination">
                                     <Pagination current={page} siblings={1} total={3} onPageChange={setPage} />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         {sidebarPosition === 'end' && (

@@ -40,8 +40,8 @@ function Page() {
                             <div className="profile-card__name">{`${user.fullName}`}</div>
                             <div className="profile-card__email">{user.email}</div>
                             <div className="profile-card__edit">
-                                <AppLink href={url.accountProfile()} className="btn btn-secondary btn-sm">
-                                    <FormattedMessage id="BUTTON_EDIT_PROFILE" />
+                                <AppLink href={url.accountPassword()} className="btn btn-secondary btn-sm">
+                                    Change Password
                                 </AppLink>
                             </div>
                         </div>

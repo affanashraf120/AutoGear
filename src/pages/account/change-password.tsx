@@ -29,14 +29,11 @@ function Page() {
     const { register, errors, watch, handleSubmit } = useForm<IForm>();
     const [loading, setLoading] = useState(true);
     const history = useAppRouter();
-    const { isUserExist } = useAuthContext();
+    const { isUserExist, getAuthorizedUser } = useAuthContext();
 
     const getUserId = (): string => {
-        if (user && user._id) {
-            const { _id } = user;
-            return _id;
-        }
-        return "";
+        const user = getAuthorizedUser();
+        return user?._id || "";
     };
 
     const [submit, submitInProgress] = useAsyncAction(

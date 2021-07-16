@@ -214,7 +214,7 @@ const AuctionProductPage = (props: Props) => {
                                                     </div>
                                                 </div>
                                             ) : (
-                                                <FirebaseDatabaseTransaction path={`/${productId}/bid_amount`}>
+                                                <FirebaseDatabaseTransaction path={`/${productId}`}>
                                                     {({ runTransaction }) => (
                                                         <AuctionBidForm
                                                             runTransaction={runTransaction}
