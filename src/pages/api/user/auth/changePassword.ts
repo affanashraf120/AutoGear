@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable comma-dangle */
+/* eslint-disable linebreak-style */
 /* eslint-disable indent */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-console */
@@ -25,18 +27,23 @@ export default validateUser(async (req: NextApiRequest, res: NextApiResponse) =>
 
                 const confirmPassword = await User.find({ _id: id, password: oldPassword });
                 if (confirmPassword) {
-                    const doc = User.findOneAndUpdate({ _id: id }, { password: newPassword }, { new: true });
-                    if (doc) {
-                        res.status(200).json({
-                            success: true,
-                            message: "Password changed successfully",
-                        });
-                    } else {
-                        res.status(502).json({
-                            success: false,
-                            message: "Database error",
-                        });
-                    }
+                    User.findOneAndUpdate(
+                        { _id: id },
+                        { password: newPassword },
+                        { new: true },
+                        (err: any, doc: any) => {
+                            if (err) {
+                                return res.status(502).json({
+                                    success: false,
+                                    message: "Database error",
+                                });
+                            }
+                            return res.status(200).json({
+                                success: true,
+                                message: "Password changed successfully",
+                            });
+                        }
+                    );
                 } else {
                     res.status(401).json({
                         success: false,
