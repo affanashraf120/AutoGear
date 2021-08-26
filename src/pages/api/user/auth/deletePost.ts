@@ -1,6 +1,11 @@
-import { verify } from "jsonwebtoken";
+/* eslint-disable linebreak-style */
+/* eslint-disable indent */
+/* eslint-disable linebreak-style */
+/* eslint-disable no-console */
+/* eslint-disable quotes */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable linebreak-style */
 import type { NextApiRequest, NextApiResponse } from "next";
-import { JWT_PRIVATE_KEY } from "~/api/config";
 import { validateUser } from "~/api/middlewares/validateUser";
 import Product from "~/models/product";
 import dbConnect from "~/utils/dbconnnect";
@@ -23,12 +28,13 @@ export default validateUser(async (req: NextApiRequest, res: NextApiResponse) =>
                         message: "Product deleted successfully",
                         data: doc,
                     });
-                } else
+                } else {
                     res.status(500).json({
                         success: false,
                         message: "Database Error",
                         data: doc,
                     });
+                }
             } catch (error) {
                 res.status(500).json({
                     success: false,
