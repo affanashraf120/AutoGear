@@ -1,11 +1,11 @@
 // react
-import React from "react";
+import React from 'react';
 // third-party
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage } from 'react-intl';
 // myData
-import features from "~/myData/componentsData/block_feature";
+import features from '~/myData/componentsData/block_feature';
 
-export type IBlockFeaturesLayout = "top-strip" | "bottom-strip";
+export type IBlockFeaturesLayout = 'top-strip' | 'bottom-strip';
 
 interface Props {
     layout: IBlockFeaturesLayout;
